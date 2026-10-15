@@ -12,7 +12,8 @@ abstract class AuctionsState with _$AuctionsState {
     @Default('') String query,
     String? statusFilter,
     String? typeFilter,
-    int? wilayaId,
-    String? wilayaName,
+    // الولاية نفسها مش اسمها: الاسم بيتحسب وقت العرض بلغة التطبيق، فشارة
+    // الفلتر بتتبدّل مع اللغة.
+    Wilaya? wilaya,
   }) = _AuctionsState;
 }

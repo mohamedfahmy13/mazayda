@@ -40,11 +40,18 @@ class AuctionDetailPage extends StatelessWidget {
           builder: (context, state) {
             return switch (state) {
               AuctionDetailInitial() ||
-              AuctionDetailLoading() => const LoadingView(),
-              AuctionDetailError(:final message) => ErrorView(
-                message: message,
-                onRetry: () =>
-                    context.read<AuctionDetailCubit>().load(auctionId),
+              AuctionDetailLoading() => const _WithBackButton(
+                child: LoadingView(),
+              ),
+              AuctionDetailError(:final message) => _WithBackButton(
+                child: ErrorView(
+                  message: message,
+                  onRetry: () =>
+                      context.read<AuctionDetailCubit>().load(auctionId),
+                ),
+              ),
+              AuctionDetailUnavailable() => const _WithBackButton(
+                child: _UnavailableView(),
               ),
               AuctionDetailLoaded(
                 :final detail,
@@ -135,23 +142,25 @@ class _DetailContentState extends State<_DetailContent> {
       account: widget.account,
     );
 
-    return Column(
-      children: [
-        Expanded(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              _DetailHeaderImage(auction: auction),
-              Padding(
-                padding: EdgeInsets.all(16.w),
-                child: _DetailInfo(auction: auction),
-              ),
-            ],
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                _DetailHeaderImage(auction: auction),
+                Padding(
+                  padding: EdgeInsets.all(16.w),
+                  child: _DetailInfo(auction: auction, viewer: detail.viewer),
+                ),
+              ],
+            ),
           ),
-        ),
-        if (cta != AuctionCta.none)
-          _DetailActionBar(auction: auction, cta: cta, viewer: detail.viewer),
-      ],
+          if (cta != AuctionCta.none)
+            _DetailActionBar(auction: auction, cta: cta, viewer: detail.viewer),
+        ],
+      ),
     );
   }
 }
@@ -182,28 +191,113 @@ class _DetailHeaderImage extends StatelessWidget {
               fallbackIcon: Icons.gavel,
             ),
           ),
-        PositionedDirectional(
-          // ننزل الزر أسفل شريط الحالة حتى لا يكون جزء منه خلفه (غير قابل للمس)
-          top: MediaQuery.of(context).padding.top + 8.h,
-          // `start` مش `right`: الرجوع بيقعد في أول الشاشة — يمين في
-          // العربي وشمال في الفرنسي/الإنجليزي.
-          start: 14.w,
-          child: CircleAvatar(
-            backgroundColor: AppColors.white,
-            child: IconButton(
-              // Flutter بيقلب السهم لوحده حسب الاتجاه — شوف AppIcons.
-              icon: const Icon(AppIcons.back, color: AppColors.primary),
-              onPressed: () {
-                if (context.canPop()) {
-                  context.pop();
-                } else {
-                  context.go(Routes.home);
-                }
-              },
-            ),
-          ),
-        ),
+        const _FloatingBackButton(),
       ],
+    );
+  }
+}
+
+/// رجوع للشاشة اللي قبل، أو للرئيسية لو الصفحة اتفتحت مباشرة (من إشعار
+/// مثلًا) ومفيش حاجة نرجعلها.
+void _leave(BuildContext context) {
+  if (context.canPop()) {
+    context.pop();
+  } else {
+    context.go(Routes.home);
+  }
+}
+
+/// زر الرجوع العائم — لازم يكون جوّه `Stack`.
+class _FloatingBackButton extends StatelessWidget {
+  const _FloatingBackButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return PositionedDirectional(
+      // ننزل الزر أسفل شريط الحالة حتى لا يكون جزء منه خلفه (غير قابل للمس)
+      top: MediaQuery.of(context).padding.top + 8.h,
+      // `start` مش `right`: الرجوع بيقعد في أول الشاشة — يمين في
+      // العربي وشمال في الفرنسي/الإنجليزي.
+      start: 14.w,
+      child: CircleAvatar(
+        backgroundColor: AppColors.white,
+        child: IconButton(
+          // Flutter بيقلب السهم لوحده حسب الاتجاه — شوف AppIcons.
+          icon: const Icon(AppIcons.back, color: AppColors.primary),
+          onPressed: () => _leave(context),
+        ),
+      ),
+    );
+  }
+}
+
+/// حالات ما قبل المحتوى (تحميل · خطأ · غير متاحة) مافيهاش صورة الغلاف اللي
+/// شايلة زر الرجوع، فبنحطّه هنا عشان المستخدم مايتحبسش في الشاشة.
+class _WithBackButton extends StatelessWidget {
+  final Widget child;
+  const _WithBackButton({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned.fill(child: child),
+        const _FloatingBackButton(),
+      ],
+    );
+  }
+}
+
+/// السيرفر رجّع 404 — غالبًا المزايدة اتلغت بعد ما ظهرت في قائمة.
+class _UnavailableView extends StatelessWidget {
+  const _UnavailableView();
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(24.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.event_busy_outlined,
+              size: 48.sp,
+              color: AppColors.textHint,
+            ),
+            Gap(12.h),
+            Text(
+              t.adUnavailableTitle,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            Gap(6.h),
+            Text(
+              t.adUnavailableBody,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 13.sp,
+                color: AppColors.textSecondary,
+              ),
+            ),
+            Gap(20.h),
+            ConstrainedBox(
+              constraints: BoxConstraints(minWidth: 160.w),
+              child: IntrinsicWidth(
+                child: PrimaryButton(
+                  label: t.goBack,
+                  onPressed: () => _leave(context),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -211,7 +305,8 @@ class _DetailHeaderImage extends StatelessWidget {
 /// كتلة المعلومات أسفل الصورة: الوسوم + العنوان + الموقع + الأسعار + الوصف.
 class _DetailInfo extends StatelessWidget {
   final Auction auction;
-  const _DetailInfo({required this.auction});
+  final AuctionViewer? viewer;
+  const _DetailInfo({required this.auction, required this.viewer});
 
   @override
   Widget build(BuildContext context) {
@@ -314,7 +409,7 @@ class _DetailInfo extends StatelessWidget {
         AuctionLeaseSection(auction: auction),
         AuctionTermsSection(auction: auction),
         AuctionResultSection(auction: auction),
-        AuctionDocumentsSection(auction: auction),
+        AuctionDocumentsSection(auction: auction, viewer: viewer),
         Gap(8.h),
       ],
     );

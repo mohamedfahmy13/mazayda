@@ -494,6 +494,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get retry => 'إعادة المحاولة';
 
   @override
+  String get goBack => 'رجوع';
+
+  @override
   String get errorGeneric => 'حدث خطأ، حاول مجددًا';
 
   @override
@@ -1043,6 +1046,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get docsCannotOpen => 'تعذّر فتح الملف — لا يوجد تطبيق لعرض PDF';
 
   @override
+  String get docsDownloadForbidden => 'لا تملك صلاحية تحميل هذه الوثيقة';
+
+  @override
+  String get docsDownloadUnavailable => 'ملف الوثيقة غير متاح حاليًا';
+
+  @override
   String get adAwardDocument => 'وثيقة الترسية';
 
   @override
@@ -1325,6 +1334,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adReceiptHint => 'يمكنك طباعة الوصل أو حفظه بعد التحميل';
+
+  @override
+  String get adUnavailableTitle => 'المزايدة غير متاحة';
+
+  @override
+  String get adUnavailableBody => 'ربما أُلغيت هذه المزايدة أو لم تعد معروضة.';
 
   @override
   String get premiumTitle => 'العضوية المميّزة';

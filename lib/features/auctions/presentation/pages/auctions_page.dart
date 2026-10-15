@@ -80,11 +80,9 @@ class _AuctionsBodyState extends State<_AuctionsBody> {
       builder: (_) => AuctionFilterSheet(
         wilayas: wilayas,
         initialType: state.typeFilter,
-        initialWilayaId: state.wilayaId,
-        initialWilayaName: state.wilayaName,
-        onApply: (type, wid, wname) {
-          cubit.applyFilters(type: type, wilayaId: wid, wilayaName: wname);
-        },
+        initialWilaya: state.wilaya,
+        onApply: (type, wilaya) =>
+            cubit.applyFilters(type: type, wilaya: wilaya),
       ),
     );
   }
@@ -98,7 +96,7 @@ class _AuctionsBodyState extends State<_AuctionsBody> {
       builder: (context, state) {
         final t = AppLocalizations.of(context);
         final cubit = context.read<AuctionsCubit>();
-        final hasSecondary = state.typeFilter != null || state.wilayaId != null;
+        final hasSecondary = state.typeFilter != null || state.wilaya != null;
         final showContext = hasSecondary || state.query.isNotEmpty;
 
         return Scaffold(
@@ -147,18 +145,14 @@ class _AuctionsBodyState extends State<_AuctionsBody> {
                 typeLabel: state.typeFilter == null
                     ? null
                     : auctionTypeFilterLabel(state.typeFilter, t),
-                wilayaLabel: state.wilayaName,
+                wilayaLabel: state.wilaya?.nameFor(
+                  Localizations.localeOf(context).languageCode,
+                ),
                 query: state.query,
-                onClearType: () => cubit.applyFilters(
-                  type: null,
-                  wilayaId: state.wilayaId,
-                  wilayaName: state.wilayaName,
-                ),
-                onClearWilaya: () => cubit.applyFilters(
-                  type: state.typeFilter,
-                  wilayaId: null,
-                  wilayaName: null,
-                ),
+                onClearType: () =>
+                    cubit.applyFilters(type: null, wilaya: state.wilaya),
+                onClearWilaya: () =>
+                    cubit.applyFilters(type: state.typeFilter, wilaya: null),
                 onClearAll: cubit.clearFilters,
               ),
               // — القائمة —

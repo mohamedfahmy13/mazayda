@@ -55,26 +55,20 @@ class AuctionsCubit extends Cubit<AuctionsState> {
     _fetch(page: 1, reset: true);
   }
 
-  void setWilaya(int? id, String? name) {
-    emit(state.copyWith(wilayaId: id, wilayaName: name));
+  void setWilaya(Wilaya? wilaya) {
+    emit(state.copyWith(wilaya: wilaya));
     _fetch(page: 1, reset: true);
   }
 
   /// يطبّق الفلاتر الثانوية (النوع + الولاية) دفعة واحدة من الـ bottom sheet.
-  void applyFilters({String? type, int? wilayaId, String? wilayaName}) {
-    emit(
-      state.copyWith(
-        typeFilter: type,
-        wilayaId: wilayaId,
-        wilayaName: wilayaName,
-      ),
-    );
+  void applyFilters({String? type, Wilaya? wilaya}) {
+    emit(state.copyWith(typeFilter: type, wilaya: wilaya));
     _fetch(page: 1, reset: true);
   }
 
   /// عدد الفلاتر الثانوية النشطة (يظهر كـ badge على زر التصفية).
   int get activeFilterCount =>
-      (state.typeFilter != null ? 1 : 0) + (state.wilayaId != null ? 1 : 0);
+      (state.typeFilter != null ? 1 : 0) + (state.wilaya != null ? 1 : 0);
 
   void clearFilters() {
     emit(
@@ -82,8 +76,7 @@ class AuctionsCubit extends Cubit<AuctionsState> {
         query: '',
         statusFilter: 'ACTIVE',
         typeFilter: null,
-        wilayaId: null,
-        wilayaName: null,
+        wilaya: null,
       ),
     );
     _fetch(page: 1, reset: true);
@@ -116,7 +109,7 @@ class AuctionsCubit extends Cubit<AuctionsState> {
         query: state.query.isEmpty ? null : state.query,
         status: state.statusFilter,
         type: state.typeFilter,
-        wilaya: state.wilayaId,
+        wilaya: state.wilaya?.id,
         page: page,
         perPage: _kPerPage,
       ),

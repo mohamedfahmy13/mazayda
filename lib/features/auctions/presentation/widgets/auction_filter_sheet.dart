@@ -9,16 +9,14 @@ import 'auction_filter_options.dart';
 class AuctionFilterSheet extends StatefulWidget {
   final List<Wilaya> wilayas;
   final String? initialType;
-  final int? initialWilayaId;
-  final String? initialWilayaName;
-  final void Function(String? type, int? wilayaId, String? wilayaName) onApply;
+  final Wilaya? initialWilaya;
+  final void Function(String? type, Wilaya? wilaya) onApply;
 
   const AuctionFilterSheet({
     super.key,
     required this.wilayas,
     required this.initialType,
-    required this.initialWilayaId,
-    required this.initialWilayaName,
+    required this.initialWilaya,
     required this.onApply,
   });
 
@@ -29,8 +27,7 @@ class AuctionFilterSheet extends StatefulWidget {
 class AuctionFilterSheetState extends State<AuctionFilterSheet> {
   final _wilayaSearch = TextEditingController();
   late String? _type = widget.initialType;
-  late int? _wilayaId = widget.initialWilayaId;
-  late String? _wilayaName = widget.initialWilayaName;
+  late Wilaya? _wilaya = widget.initialWilaya;
   late List<Wilaya> _filtered = widget.wilayas;
 
   @override
@@ -40,13 +37,11 @@ class AuctionFilterSheetState extends State<AuctionFilterSheet> {
   }
 
   void _filterWilayas() {
-    final q = _wilayaSearch.text.trim().toLowerCase();
+    final q = _wilayaSearch.text.trim();
     setState(() {
       _filtered = q.isEmpty
           ? widget.wilayas
-          : widget.wilayas
-                .where((w) => w.name.toLowerCase().contains(q))
-                .toList();
+          : widget.wilayas.where((w) => w.names.contains(q)).toList();
     });
   }
 
@@ -59,15 +54,14 @@ class AuctionFilterSheetState extends State<AuctionFilterSheet> {
   void _reset() {
     setState(() {
       _type = null;
-      _wilayaId = null;
-      _wilayaName = null;
+      _wilaya = null;
       _wilayaSearch.clear();
       _filtered = widget.wilayas;
     });
   }
 
   void _apply() {
-    widget.onApply(_type, _wilayaId, _wilayaName);
+    widget.onApply(_type, _wilaya);
     Navigator.pop(context);
   }
 
@@ -143,12 +137,9 @@ class AuctionFilterSheetState extends State<AuctionFilterSheet> {
                       children: [
                         _SectionTitle(t.wilaya),
                         const Spacer(),
-                        if (_wilayaId != null)
+                        if (_wilaya != null)
                           GestureDetector(
-                            onTap: () => setState(() {
-                              _wilayaId = null;
-                              _wilayaName = null;
-                            }),
+                            onTap: () => setState(() => _wilaya = null),
                             child: Text(
                               t.clearSelection,
                               style: TextStyle(
@@ -198,17 +189,15 @@ class AuctionFilterSheetState extends State<AuctionFilterSheet> {
         ),
       );
     }
+    final language = Localizations.localeOf(context).languageCode;
     return Wrap(
       spacing: 8.w,
       runSpacing: 8.h,
       children: _filtered.map((w) {
         return _WilayaChip(
-          name: w.name,
-          selected: w.id == _wilayaId,
-          onTap: () => setState(() {
-            _wilayaId = w.id;
-            _wilayaName = w.name;
-          }),
+          name: w.nameFor(language),
+          selected: w.id == _wilaya?.id,
+          onTap: () => setState(() => _wilaya = w),
         );
       }).toList(),
     );

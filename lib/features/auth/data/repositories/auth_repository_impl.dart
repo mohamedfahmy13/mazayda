@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -6,6 +8,7 @@ import '../../../../core/errors/failures.dart';
 import '../../../../core/network/token_storage.dart';
 import '../../../../core/notifications/device_registrar.dart';
 import '../../../../core/session/account_cache.dart';
+import '../../../../core/utils/locale_sync.dart';
 import '../../domain/entities/auth_entities.dart';
 import '../../domain/entities/email_recovery.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -17,12 +20,14 @@ class AuthRepositoryImpl implements AuthRepository {
   final TokenStorage tokenStorage;
   final DeviceRegistrar deviceRegistrar;
   final AccountCache accountCache;
+  final LocaleSync localeSync;
 
   AuthRepositoryImpl(
     this.remote,
     this.tokenStorage,
     this.deviceRegistrar,
     this.accountCache,
+    this.localeSync,
   );
 
   @override
@@ -72,6 +77,8 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       // نربط الجهاز بالحساب عشان الإشعارات توصله (بيتجاهل الفشل بهدوء).
       await deviceRegistrar.register();
+      // وبلغة التطبيق — الحساب الجديد بيتعمل بالعربي افتراضيًا.
+      unawaited(localeSync.sync());
       return model.toEntity();
     });
   }
@@ -105,6 +112,7 @@ class AuthRepositoryImpl implements AuthRepository {
           refreshToken: tokens.refreshToken,
         );
         await deviceRegistrar.register();
+        unawaited(localeSync.sync());
       }
       return result.toEntity();
     });

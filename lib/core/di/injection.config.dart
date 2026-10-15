@@ -53,7 +53,7 @@ import '../../features/auth/domain/usecases/verify_otp.dart' as _i975;
 import '../../features/auth/presentation/cubit/email_recovery_cubit.dart'
     as _i708;
 import '../../features/auth/presentation/cubit/login_cubit.dart' as _i69;
-import '../../features/auth/presentation/cubit/otp_cubit.dart' as _i1034;
+import '../../features/auth/presentation/cubit/otp_cubit.dart' as _i1035;
 import '../../features/auth/presentation/cubit/password_recovery_cubit.dart'
     as _i648;
 import '../../features/auth/presentation/cubit/register_cubit.dart' as _i759;
@@ -110,7 +110,7 @@ import '../../features/notifications/domain/repositories/notifications_repositor
 import '../../features/notifications/domain/usecases/notifications_usecases.dart'
     as _i460;
 import '../../features/notifications/presentation/cubit/notification_preferences_cubit.dart'
-    as _i1035;
+    as _i1034;
 import '../../features/notifications/presentation/cubit/notifications_cubit.dart'
     as _i405;
 import '../../features/payments/data/datasources/payments_remote_data_source.dart'
@@ -157,6 +157,7 @@ import '../realtime/realtime_service.dart' as _i854;
 import '../session/account_cache.dart' as _i141;
 import '../session/session_manager.dart' as _i432;
 import '../utils/locale_cubit.dart' as _i218;
+import '../utils/locale_sync.dart' as _i209;
 import 'injection.dart' as _i464;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -188,18 +189,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i218.LocaleCubit>(
       () => _i218.LocaleCubit(gh<_i558.FlutterSecureStorage>()),
     );
-    gh.lazySingleton<_i690.ConnectivityCubit>(
-      () => _i690.ConnectivityCubit(gh<_i895.Connectivity>()),
-    );
     gh.lazySingleton<_i557.ApiClient>(
-      () =>
-          _i557.ApiClient(gh<_i964.TokenStorage>(), gh<_i432.SessionManager>()),
-    );
-    gh.lazySingleton<_i860.DeviceRegistrar>(
-      () => _i860.DeviceRegistrar(
-        gh<_i557.ApiClient>(),
-        gh<_i269.PushNotificationService>(),
+      () => _i557.ApiClient(
         gh<_i964.TokenStorage>(),
+        gh<_i432.SessionManager>(),
+        gh<_i218.LocaleCubit>(),
       ),
     );
     gh.lazySingleton<_i107.AuthRemoteDataSource>(
@@ -216,6 +210,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i789.KycRemoteDataSource>(
       () => _i789.KycRemoteDataSourceImpl(gh<_i557.ApiClient>()),
+    );
+    gh.lazySingleton<_i690.ConnectivityCubit>(
+      () => _i690.ConnectivityCubit(gh<_i895.Connectivity>()),
     );
     gh.lazySingleton<_i1017.KycRepository>(
       () => _i832.KycRepositoryImpl(gh<_i789.KycRemoteDataSource>()),
@@ -235,53 +232,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i757.DocumentsRemoteDataSource>(
       () => _i757.DocumentsRemoteDataSourceImpl(gh<_i557.ApiClient>()),
     );
-    gh.lazySingleton<_i787.AuthRepository>(
-      () => _i153.AuthRepositoryImpl(
-        gh<_i107.AuthRemoteDataSource>(),
-        gh<_i964.TokenStorage>(),
-        gh<_i860.DeviceRegistrar>(),
-        gh<_i141.AccountCache>(),
-      ),
-    );
-    gh.factory<_i625.CheckSession>(
-      () => _i625.CheckSession(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i123.SubmitEmailRecovery>(
-      () => _i123.SubmitEmailRecovery(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i123.GetEmailRecoveryStatus>(
-      () => _i123.GetEmailRecoveryStatus(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i778.LoginUser>(
-      () => _i778.LoginUser(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i778.GetCurrentUser>(
-      () => _i778.GetCurrentUser(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i778.LogoutUser>(
-      () => _i778.LogoutUser(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i38.RequestPasswordReset>(
-      () => _i38.RequestPasswordReset(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i38.VerifyPasswordReset>(
-      () => _i38.VerifyPasswordReset(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i38.RevealSecretQuestion>(
-      () => _i38.RevealSecretQuestion(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i38.RecoverBySecret>(
-      () => _i38.RecoverBySecret(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i198.RegisterUser>(
-      () => _i198.RegisterUser(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i975.VerifyOtp>(
-      () => _i975.VerifyOtp(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i975.ResendOtp>(
-      () => _i975.ResendOtp(gh<_i787.AuthRepository>()),
-    );
     gh.lazySingleton<_i620.BiddingRemoteDataSource>(
       () => _i620.BiddingRemoteDataSourceImpl(gh<_i557.ApiClient>()),
     );
@@ -298,9 +248,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i685.MyAuctionsRepositoryImpl(
         gh<_i510.MyAuctionsRemoteDataSource>(),
       ),
-    );
-    gh.factory<_i759.RegisterCubit>(
-      () => _i759.RegisterCubit(gh<_i198.RegisterUser>()),
     );
     gh.lazySingleton<_i563.NotificationsRepository>(
       () => _i201.NotificationsRepositoryImpl(
@@ -325,6 +272,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i793.AuctionRepository>(
       () => _i837.AuctionRepositoryImpl(gh<_i838.AuctionRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i860.DeviceRegistrar>(
+      () => _i860.DeviceRegistrar(
+        gh<_i557.ApiClient>(),
+        gh<_i269.PushNotificationService>(),
+        gh<_i964.TokenStorage>(),
+      ),
     );
     gh.factory<_i581.GetLatestBids>(
       () => _i581.GetLatestBids(gh<_i582.BiddingRepository>()),
@@ -390,25 +344,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i301.GetDocumentFilterOptions>(),
       ),
     );
-    gh.factory<_i708.EmailRecoveryCubit>(
-      () => _i708.EmailRecoveryCubit(
-        gh<_i123.SubmitEmailRecovery>(),
-        gh<_i123.GetEmailRecoveryStatus>(),
-      ),
-    );
-    gh.factory<_i648.PasswordRecoveryCubit>(
-      () => _i648.PasswordRecoveryCubit(
-        gh<_i38.RequestPasswordReset>(),
-        gh<_i38.VerifyPasswordReset>(),
-        gh<_i38.RevealSecretQuestion>(),
-        gh<_i38.RecoverBySecret>(),
+    gh.lazySingleton<_i209.LocaleSync>(
+      () => _i209.LocaleSync(
+        gh<_i557.ApiClient>(),
+        gh<_i964.TokenStorage>(),
+        gh<_i218.LocaleCubit>(),
       ),
     );
     gh.lazySingleton<_i420.QaRepository>(
       () => _i1033.QaRepositoryImpl(gh<_i92.QaRemoteDataSource>()),
-    );
-    gh.factory<_i1034.OtpCubit>(
-      () => _i1034.OtpCubit(gh<_i975.VerifyOtp>(), gh<_i975.ResendOtp>()),
     );
     gh.factory<_i306.BuyBook>(
       () => _i306.BuyBook(gh<_i663.PaymentsRepository>()),
@@ -481,7 +425,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i420.AskQuestion>(
       () => _i420.AskQuestion(gh<_i420.QaRepository>()),
     );
-    gh.factory<_i69.LoginCubit>(() => _i69.LoginCubit(gh<_i778.LoginUser>()));
+    gh.factory<_i405.NotificationsCubit>(
+      () => _i405.NotificationsCubit(
+        gh<_i460.GetNotifications>(),
+        gh<_i460.MarkNotificationRead>(),
+        gh<_i460.MarkAllNotificationsRead>(),
+        gh<_i269.PushNotificationService>(),
+        gh<_i218.LocaleCubit>(),
+      ),
+    );
     gh.factory<_i72.GetProfile>(
       () => _i72.GetProfile(gh<_i894.ProfileRepository>()),
     );
@@ -496,8 +448,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i854.RealtimeService>(),
       ),
     );
-    gh.factory<_i1035.NotificationPreferencesCubit>(
-      () => _i1035.NotificationPreferencesCubit(
+    gh.factory<_i1034.NotificationPreferencesCubit>(
+      () => _i1034.NotificationPreferencesCubit(
         gh<_i460.GetNotificationPreferences>(),
         gh<_i460.UpdateNotificationPreferences>(),
       ),
@@ -522,19 +474,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i689.GetAuctions>(
       () => _i689.GetAuctions(gh<_i793.AuctionRepository>()),
     );
-    gh.factory<_i405.NotificationsCubit>(
-      () => _i405.NotificationsCubit(
-        gh<_i460.GetNotifications>(),
-        gh<_i460.MarkNotificationRead>(),
-        gh<_i460.MarkAllNotificationsRead>(),
-        gh<_i269.PushNotificationService>(),
-      ),
-    );
-    gh.factory<_i36.ProfileCubit>(
-      () => _i36.ProfileCubit(
-        gh<_i72.GetProfile>(),
-        gh<_i78.UpdateProfile>(),
-        gh<_i778.LogoutUser>(),
+    gh.lazySingleton<_i787.AuthRepository>(
+      () => _i153.AuthRepositoryImpl(
+        gh<_i107.AuthRemoteDataSource>(),
+        gh<_i964.TokenStorage>(),
+        gh<_i860.DeviceRegistrar>(),
+        gh<_i141.AccountCache>(),
+        gh<_i209.LocaleSync>(),
       ),
     );
     gh.factory<_i700.KycCubit>(
@@ -568,10 +514,77 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i487.QaCubit>(
       () => _i487.QaCubit(gh<_i420.GetQuestions>(), gh<_i420.AskQuestion>()),
     );
+    gh.factory<_i625.CheckSession>(
+      () => _i625.CheckSession(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i123.SubmitEmailRecovery>(
+      () => _i123.SubmitEmailRecovery(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i123.GetEmailRecoveryStatus>(
+      () => _i123.GetEmailRecoveryStatus(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i778.LoginUser>(
+      () => _i778.LoginUser(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i778.GetCurrentUser>(
+      () => _i778.GetCurrentUser(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i778.LogoutUser>(
+      () => _i778.LogoutUser(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i38.RequestPasswordReset>(
+      () => _i38.RequestPasswordReset(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i38.VerifyPasswordReset>(
+      () => _i38.VerifyPasswordReset(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i38.RevealSecretQuestion>(
+      () => _i38.RevealSecretQuestion(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i38.RecoverBySecret>(
+      () => _i38.RecoverBySecret(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i198.RegisterUser>(
+      () => _i198.RegisterUser(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i975.VerifyOtp>(
+      () => _i975.VerifyOtp(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i975.ResendOtp>(
+      () => _i975.ResendOtp(gh<_i787.AuthRepository>()),
+    );
     gh.factory<_i433.AppealsCubit>(
       () =>
           _i433.AppealsCubit(gh<_i390.GetAppeals>(), gh<_i896.SubmitAppeal>()),
     );
+    gh.factory<_i759.RegisterCubit>(
+      () => _i759.RegisterCubit(gh<_i198.RegisterUser>()),
+    );
+    gh.factory<_i36.ProfileCubit>(
+      () => _i36.ProfileCubit(
+        gh<_i72.GetProfile>(),
+        gh<_i78.UpdateProfile>(),
+        gh<_i778.LogoutUser>(),
+      ),
+    );
+    gh.factory<_i708.EmailRecoveryCubit>(
+      () => _i708.EmailRecoveryCubit(
+        gh<_i123.SubmitEmailRecovery>(),
+        gh<_i123.GetEmailRecoveryStatus>(),
+      ),
+    );
+    gh.factory<_i648.PasswordRecoveryCubit>(
+      () => _i648.PasswordRecoveryCubit(
+        gh<_i38.RequestPasswordReset>(),
+        gh<_i38.VerifyPasswordReset>(),
+        gh<_i38.RevealSecretQuestion>(),
+        gh<_i38.RecoverBySecret>(),
+      ),
+    );
+    gh.factory<_i1035.OtpCubit>(
+      () => _i1035.OtpCubit(gh<_i975.VerifyOtp>(), gh<_i975.ResendOtp>()),
+    );
+    gh.factory<_i69.LoginCubit>(() => _i69.LoginCubit(gh<_i778.LoginUser>()));
     return this;
   }
 }

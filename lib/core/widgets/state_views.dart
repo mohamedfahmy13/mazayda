@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mazayada/l10n/app_localizations.dart';
 import '../constants/app_colors.dart';
 import 'primary_button.dart';
 
@@ -41,12 +42,16 @@ class ErrorView extends StatelessWidget {
             ),
             if (onRetry != null) ...[
               SizedBox(height: 20.h),
-              SizedBox(
-                width: 160.w,
-                child: PrimaryButton(
-                  label: 'إعادة المحاولة',
-                  icon: Icons.refresh,
-                  onPressed: onRetry,
+              // عرض أدنى مش ثابت: الـ 160 الثابتة كانت بتقصّ النص لـ
+              // «إعادة المحا…»، فالزرار دلوقتي بيكبر على قد النص.
+              ConstrainedBox(
+                constraints: BoxConstraints(minWidth: 160.w),
+                child: IntrinsicWidth(
+                  child: PrimaryButton(
+                    label: AppLocalizations.of(context).retry,
+                    icon: Icons.refresh,
+                    onPressed: onRetry,
+                  ),
                 ),
               ),
             ],

@@ -1030,6 +1030,12 @@ abstract class AppLocalizations {
   /// **'إعادة المحاولة'**
   String get retry;
 
+  /// No description provided for @goBack.
+  ///
+  /// In ar, this message translates to:
+  /// **'رجوع'**
+  String get goBack;
+
   /// No description provided for @errorGeneric.
   ///
   /// In ar, this message translates to:
@@ -2086,6 +2092,18 @@ abstract class AppLocalizations {
   /// **'تعذّر فتح الملف — لا يوجد تطبيق لعرض PDF'**
   String get docsCannotOpen;
 
+  /// No description provided for @docsDownloadForbidden.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تملك صلاحية تحميل هذه الوثيقة'**
+  String get docsDownloadForbidden;
+
+  /// No description provided for @docsDownloadUnavailable.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملف الوثيقة غير متاح حاليًا'**
+  String get docsDownloadUnavailable;
+
   /// No description provided for @adAwardDocument.
   ///
   /// In ar, this message translates to:
@@ -2577,6 +2595,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'يمكنك طباعة الوصل أو حفظه بعد التحميل'**
   String get adReceiptHint;
+
+  /// No description provided for @adUnavailableTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزايدة غير متاحة'**
+  String get adUnavailableTitle;
+
+  /// No description provided for @adUnavailableBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'ربما أُلغيت هذه المزايدة أو لم تعد معروضة.'**
+  String get adUnavailableBody;
 
   /// No description provided for @premiumTitle.
   ///

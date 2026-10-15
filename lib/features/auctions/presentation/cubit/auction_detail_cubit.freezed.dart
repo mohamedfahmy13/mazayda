@@ -56,14 +56,15 @@ extension AuctionDetailStatePatterns on AuctionDetailState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AuctionDetailInitial value)?  initial,TResult Function( AuctionDetailLoading value)?  loading,TResult Function( AuctionDetailLoaded value)?  loaded,TResult Function( AuctionDetailError value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AuctionDetailInitial value)?  initial,TResult Function( AuctionDetailLoading value)?  loading,TResult Function( AuctionDetailLoaded value)?  loaded,TResult Function( AuctionDetailError value)?  error,TResult Function( AuctionDetailUnavailable value)?  unavailable,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case AuctionDetailInitial() when initial != null:
 return initial(_that);case AuctionDetailLoading() when loading != null:
 return loading(_that);case AuctionDetailLoaded() when loaded != null:
 return loaded(_that);case AuctionDetailError() when error != null:
-return error(_that);case _:
+return error(_that);case AuctionDetailUnavailable() when unavailable != null:
+return unavailable(_that);case _:
   return orElse();
 
 }
@@ -81,14 +82,15 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AuctionDetailInitial value)  initial,required TResult Function( AuctionDetailLoading value)  loading,required TResult Function( AuctionDetailLoaded value)  loaded,required TResult Function( AuctionDetailError value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AuctionDetailInitial value)  initial,required TResult Function( AuctionDetailLoading value)  loading,required TResult Function( AuctionDetailLoaded value)  loaded,required TResult Function( AuctionDetailError value)  error,required TResult Function( AuctionDetailUnavailable value)  unavailable,}){
 final _that = this;
 switch (_that) {
 case AuctionDetailInitial():
 return initial(_that);case AuctionDetailLoading():
 return loading(_that);case AuctionDetailLoaded():
 return loaded(_that);case AuctionDetailError():
-return error(_that);}
+return error(_that);case AuctionDetailUnavailable():
+return unavailable(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -102,14 +104,15 @@ return error(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AuctionDetailInitial value)?  initial,TResult? Function( AuctionDetailLoading value)?  loading,TResult? Function( AuctionDetailLoaded value)?  loaded,TResult? Function( AuctionDetailError value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AuctionDetailInitial value)?  initial,TResult? Function( AuctionDetailLoading value)?  loading,TResult? Function( AuctionDetailLoaded value)?  loaded,TResult? Function( AuctionDetailError value)?  error,TResult? Function( AuctionDetailUnavailable value)?  unavailable,}){
 final _that = this;
 switch (_that) {
 case AuctionDetailInitial() when initial != null:
 return initial(_that);case AuctionDetailLoading() when loading != null:
 return loading(_that);case AuctionDetailLoaded() when loaded != null:
 return loaded(_that);case AuctionDetailError() when error != null:
-return error(_that);case _:
+return error(_that);case AuctionDetailUnavailable() when unavailable != null:
+return unavailable(_that);case _:
   return null;
 
 }
@@ -126,13 +129,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( AuctionDetail detail,  bool isAuthenticated,  ViewerAccountFlags? account)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( AuctionDetail detail,  bool isAuthenticated,  ViewerAccountFlags? account)?  loaded,TResult Function( String message)?  error,TResult Function()?  unavailable,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case AuctionDetailInitial() when initial != null:
 return initial();case AuctionDetailLoading() when loading != null:
 return loading();case AuctionDetailLoaded() when loaded != null:
 return loaded(_that.detail,_that.isAuthenticated,_that.account);case AuctionDetailError() when error != null:
-return error(_that.message);case _:
+return error(_that.message);case AuctionDetailUnavailable() when unavailable != null:
+return unavailable();case _:
   return orElse();
 
 }
@@ -150,13 +154,14 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( AuctionDetail detail,  bool isAuthenticated,  ViewerAccountFlags? account)  loaded,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( AuctionDetail detail,  bool isAuthenticated,  ViewerAccountFlags? account)  loaded,required TResult Function( String message)  error,required TResult Function()  unavailable,}) {final _that = this;
 switch (_that) {
 case AuctionDetailInitial():
 return initial();case AuctionDetailLoading():
 return loading();case AuctionDetailLoaded():
 return loaded(_that.detail,_that.isAuthenticated,_that.account);case AuctionDetailError():
-return error(_that.message);}
+return error(_that.message);case AuctionDetailUnavailable():
+return unavailable();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -170,13 +175,14 @@ return error(_that.message);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( AuctionDetail detail,  bool isAuthenticated,  ViewerAccountFlags? account)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( AuctionDetail detail,  bool isAuthenticated,  ViewerAccountFlags? account)?  loaded,TResult? Function( String message)?  error,TResult? Function()?  unavailable,}) {final _that = this;
 switch (_that) {
 case AuctionDetailInitial() when initial != null:
 return initial();case AuctionDetailLoading() when loading != null:
 return loading();case AuctionDetailLoaded() when loaded != null:
 return loaded(_that.detail,_that.isAuthenticated,_that.account);case AuctionDetailError() when error != null:
-return error(_that.message);case _:
+return error(_that.message);case AuctionDetailUnavailable() when unavailable != null:
+return unavailable();case _:
   return null;
 
 }
@@ -387,5 +393,37 @@ as String,
 
 
 }
+
+/// @nodoc
+
+
+class AuctionDetailUnavailable implements AuctionDetailState {
+  const AuctionDetailUnavailable();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AuctionDetailUnavailable);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+    return 'AuctionDetailState.unavailable()';
+}
+
+
+}
+
+
+
 
 // dart format on

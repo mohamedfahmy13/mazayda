@@ -4,7 +4,7 @@ import '../session/session_manager.dart';
 import 'token_storage.dart';
 
 /// Interceptor بيضيف:
-/// - Accept-Language: ar (لتعريب ردود الـ API)
+/// - Accept-Language: لغة التطبيق الحالية (رسايل وتسميات الـ API بنفس لغة الواجهة)
 /// - Authorization: Bearer {access} للطلبات المحمية
 /// وبيعالج 401 بمحاولة تجديد التوكن مرة واحدة ثم إعادة الطلب.
 /// عند فشل التجديد نهائيًا: يمسح التوكنات ويبثّ حدث انتهاء الجلسة.
@@ -13,7 +13,15 @@ class AuthInterceptor extends Interceptor {
   final Dio _dio; // نفس الـ Dio لإعادة المحاولة
   final SessionManager _sessionManager;
 
-  AuthInterceptor(this._tokenStorage, this._dio, this._sessionManager);
+  /// بيتقري مع كل طلب، فتغيير اللغة بيسري فورًا من غير إعادة بناء الـ Dio.
+  final String Function() _languageCode;
+
+  AuthInterceptor(
+    this._tokenStorage,
+    this._dio,
+    this._sessionManager,
+    this._languageCode,
+  );
 
   bool _isRefreshing = false;
 
@@ -23,7 +31,7 @@ class AuthInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     options.headers['Accept'] = 'application/json';
-    options.headers['Accept-Language'] = 'ar';
+    options.headers['Accept-Language'] = _languageCode();
 
     // ما نضفش التوكن في طلبات الـ auth العامة
     // endpoints الضيف — ما نضفش عليها توكن (توكن قديم/منتهي ممكن يسبّب 401).

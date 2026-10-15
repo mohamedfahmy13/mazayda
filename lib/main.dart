@@ -16,6 +16,7 @@ import 'core/router/app_router.dart';
 import 'core/session/session_manager.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/locale_cubit.dart';
+import 'core/utils/locale_sync.dart';
 import 'features/notifications/domain/usecases/notifications_usecases.dart';
 
 /// مقاس التصميم المرجعي لـ flutter_screenutil.
@@ -39,6 +40,8 @@ Future<void> main() async {
   await configureDependencies();
   // حمّل اللغة المحفوظة قبل التشغيل
   await getIt<LocaleCubit>().loadSaved();
+  // وبلّغ السيرفر بيها عشان الإشعارات تتولّد بنفس اللغة.
+  getIt<LocaleSync>().start();
 
   runApp(const MazayadaApp());
 

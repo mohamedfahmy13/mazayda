@@ -157,6 +157,13 @@ AuctionCta ctaFor(
   required bool isAuthenticated,
   ViewerAccountFlags? account,
 }) {
+  // الملغية (أو المسودة) مالهاش أي إجراء، ولا حتى «سجّل دخولك». الشرط ده
+  // أول حاجة لأن وقت الإقفال ممكن يكون لسه جاي فـ`isEndedNow` مش هيلقطها.
+  if (auction.status == AuctionStatus.cancelled ||
+      auction.status == AuctionStatus.draft) {
+    return AuctionCta.none;
+  }
+
   if (!isAuthenticated) return AuctionCta.login;
 
   // شراء دفتر الشروط والمشاركة عمومًا **للمواطن بس** — حساب الإدارة أو

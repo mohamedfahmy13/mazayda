@@ -294,7 +294,7 @@ flutter run
 
 - **الـ envelope:** كل response شكله `{data, message, meta}`. الـ `ApiClient` بيرجّع جزء `data` تلقائيًا.
 - **الفلوس:** بترجع بالدينار الكامل بالشكل `{amount, formatted}` → `MoneyModel`.
-- **التعريب:** بنبعت `Accept-Language: ar` في كل طلب (في الـ interceptor).
+- **التعريب:** بنبعت `Accept-Language` بلغة التطبيق الحالية في كل طلب (في الـ interceptor)، و`LocaleSync` بيحفظها على الحساب (`PUT /profile {locale}`) عشان الإشعارات تتولّد بنفس اللغة.
 - **التوكن:** access + refresh. التجديد بيستخدم الـ **refresh token** كـ bearer (مش الـ access).
 - **401:** الـ interceptor بيحاول يجدّد مرة واحدة ويعيد الطلب، ولو فشل بيمسح التوكنات.
 

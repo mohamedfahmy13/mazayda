@@ -12,6 +12,7 @@ import '../../../../../core/utils/money_format.dart';
 import '../../../../documents/presentation/widgets/document_download_button.dart';
 import '../../../domain/entities/auction.dart';
 import '../../../domain/entities/auction_session.dart';
+import '../../../domain/entities/auction_viewer.dart';
 import 'detail_section.dart';
 
 String _date(DateTime d) => DateFormat('yyyy/MM/dd — HH:mm').format(d);
@@ -127,7 +128,12 @@ class AuctionPricingSection extends StatelessWidget {
 /// مفيش ولا واحدة — فالزائر والمزايدة اللي لسه مابدأتش مايشوفوش قسم فاضي.
 class AuctionDocumentsSection extends StatelessWidget {
   final Auction auction;
-  const AuctionDocumentsSection({super.key, required this.auction});
+  final AuctionViewer? viewer;
+  const AuctionDocumentsSection({
+    super.key,
+    required this.auction,
+    this.viewer,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +143,16 @@ class AuctionDocumentsSection extends StatelessWidget {
     final receipt = auction.participationReceipt;
     final result = auction.resultDocument;
 
+    // مرجع الدفتر بيرجع للكل حتى الزائر، لكن تحميله مسموح بس لو مجاني أو
+    // اتشرى (`has_book_access`)، أو للفائز والموظف (DocumentPolicy). من غير
+    // الشرط ده الزرار كان بيظهر لدفتر مدفوع مااتشراش، والسيرفر يرفض بـ 403.
+    final canDownloadBook =
+        auction.hasBookAccess ||
+        (viewer?.isWinner ?? false) ||
+        (viewer?.isStaff ?? false);
+
     final buttons = <Widget>[
-      if (book?.id != null)
+      if (book?.id != null && canDownloadBook)
         DocumentDownloadButton(
           documentId: book!.id!,
           title: book.title ?? t.docTypeConditionBook,

@@ -140,6 +140,7 @@ class _KycFormState extends State<KycForm> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
+    final language = Localizations.localeOf(context).languageCode;
     final errors = widget.fieldErrors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +190,7 @@ class _KycFormState extends State<KycForm> {
           value: _wilayaId,
           items: [
             for (final w in widget.wilayas)
-              DropdownMenuItem(value: w.id, child: Text(w.name)),
+              DropdownMenuItem(value: w.id, child: Text(w.nameFor(language))),
           ],
           onChanged: (id) {
             setState(() {
@@ -205,7 +206,7 @@ class _KycFormState extends State<KycForm> {
           value: _communeId,
           items: [
             for (final c in widget.communes)
-              DropdownMenuItem(value: c.id, child: Text(c.name)),
+              DropdownMenuItem(value: c.id, child: Text(c.nameFor(language))),
           ],
           onChanged: (id) => setState(() => _communeId = id),
         ),

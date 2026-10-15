@@ -45,22 +45,58 @@ class KycStatus extends Equatable {
   List<Object?> get props => [status, documentsOnFile, canSubmit];
 }
 
+/// اسم مكان بكل لغاته (`name_ar` / `name_fr` / `name_en`).
+///
+/// الاختيار بيتم وقت العرض حسب لغة التطبيق، فتغيير اللغة بيسري من غير ما
+/// نجيب القايمة تاني. الإنجليزي لو ناقص بنرجع للاسم اللاتيني (الفرنسي) قبل
+/// العربي، لأنه أقرب لقارئ إنجليزي.
+class PlaceName extends Equatable {
+  final String ar;
+  final String fr;
+  final String en;
+  const PlaceName({this.ar = '', this.fr = '', this.en = ''});
+
+  String forLanguage(String languageCode) {
+    final order = switch (languageCode) {
+      'ar' => [ar, fr, en],
+      'en' => [en, fr, ar],
+      _ => [fr, en, ar],
+    };
+    return order.firstWhere((n) => n.isNotEmpty, orElse: () => '');
+  }
+
+  /// البحث بأي لغة: المستخدم ممكن يكتب «Adrar» أو «أدرار».
+  bool contains(String query) {
+    final q = query.toLowerCase();
+    return [ar, fr, en].any((n) => n.toLowerCase().contains(q));
+  }
+
+  @override
+  List<Object?> get props => [ar, fr, en];
+}
+
 /// ولاية (للـ dropdown).
 class Wilaya extends Equatable {
   final int id;
   final String code;
-  final String name;
-  const Wilaya({required this.id, required this.code, required this.name});
+  final PlaceName names;
+  const Wilaya({required this.id, required this.code, required this.names});
+
+  String nameFor(String languageCode) => names.forLanguage(languageCode);
+
   @override
-  List<Object?> get props => [id, code, name];
+  List<Object?> get props => [id, code, names];
 }
 
 /// بلدية (للـ dropdown، مرتبطة بولاية).
 class Commune extends Equatable {
   final int id;
-  final String name;
+  final PlaceName names;
   final String? postalCode;
-  const Commune({required this.id, required this.name, this.postalCode});
+  const Commune({required this.id, required this.names, this.postalCode});
+
+  String nameFor(String languageCode) => names.forLanguage(languageCode);
+
   @override
-  List<Object?> get props => [id, name, postalCode];
+  List<Object?> get props => [id, names, postalCode];
 }

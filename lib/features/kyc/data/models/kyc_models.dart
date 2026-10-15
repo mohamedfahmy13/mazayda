@@ -38,7 +38,7 @@ abstract class KycStatusModel with _$KycStatusModel {
   ];
 }
 
-/// ولاية — GET /wilayas (بترجع name_ar / name_fr).
+/// ولاية — GET /wilayas (بترجع name_ar / name_fr، و`name_en` لما الباك يضيفه).
 @freezed
 abstract class WilayaModel with _$WilayaModel {
   const WilayaModel._();
@@ -48,12 +48,17 @@ abstract class WilayaModel with _$WilayaModel {
     @Default('') String code,
     @JsonKey(name: 'name_ar') String? nameAr,
     @JsonKey(name: 'name_fr') String? nameFr,
+    @JsonKey(name: 'name_en') String? nameEn,
   }) = _WilayaModel;
 
   factory WilayaModel.fromJson(Map<String, dynamic> json) =>
       _$WilayaModelFromJson(json);
 
-  Wilaya toEntity() => Wilaya(id: id, code: code, name: nameAr ?? nameFr ?? '');
+  Wilaya toEntity() => Wilaya(
+    id: id,
+    code: code,
+    names: PlaceName(ar: nameAr ?? '', fr: nameFr ?? '', en: nameEn ?? ''),
+  );
 }
 
 /// بلدية — GET /wilayas/:id/communes.
@@ -65,12 +70,16 @@ abstract class CommuneModel with _$CommuneModel {
     required int id,
     @JsonKey(name: 'name_ar') String? nameAr,
     @JsonKey(name: 'name_fr') String? nameFr,
+    @JsonKey(name: 'name_en') String? nameEn,
     @JsonKey(name: 'postal_code') String? postalCode,
   }) = _CommuneModel;
 
   factory CommuneModel.fromJson(Map<String, dynamic> json) =>
       _$CommuneModelFromJson(json);
 
-  Commune toEntity() =>
-      Commune(id: id, name: nameAr ?? nameFr ?? '', postalCode: postalCode);
+  Commune toEntity() => Commune(
+    id: id,
+    names: PlaceName(ar: nameAr ?? '', fr: nameFr ?? '', en: nameEn ?? ''),
+    postalCode: postalCode,
+  );
 }

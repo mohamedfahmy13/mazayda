@@ -498,6 +498,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get retry => 'Réessayer';
 
   @override
+  String get goBack => 'Retour';
+
+  @override
   String get errorGeneric => 'Une erreur s\'est produite, réessayez';
 
   @override
@@ -1055,6 +1058,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'ouvrir le fichier — aucune application PDF';
 
   @override
+  String get docsDownloadForbidden =>
+      'Vous n\'avez pas accès au téléchargement de ce document';
+
+  @override
+  String get docsDownloadUnavailable =>
+      'Le fichier du document n\'est pas disponible pour le moment';
+
+  @override
   String get adAwardDocument => 'Document d\'adjudication';
 
   @override
@@ -1343,6 +1354,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get adReceiptHint =>
       'Vous pouvez imprimer ou enregistrer le reçu après le téléchargement';
+
+  @override
+  String get adUnavailableTitle => 'Enchère indisponible';
+
+  @override
+  String get adUnavailableBody =>
+      'Cette enchère a peut-être été annulée ou n\'est plus publiée.';
 
   @override
   String get premiumTitle => 'Abonnement Premium';

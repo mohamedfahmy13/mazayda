@@ -495,6 +495,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Retry';
 
   @override
+  String get goBack => 'Go back';
+
+  @override
   String get errorGeneric => 'An error occurred, please try again';
 
   @override
@@ -1046,6 +1049,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not open the file — no PDF viewer installed';
 
   @override
+  String get docsDownloadForbidden =>
+      'You don\'t have access to download this document';
+
+  @override
+  String get docsDownloadUnavailable =>
+      'The document file isn\'t available right now';
+
+  @override
   String get adAwardDocument => 'Award document';
 
   @override
@@ -1330,6 +1341,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get adReceiptHint =>
       'You can print or save the receipt after downloading';
+
+  @override
+  String get adUnavailableTitle => 'Auction unavailable';
+
+  @override
+  String get adUnavailableBody =>
+      'This auction may have been cancelled or is no longer listed.';
 
   @override
   String get premiumTitle => 'Premium membership';

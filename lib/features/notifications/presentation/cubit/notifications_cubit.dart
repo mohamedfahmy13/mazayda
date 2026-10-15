@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/notifications/push_notification_service.dart';
 import '../../../../core/usecase/usecase.dart';
+import '../../../../core/utils/locale_cubit.dart';
 import '../../domain/entities/app_notification.dart';
 import '../../domain/usecases/notifications_usecases.dart';
 
@@ -29,13 +31,19 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   /// إشعار Push وصل والصفحة مفتوحة → نحدّث القائمة من غير مؤشّر تحميل.
   StreamSubscription<void>? _pushSub;
 
+  /// اللغة اتغيّرت → نجيب القائمة تاني باللغة الجديدة (التاب بيفضل عايش
+  /// في الخلفية، فمن غيره هيعرض النسخة القديمة).
+  StreamSubscription<Locale>? _localeSub;
+
   NotificationsCubit(
     this._getNotifications,
     this._markRead,
     this._markAll,
     PushNotificationService push,
+    LocaleCubit localeCubit,
   ) : super(const NotificationsState()) {
     _pushSub = push.onForegroundMessage.listen((_) => load(silent: true));
+    _localeSub = localeCubit.stream.listen((_) => load(silent: true));
   }
 
   /// [silent]: تحديث في الخلفية — القائمة الحالية تفضل ظاهرة لحد ما
@@ -92,6 +100,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   @override
   Future<void> close() {
     _pushSub?.cancel();
+    _localeSub?.cancel();
     return super.close();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import '../../../../core/errors/failures.dart';
 import '../../../../core/network/token_storage.dart';
 import '../../../../core/session/account_cache.dart';
 import '../../../../core/usecase/usecase.dart';
@@ -26,6 +27,10 @@ sealed class AuctionDetailState with _$AuctionDetailState {
   }) = AuctionDetailLoaded;
 
   const factory AuctionDetailState.error(String message) = AuctionDetailError;
+
+  /// السيرفر رجّع 404: المزايدة اتلغت أو اتسحبت من العرض. حالة لوحدها عشان
+  /// «إعادة المحاولة» مالهاش لازمة هنا — المستخدم محتاج يرجع بس.
+  const factory AuctionDetailState.unavailable() = AuctionDetailUnavailable;
 }
 
 @injectable
@@ -49,7 +54,11 @@ class AuctionDetailCubit extends Cubit<AuctionDetailState> {
     if (isClosed) return;
 
     await result.fold(
-      (failure) async => emit(AuctionDetailState.error(failure.message)),
+      (failure) async => emit(
+        failure is ServerFailure && failure.statusCode == 404
+            ? const AuctionDetailState.unavailable()
+            : AuctionDetailState.error(failure.message),
+      ),
       (detail) async {
         final isAuthed = await _tokenStorage.hasTokens;
         if (isClosed) return;

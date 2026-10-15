@@ -4,14 +4,17 @@
 // شاشة تبان غلط: سلّم الأزرار، وإقفال المزايدة بالوقت، وحد المزايدة الأدنى.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mazayada/core/session/account_cache.dart';
 import 'package:mazayada/core/widgets/brand_mark.dart';
+import 'package:mazayada/core/widgets/state_views.dart';
 import 'package:mazayada/features/auctions/domain/entities/auction.dart';
 import 'package:mazayada/features/auctions/domain/entities/auction_viewer.dart';
 import 'package:mazayada/features/auctions/domain/entities/money.dart';
+import 'package:mazayada/features/auctions/presentation/widgets/detail/detail_sections.dart';
 import 'package:mazayada/features/bidding/presentation/widgets/bid_controls.dart';
 import 'package:mazayada/features/payments/domain/entities/payment_rejection.dart';
 import 'package:mazayada/l10n/app_localizations.dart';
@@ -178,6 +181,78 @@ void main() {
         ctaFor(live, _citizen, isAuthenticated: true),
         AuctionCta.buyBook,
       );
+    });
+  });
+
+  group('MZ-MOB-01 — المزايدة الملغية', () {
+    test('مالهاش أي إجراء حتى لو وقت الإقفال لسه جاي', () {
+      final cancelled = _auction(
+        status: AuctionStatus.cancelled,
+        endTime: DateTime.now().add(const Duration(hours: 1)),
+      );
+      expect(cancelled.isEndedNow, isFalse);
+      expect(
+        ctaFor(cancelled, _citizen, isAuthenticated: true),
+        AuctionCta.none,
+      );
+      // الضيف مايتطلبش منه تسجيل دخول لمزايدة ملغية.
+      expect(ctaFor(cancelled, null, isAuthenticated: false), AuctionCta.none);
+      // الوضع المحدود (مسجّل من غير viewer) كان بيرجّع «شارك».
+      expect(ctaFor(cancelled, null, isAuthenticated: true), AuctionCta.none);
+    });
+
+    testWidgets('نص «إعادة المحاولة» مابيتقصّش على عرض موبايل', (tester) async {
+      tester.view.physicalSize = const Size(375, 812);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(_host(ErrorView(message: 'خطأ', onRetry: () {})));
+      await tester.pumpAndSettle();
+
+      final label = tester.renderObject<RenderParagraph>(
+        find.text('إعادة المحاولة'),
+      );
+      expect(label.didExceedMaxLines, isFalse);
+    });
+  });
+
+  group('MZ-MOB-04 — زرار تحميل دفتر الشروط', () {
+    Auction withBook({required bool access}) => Auction(
+      id: 'a1',
+      title: 'مزايدة',
+      status: AuctionStatus.closed,
+      auctionType: 'SALE',
+      openingPrice: _zero,
+      currentPrice: _zero,
+      depositAmount: _zero,
+      hasBookAccess: access,
+      conditionBook: const AuctionDocumentRef(id: 'd1', title: 'دفتر'),
+    );
+
+    testWidgets('مايظهرش لدفتر مدفوع مااتشراش (السيرفر هيرفض بـ 403)', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _host(AuctionDocumentsSection(auction: withBook(access: false))),
+      );
+      expect(find.text('تحميل دفتر الشروط'), findsNothing);
+    });
+
+    testWidgets('بيظهر بعد الشراء، وللفائز', (tester) async {
+      await tester.pumpWidget(
+        _host(AuctionDocumentsSection(auction: withBook(access: true))),
+      );
+      expect(find.text('تحميل دفتر الشروط'), findsOneWidget);
+
+      await tester.pumpWidget(
+        _host(
+          AuctionDocumentsSection(
+            auction: withBook(access: false),
+            viewer: const AuctionViewer(isWinner: true),
+          ),
+        ),
+      );
+      expect(find.text('تحميل دفتر الشروط'), findsOneWidget);
     });
   });
 

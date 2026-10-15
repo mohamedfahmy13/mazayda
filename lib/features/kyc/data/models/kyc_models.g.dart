@@ -33,6 +33,7 @@ _WilayaModel _$WilayaModelFromJson(Map<String, dynamic> json) => _WilayaModel(
   code: json['code'] as String? ?? '',
   nameAr: json['name_ar'] as String?,
   nameFr: json['name_fr'] as String?,
+  nameEn: json['name_en'] as String?,
 );
 
 Map<String, dynamic> _$WilayaModelToJson(_WilayaModel instance) =>
@@ -41,6 +42,7 @@ Map<String, dynamic> _$WilayaModelToJson(_WilayaModel instance) =>
       'code': instance.code,
       'name_ar': instance.nameAr,
       'name_fr': instance.nameFr,
+      'name_en': instance.nameEn,
     };
 
 _CommuneModel _$CommuneModelFromJson(Map<String, dynamic> json) =>
@@ -48,6 +50,7 @@ _CommuneModel _$CommuneModelFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num).toInt(),
       nameAr: json['name_ar'] as String?,
       nameFr: json['name_fr'] as String?,
+      nameEn: json['name_en'] as String?,
       postalCode: json['postal_code'] as String?,
     );
 
@@ -56,5 +59,6 @@ Map<String, dynamic> _$CommuneModelToJson(_CommuneModel instance) =>
       'id': instance.id,
       'name_ar': instance.nameAr,
       'name_fr': instance.nameFr,
+      'name_en': instance.nameEn,
       'postal_code': instance.postalCode,
     };

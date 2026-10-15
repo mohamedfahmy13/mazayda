@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart' show Bidi;
 import 'package:mazayada/l10n/app_localizations.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_icons.dart';
 import '../../domain/entities/app_notification.dart';
 import 'notification_labels.dart';
+
+/// اتجاه نص الإشعار من محتواه مش من لغة الواجهة: نص السيرفر ممكن ييجي بلغة
+/// غير لغة التطبيق (إشعارات قديمة اتولّدت بالعربي)، ولو اتعرض عربي بـ LTR
+/// النقطة وعلامات «» بتنقلب لأول السطر.
+TextDirection _directionOf(String text) =>
+    Bidi.detectRtlDirectionality(text) ? TextDirection.rtl : TextDirection.ltr;
 
 /// بطاقة إشعار تبرز غير المقروء وتوضح النوع والوقت والوجهة بصريًا.
 class NotificationTile extends StatefulWidget {
@@ -105,6 +112,9 @@ class _NotificationTileState extends State<NotificationTile> {
                                 Expanded(
                                   child: Text(
                                     notification.title,
+                                    textDirection: _directionOf(
+                                      notification.title,
+                                    ),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -136,6 +146,7 @@ class _NotificationTileState extends State<NotificationTile> {
                             Gap(5.h),
                             Text(
                               notification.body,
+                              textDirection: _directionOf(notification.body),
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

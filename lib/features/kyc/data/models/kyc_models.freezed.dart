@@ -307,7 +307,7 @@ as bool,
 /// @nodoc
 mixin _$WilayaModel {
 
- int get id; String get code;@JsonKey(name: 'name_ar') String? get nameAr;@JsonKey(name: 'name_fr') String? get nameFr;
+ int get id; String get code;@JsonKey(name: 'name_ar') String? get nameAr;@JsonKey(name: 'name_fr') String? get nameFr;@JsonKey(name: 'name_en') String? get nameEn;
 /// Create a copy of WilayaModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -321,20 +321,20 @@ $WilayaModelCopyWith<WilayaModel> get copyWith => _$WilayaModelCopyWithImpl<Wila
 @override
 bool operator ==(Object other) {
   final _this = this as WilayaModel;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WilayaModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.code, _this.code) || other.code == _this.code)&&(identical(other.nameAr, _this.nameAr) || other.nameAr == _this.nameAr)&&(identical(other.nameFr, _this.nameFr) || other.nameFr == _this.nameFr));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WilayaModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.code, _this.code) || other.code == _this.code)&&(identical(other.nameAr, _this.nameAr) || other.nameAr == _this.nameAr)&&(identical(other.nameFr, _this.nameFr) || other.nameFr == _this.nameFr)&&(identical(other.nameEn, _this.nameEn) || other.nameEn == _this.nameEn));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as WilayaModel;
-  return Object.hash(runtimeType,_this.id,_this.code,_this.nameAr,_this.nameFr);
+  return Object.hash(runtimeType,_this.id,_this.code,_this.nameAr,_this.nameFr,_this.nameEn);
 }
 
 @override
 String toString() {
   final _this = this as WilayaModel;
-  return 'WilayaModel(id: ${_this.id}, code: ${_this.code}, nameAr: ${_this.nameAr}, nameFr: ${_this.nameFr})';
+  return 'WilayaModel(id: ${_this.id}, code: ${_this.code}, nameAr: ${_this.nameAr}, nameFr: ${_this.nameFr}, nameEn: ${_this.nameEn})';
 }
 
 
@@ -345,7 +345,7 @@ abstract mixin class $WilayaModelCopyWith<$Res>  {
   factory $WilayaModelCopyWith(WilayaModel value, $Res Function(WilayaModel) _then) = _$WilayaModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String code,@JsonKey(name: 'name_ar') String? nameAr,@JsonKey(name: 'name_fr') String? nameFr
+ int id, String code,@JsonKey(name: 'name_ar') String? nameAr,@JsonKey(name: 'name_fr') String? nameFr,@JsonKey(name: 'name_en') String? nameEn
 });
 
 
@@ -362,12 +362,13 @@ class _$WilayaModelCopyWithImpl<$Res>
 
 /// Create a copy of WilayaModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? code = null,Object? nameAr = freezed,Object? nameFr = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? code = null,Object? nameAr = freezed,Object? nameFr = freezed,Object? nameEn = freezed,}) {
   return _then(WilayaModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,nameAr: freezed == nameAr ? _self.nameAr : nameAr // ignore: cast_nullable_to_non_nullable
 as String?,nameFr: freezed == nameFr ? _self.nameFr : nameFr // ignore: cast_nullable_to_non_nullable
+as String?,nameEn: freezed == nameEn ? _self.nameEn : nameEn // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -453,10 +454,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String code, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String code, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr, @JsonKey(name: 'name_en')  String? nameEn)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WilayaModel() when $default != null:
-return $default(_that.id,_that.code,_that.nameAr,_that.nameFr);case _:
+return $default(_that.id,_that.code,_that.nameAr,_that.nameFr,_that.nameEn);case _:
   return orElse();
 
 }
@@ -474,10 +475,10 @@ return $default(_that.id,_that.code,_that.nameAr,_that.nameFr);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String code, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String code, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr, @JsonKey(name: 'name_en')  String? nameEn)  $default,) {final _that = this;
 switch (_that) {
 case _WilayaModel():
-return $default(_that.id,_that.code,_that.nameAr,_that.nameFr);case _:
+return $default(_that.id,_that.code,_that.nameAr,_that.nameFr,_that.nameEn);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -494,10 +495,10 @@ return $default(_that.id,_that.code,_that.nameAr,_that.nameFr);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String code, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String code, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr, @JsonKey(name: 'name_en')  String? nameEn)?  $default,) {final _that = this;
 switch (_that) {
 case _WilayaModel() when $default != null:
-return $default(_that.id,_that.code,_that.nameAr,_that.nameFr);case _:
+return $default(_that.id,_that.code,_that.nameAr,_that.nameFr,_that.nameEn);case _:
   return null;
 
 }
@@ -509,13 +510,14 @@ return $default(_that.id,_that.code,_that.nameAr,_that.nameFr);case _:
 @JsonSerializable()
 
 class _WilayaModel extends WilayaModel {
-  const _WilayaModel({required this.id, this.code = '', @JsonKey(name: 'name_ar') this.nameAr, @JsonKey(name: 'name_fr') this.nameFr}): super._();
+  const _WilayaModel({required this.id, this.code = '', @JsonKey(name: 'name_ar') this.nameAr, @JsonKey(name: 'name_fr') this.nameFr, @JsonKey(name: 'name_en') this.nameEn}): super._();
   factory _WilayaModel.fromJson(Map<String, dynamic> json) => _$WilayaModelFromJson(json);
 
 @override final  int id;
 @override@JsonKey() final  String code;
 @override@JsonKey(name: 'name_ar') final  String? nameAr;
 @override@JsonKey(name: 'name_fr') final  String? nameFr;
+@override@JsonKey(name: 'name_en') final  String? nameEn;
 
 /// Create a copy of WilayaModel
 /// with the given fields replaced by the non-null parameter values.
@@ -530,18 +532,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WilayaModel&&(identical(other.id, id) || other.id == id)&&(identical(other.code, code) || other.code == code)&&(identical(other.nameAr, nameAr) || other.nameAr == nameAr)&&(identical(other.nameFr, nameFr) || other.nameFr == nameFr));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WilayaModel&&(identical(other.id, id) || other.id == id)&&(identical(other.code, code) || other.code == code)&&(identical(other.nameAr, nameAr) || other.nameAr == nameAr)&&(identical(other.nameFr, nameFr) || other.nameFr == nameFr)&&(identical(other.nameEn, nameEn) || other.nameEn == nameEn));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,code,nameAr,nameFr);
+    return Object.hash(runtimeType,id,code,nameAr,nameFr,nameEn);
 }
 
 @override
 String toString() {
-    return 'WilayaModel(id: $id, code: $code, nameAr: $nameAr, nameFr: $nameFr)';
+    return 'WilayaModel(id: $id, code: $code, nameAr: $nameAr, nameFr: $nameFr, nameEn: $nameEn)';
 }
 
 
@@ -552,7 +554,7 @@ abstract mixin class _$WilayaModelCopyWith<$Res> implements $WilayaModelCopyWith
   factory _$WilayaModelCopyWith(_WilayaModel value, $Res Function(_WilayaModel) _then) = __$WilayaModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String code,@JsonKey(name: 'name_ar') String? nameAr,@JsonKey(name: 'name_fr') String? nameFr
+ int id, String code,@JsonKey(name: 'name_ar') String? nameAr,@JsonKey(name: 'name_fr') String? nameFr,@JsonKey(name: 'name_en') String? nameEn
 });
 
 
@@ -569,12 +571,13 @@ class __$WilayaModelCopyWithImpl<$Res>
 
 /// Create a copy of WilayaModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? code = null,Object? nameAr = freezed,Object? nameFr = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? code = null,Object? nameAr = freezed,Object? nameFr = freezed,Object? nameEn = freezed,}) {
   return _then(_WilayaModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,nameAr: freezed == nameAr ? _self.nameAr : nameAr // ignore: cast_nullable_to_non_nullable
 as String?,nameFr: freezed == nameFr ? _self.nameFr : nameFr // ignore: cast_nullable_to_non_nullable
+as String?,nameEn: freezed == nameEn ? _self.nameEn : nameEn // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -586,7 +589,7 @@ as String?,
 /// @nodoc
 mixin _$CommuneModel {
 
- int get id;@JsonKey(name: 'name_ar') String? get nameAr;@JsonKey(name: 'name_fr') String? get nameFr;@JsonKey(name: 'postal_code') String? get postalCode;
+ int get id;@JsonKey(name: 'name_ar') String? get nameAr;@JsonKey(name: 'name_fr') String? get nameFr;@JsonKey(name: 'name_en') String? get nameEn;@JsonKey(name: 'postal_code') String? get postalCode;
 /// Create a copy of CommuneModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -600,20 +603,20 @@ $CommuneModelCopyWith<CommuneModel> get copyWith => _$CommuneModelCopyWithImpl<C
 @override
 bool operator ==(Object other) {
   final _this = this as CommuneModel;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommuneModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.nameAr, _this.nameAr) || other.nameAr == _this.nameAr)&&(identical(other.nameFr, _this.nameFr) || other.nameFr == _this.nameFr)&&(identical(other.postalCode, _this.postalCode) || other.postalCode == _this.postalCode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommuneModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.nameAr, _this.nameAr) || other.nameAr == _this.nameAr)&&(identical(other.nameFr, _this.nameFr) || other.nameFr == _this.nameFr)&&(identical(other.nameEn, _this.nameEn) || other.nameEn == _this.nameEn)&&(identical(other.postalCode, _this.postalCode) || other.postalCode == _this.postalCode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as CommuneModel;
-  return Object.hash(runtimeType,_this.id,_this.nameAr,_this.nameFr,_this.postalCode);
+  return Object.hash(runtimeType,_this.id,_this.nameAr,_this.nameFr,_this.nameEn,_this.postalCode);
 }
 
 @override
 String toString() {
   final _this = this as CommuneModel;
-  return 'CommuneModel(id: ${_this.id}, nameAr: ${_this.nameAr}, nameFr: ${_this.nameFr}, postalCode: ${_this.postalCode})';
+  return 'CommuneModel(id: ${_this.id}, nameAr: ${_this.nameAr}, nameFr: ${_this.nameFr}, nameEn: ${_this.nameEn}, postalCode: ${_this.postalCode})';
 }
 
 
@@ -624,7 +627,7 @@ abstract mixin class $CommuneModelCopyWith<$Res>  {
   factory $CommuneModelCopyWith(CommuneModel value, $Res Function(CommuneModel) _then) = _$CommuneModelCopyWithImpl;
 @useResult
 $Res call({
- int id,@JsonKey(name: 'name_ar') String? nameAr,@JsonKey(name: 'name_fr') String? nameFr,@JsonKey(name: 'postal_code') String? postalCode
+ int id,@JsonKey(name: 'name_ar') String? nameAr,@JsonKey(name: 'name_fr') String? nameFr,@JsonKey(name: 'name_en') String? nameEn,@JsonKey(name: 'postal_code') String? postalCode
 });
 
 
@@ -641,11 +644,12 @@ class _$CommuneModelCopyWithImpl<$Res>
 
 /// Create a copy of CommuneModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? nameAr = freezed,Object? nameFr = freezed,Object? postalCode = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? nameAr = freezed,Object? nameFr = freezed,Object? nameEn = freezed,Object? postalCode = freezed,}) {
   return _then(CommuneModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,nameAr: freezed == nameAr ? _self.nameAr : nameAr // ignore: cast_nullable_to_non_nullable
 as String?,nameFr: freezed == nameFr ? _self.nameFr : nameFr // ignore: cast_nullable_to_non_nullable
+as String?,nameEn: freezed == nameEn ? _self.nameEn : nameEn // ignore: cast_nullable_to_non_nullable
 as String?,postalCode: freezed == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -732,10 +736,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr, @JsonKey(name: 'postal_code')  String? postalCode)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr, @JsonKey(name: 'name_en')  String? nameEn, @JsonKey(name: 'postal_code')  String? postalCode)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CommuneModel() when $default != null:
-return $default(_that.id,_that.nameAr,_that.nameFr,_that.postalCode);case _:
+return $default(_that.id,_that.nameAr,_that.nameFr,_that.nameEn,_that.postalCode);case _:
   return orElse();
 
 }
@@ -753,10 +757,10 @@ return $default(_that.id,_that.nameAr,_that.nameFr,_that.postalCode);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr, @JsonKey(name: 'postal_code')  String? postalCode)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr, @JsonKey(name: 'name_en')  String? nameEn, @JsonKey(name: 'postal_code')  String? postalCode)  $default,) {final _that = this;
 switch (_that) {
 case _CommuneModel():
-return $default(_that.id,_that.nameAr,_that.nameFr,_that.postalCode);case _:
+return $default(_that.id,_that.nameAr,_that.nameFr,_that.nameEn,_that.postalCode);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -773,10 +777,10 @@ return $default(_that.id,_that.nameAr,_that.nameFr,_that.postalCode);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr, @JsonKey(name: 'postal_code')  String? postalCode)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'name_ar')  String? nameAr, @JsonKey(name: 'name_fr')  String? nameFr, @JsonKey(name: 'name_en')  String? nameEn, @JsonKey(name: 'postal_code')  String? postalCode)?  $default,) {final _that = this;
 switch (_that) {
 case _CommuneModel() when $default != null:
-return $default(_that.id,_that.nameAr,_that.nameFr,_that.postalCode);case _:
+return $default(_that.id,_that.nameAr,_that.nameFr,_that.nameEn,_that.postalCode);case _:
   return null;
 
 }
@@ -788,12 +792,13 @@ return $default(_that.id,_that.nameAr,_that.nameFr,_that.postalCode);case _:
 @JsonSerializable()
 
 class _CommuneModel extends CommuneModel {
-  const _CommuneModel({required this.id, @JsonKey(name: 'name_ar') this.nameAr, @JsonKey(name: 'name_fr') this.nameFr, @JsonKey(name: 'postal_code') this.postalCode}): super._();
+  const _CommuneModel({required this.id, @JsonKey(name: 'name_ar') this.nameAr, @JsonKey(name: 'name_fr') this.nameFr, @JsonKey(name: 'name_en') this.nameEn, @JsonKey(name: 'postal_code') this.postalCode}): super._();
   factory _CommuneModel.fromJson(Map<String, dynamic> json) => _$CommuneModelFromJson(json);
 
 @override final  int id;
 @override@JsonKey(name: 'name_ar') final  String? nameAr;
 @override@JsonKey(name: 'name_fr') final  String? nameFr;
+@override@JsonKey(name: 'name_en') final  String? nameEn;
 @override@JsonKey(name: 'postal_code') final  String? postalCode;
 
 /// Create a copy of CommuneModel
@@ -809,18 +814,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommuneModel&&(identical(other.id, id) || other.id == id)&&(identical(other.nameAr, nameAr) || other.nameAr == nameAr)&&(identical(other.nameFr, nameFr) || other.nameFr == nameFr)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommuneModel&&(identical(other.id, id) || other.id == id)&&(identical(other.nameAr, nameAr) || other.nameAr == nameAr)&&(identical(other.nameFr, nameFr) || other.nameFr == nameFr)&&(identical(other.nameEn, nameEn) || other.nameEn == nameEn)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,nameAr,nameFr,postalCode);
+    return Object.hash(runtimeType,id,nameAr,nameFr,nameEn,postalCode);
 }
 
 @override
 String toString() {
-    return 'CommuneModel(id: $id, nameAr: $nameAr, nameFr: $nameFr, postalCode: $postalCode)';
+    return 'CommuneModel(id: $id, nameAr: $nameAr, nameFr: $nameFr, nameEn: $nameEn, postalCode: $postalCode)';
 }
 
 
@@ -831,7 +836,7 @@ abstract mixin class _$CommuneModelCopyWith<$Res> implements $CommuneModelCopyWi
   factory _$CommuneModelCopyWith(_CommuneModel value, $Res Function(_CommuneModel) _then) = __$CommuneModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id,@JsonKey(name: 'name_ar') String? nameAr,@JsonKey(name: 'name_fr') String? nameFr,@JsonKey(name: 'postal_code') String? postalCode
+ int id,@JsonKey(name: 'name_ar') String? nameAr,@JsonKey(name: 'name_fr') String? nameFr,@JsonKey(name: 'name_en') String? nameEn,@JsonKey(name: 'postal_code') String? postalCode
 });
 
 
@@ -848,11 +853,12 @@ class __$CommuneModelCopyWithImpl<$Res>
 
 /// Create a copy of CommuneModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? nameAr = freezed,Object? nameFr = freezed,Object? postalCode = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? nameAr = freezed,Object? nameFr = freezed,Object? nameEn = freezed,Object? postalCode = freezed,}) {
   return _then(_CommuneModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,nameAr: freezed == nameAr ? _self.nameAr : nameAr // ignore: cast_nullable_to_non_nullable
 as String?,nameFr: freezed == nameFr ? _self.nameFr : nameFr // ignore: cast_nullable_to_non_nullable
+as String?,nameEn: freezed == nameEn ? _self.nameEn : nameEn // ignore: cast_nullable_to_non_nullable
 as String?,postalCode: freezed == postalCode ? _self.postalCode : postalCode // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

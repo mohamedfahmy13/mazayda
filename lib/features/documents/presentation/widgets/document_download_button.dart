@@ -4,6 +4,7 @@ import 'package:mazayada/l10n/app_localizations.dart';
 import 'package:open_filex/open_filex.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/di/injection.dart';
+import '../../../../core/errors/failures.dart';
 import '../../domain/usecases/documents_usecases.dart';
 
 /// زر تحميل وثيقة مستقل بذاته — بيدير حالة التحميل داخليًا.
@@ -48,7 +49,10 @@ class _DocumentDownloadButtonState extends State<DocumentDownloadButton> {
 
     await res.fold(
       (f) async => messenger.showSnackBar(
-        SnackBar(content: Text(f.message), backgroundColor: AppColors.danger),
+        SnackBar(
+          content: Text(_failureMessage(f, t)),
+          backgroundColor: AppColors.danger,
+        ),
       ),
       (path) async {
         final result = await OpenFilex.open(path);
@@ -58,6 +62,14 @@ class _DocumentDownloadButtonState extends State<DocumentDownloadButton> {
       },
     );
   }
+
+  /// الرفض المتوقع بنصوصنا: ردّ الخطأ بييجي bytes زي الملف فرسالته مابتتقريش
+  /// (كانت بتطلع «حدث خطأ» عامة)، ورفض الـ policy أصلًا رسالته إنجليزي ثابت.
+  String _failureMessage(Failure f, AppLocalizations t) => switch (f) {
+    ServerFailure(statusCode: 403) => t.docsDownloadForbidden,
+    ServerFailure(statusCode: 404) => t.docsDownloadUnavailable,
+    _ => f.message,
+  };
 
   @override
   Widget build(BuildContext context) {

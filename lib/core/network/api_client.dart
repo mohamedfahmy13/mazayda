@@ -5,6 +5,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../constants/api_constants.dart';
 import '../errors/exceptions.dart';
 import '../session/session_manager.dart';
+import '../utils/locale_cubit.dart';
 import 'api_response.dart';
 import 'auth_interceptor.dart';
 import 'token_storage.dart';
@@ -18,7 +19,11 @@ import 'token_storage.dart';
 class ApiClient {
   late final Dio _dio;
 
-  ApiClient(TokenStorage tokenStorage, SessionManager sessionManager) {
+  ApiClient(
+    TokenStorage tokenStorage,
+    SessionManager sessionManager,
+    LocaleCubit localeCubit,
+  ) {
     _dio = Dio(
       BaseOptions(
         baseUrl: ApiConstants.baseUrl,
@@ -30,7 +35,14 @@ class ApiClient {
       ),
     );
 
-    _dio.interceptors.add(AuthInterceptor(tokenStorage, _dio, sessionManager));
+    _dio.interceptors.add(
+      AuthInterceptor(
+        tokenStorage,
+        _dio,
+        sessionManager,
+        () => localeCubit.state.languageCode,
+      ),
+    );
     _dio.interceptors.add(PrettyDioLogger(
       requestBody: true,
       responseBody: true,
