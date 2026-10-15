@@ -604,7 +604,7 @@
   "adDownloadConditionBook": "تحميل دفتر الشروط",
   "adReceiptHint": "يمكنك طباعة الوصل أو حفظه بعد التحميل",
   "adUnavailableTitle": "المزايدة غير متاحة",
-  "adUnavailableBody": "ربما أُلغيت هذه المزايدة أو لم تعد معروضة.",
+  "adUnavailableBody": "هذه المزايدة لم تعد معروضة.",
   "premiumTitle": "العضوية المميّزة",
   "premiumTagline": "اعرف بالمزايدات الجديدة قبل غيرك",
   "premiumActive": "اشتراكك فعّال",

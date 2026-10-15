@@ -561,6 +561,10 @@ class AuctionResultSection extends StatelessWidget {
     // `isEndedNow` بتحسب عدّاد الإقفال كمان، فالنتيجة بتظهر لحظة انتهاء
     // الوقت من غير ما نستنى إعادة تحميل (تعديل العميل رقم 3).
     if (!auction.isEndedNow) return const SizedBox.shrink();
+    // الملغية مالهاش نتيجة — من غير الشرط ده كانت هتعرض «لا يوجد فائز».
+    if (auction.status == AuctionStatus.cancelled) {
+      return const SizedBox.shrink();
+    }
 
     final appeal = auction.appealWindow;
     return DetailSection(

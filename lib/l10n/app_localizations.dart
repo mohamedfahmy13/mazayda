@@ -2605,7 +2605,7 @@ abstract class AppLocalizations {
   /// No description provided for @adUnavailableBody.
   ///
   /// In ar, this message translates to:
-  /// **'ربما أُلغيت هذه المزايدة أو لم تعد معروضة.'**
+  /// **'هذه المزايدة لم تعد معروضة.'**
   String get adUnavailableBody;
 
   /// No description provided for @premiumTitle.

@@ -583,7 +583,7 @@
   "adDownloadConditionBook": "Download the condition book",
   "adReceiptHint": "You can print or save the receipt after downloading",
   "adUnavailableTitle": "Auction unavailable",
-  "adUnavailableBody": "This auction may have been cancelled or is no longer listed.",
+  "adUnavailableBody": "This auction is no longer listed.",
   "premiumTitle": "Premium membership",
   "premiumTagline": "Hear about new auctions before anyone else",
   "premiumActive": "Your subscription is active",

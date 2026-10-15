@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -1346,8 +1347,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adUnavailableTitle => 'Auction unavailable';
 
   @override
-  String get adUnavailableBody =>
-      'This auction may have been cancelled or is no longer listed.';
+  String get adUnavailableBody => 'This auction is no longer listed.';
 
   @override
   String get premiumTitle => 'Premium membership';

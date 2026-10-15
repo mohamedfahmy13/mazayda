@@ -28,7 +28,7 @@ sealed class AuctionDetailState with _$AuctionDetailState {
 
   const factory AuctionDetailState.error(String message) = AuctionDetailError;
 
-  /// السيرفر رجّع 404: المزايدة اتلغت أو اتسحبت من العرض. حالة لوحدها عشان
+  /// السيرفر رجّع 404: مسودة أو اتشالت من العرض. حالة لوحدها عشان
   /// «إعادة المحاولة» مالهاش لازمة هنا — المستخدم محتاج يرجع بس.
   const factory AuctionDetailState.unavailable() = AuctionDetailUnavailable;
 }

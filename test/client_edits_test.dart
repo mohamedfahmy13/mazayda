@@ -201,6 +201,26 @@ void main() {
       expect(ctaFor(cancelled, null, isAuthenticated: true), AuctionCta.none);
     });
 
+    testWidgets('مالهاش قسم نتيجة حتى بعد وقت الإقفال', (tester) async {
+      await tester.pumpWidget(
+        _host(
+          AuctionResultSection(
+            auction: _auction(status: AuctionStatus.cancelled, hasEnded: true),
+          ),
+        ),
+      );
+      expect(find.text('نتيجة المزاد'), findsNothing);
+
+      await tester.pumpWidget(
+        _host(
+          AuctionResultSection(
+            auction: _auction(status: AuctionStatus.closed, hasEnded: true),
+          ),
+        ),
+      );
+      expect(find.text('نتيجة المزاد'), findsOneWidget);
+    });
+
     testWidgets('نص «إعادة المحاولة» مابيتقصّش على عرض موبايل', (tester) async {
       tester.view.physicalSize = const Size(375, 812);
       tester.view.devicePixelRatio = 1;

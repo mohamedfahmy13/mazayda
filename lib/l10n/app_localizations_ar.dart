@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -1339,7 +1340,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adUnavailableTitle => 'المزايدة غير متاحة';
 
   @override
-  String get adUnavailableBody => 'ربما أُلغيت هذه المزايدة أو لم تعد معروضة.';
+  String get adUnavailableBody => 'هذه المزايدة لم تعد معروضة.';
 
   @override
   String get premiumTitle => 'العضوية المميّزة';

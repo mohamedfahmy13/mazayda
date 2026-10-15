@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -1359,8 +1360,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adUnavailableTitle => 'Enchère indisponible';
 
   @override
-  String get adUnavailableBody =>
-      'Cette enchère a peut-être été annulée ou n\'est plus publiée.';
+  String get adUnavailableBody => 'Cette enchère n\'est plus publiée.';
 
   @override
   String get premiumTitle => 'Abonnement Premium';

@@ -248,7 +248,7 @@ class _WithBackButton extends StatelessWidget {
   }
 }
 
-/// السيرفر رجّع 404 — غالبًا المزايدة اتلغت بعد ما ظهرت في قائمة.
+/// السيرفر رجّع 404 — مسودة أو مزايدة اتشالت (الملغية بقت بتفتح عادي).
 class _UnavailableView extends StatelessWidget {
   const _UnavailableView();
 
@@ -317,6 +317,14 @@ class _DetailInfo extends StatelessWidget {
         Wrap(
           spacing: 6.w,
           children: [
+            // الملغية بقت بتفتح (رد الباك على MZ-MOB-01) — لازم تبان إنها
+            // ملغية، لأن الصفحة من غير أزرار بس مش كفاية توضّح ده.
+            if (auction.status == AuctionStatus.cancelled)
+              _DetailTag(
+                text: t.cancelled,
+                fg: AppColors.danger,
+                bg: AppColors.dangerBg,
+              ),
             if (auction.category != null)
               _DetailTag(
                 text: auction.category!.name,

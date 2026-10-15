@@ -583,7 +583,7 @@
   "adDownloadConditionBook": "Télécharger le cahier des charges",
   "adReceiptHint": "Vous pouvez imprimer ou enregistrer le reçu après le téléchargement",
   "adUnavailableTitle": "Enchère indisponible",
-  "adUnavailableBody": "Cette enchère a peut-être été annulée ou n'est plus publiée.",
+  "adUnavailableBody": "Cette enchère n'est plus publiée.",
   "premiumTitle": "Abonnement Premium",
   "premiumTagline": "Soyez informé des nouvelles enchères avant les autres",
   "premiumActive": "Votre abonnement est actif",

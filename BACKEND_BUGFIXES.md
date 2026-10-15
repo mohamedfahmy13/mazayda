@@ -11,13 +11,14 @@
 
 ## 0) الخلاصة
 
-| # | الباج | المطلوب من الباك | الأولوية |
-|---|-------|------------------|----------|
-| 1 | MZ-MOB-01 | `GET /auctions/{id}` يرجّع المزايدة **الملغية** بدل 404 | P2 |
-| 2 | MZ-MOB-02 | الإشعارات تتترجم **وقت القراءة** بلغة الطلب | P3 |
-| 3 | MZ-MOB-02 | رسايل 401/404 تحترم `Accept-Language` | P3 |
-| 4 | MZ-MOB-03 | `/wilayas` يرجّع `name_en`، والإنجليزي يرجع للفرنسي قبل العربي | P3 |
-| 5 | MZ-MOB-04 | التأكد إن ملف دفتر «سكن وسط المدينة» موجود + رسالة 403 مترجمة بكود | P3 |
+| # | الباج | المطلوب من الباك | الأولوية | الحالة |
+|---|-------|------------------|----------|--------|
+| 1 | MZ-MOB-01 | `GET /auctions/{id}` يرجّع المزايدة **الملغية** بدل 404 | P2 | ✅ `9328c31` |
+| 2 | MZ-MOB-02 | الإشعارات تتترجم **وقت القراءة** بلغة الطلب | P3 | ✅ `9328c31` |
+| 3 | MZ-MOB-02 | رسايل 401/404 تحترم `Accept-Language` | P3 | ✅ اتأكدنا على السيرفر |
+| 4 | MZ-MOB-03 | `/wilayas` يرجّع `name_en`، والإنجليزي يرجع للفرنسي قبل العربي | P3 | ✅ اتأكدنا على السيرفر |
+| 5 | MZ-MOB-04 | التأكد إن ملف دفتر «سكن وسط المدينة» موجود + رسالة 403 مترجمة بكود | P3 | ⚠️ الملف تمام، **الكود مابيوصلش** (§5) |
+| 6 | متابعة | فرع `AuthorizationException` في الـ renderer مابيتنفذش | P3 | ⏳ مطلوب |
 
 ---
 
@@ -217,3 +218,46 @@
 - مستخدم مااشتراش الدفتر: مايشوفش زرار التحميل خالص.
 - مستخدم شاري الدفتر: `GET /api/v1/documents/aa49fb1f-…/download` يرجّع **200**
   وملف PDF.
+
+---
+
+## 5) متابعة على الرد (commit `9328c31`): كود الـ 403 مابيوصلش
+
+راجعنا الـ commit واتأكدنا على السيرفر من البنود 1 لـ 4. فاضل حاجة واحدة في
+البند 5.
+
+### المشكلة
+
+- Laravel بيحوّل `AuthorizationException` لـ `AccessDeniedHttpException` جوّه
+  `Handler::prepareException()`، وده بيحصل **قبل** ما الـ render callbacks
+  تشتغل. الأصلي بيتحط في `getPrevious()`. اتأكدنا من ترتيب
+  `prepareException` ← `renderViaCallbacks` في `Handler::render()` في Laravel 10
+  و12، والـ repo على 11.53.1 اللي بينهم.
+- يبقى فرع `if ($e instanceof AuthorizationException)` في `bootstrap/app.php`
+  **مابيتنفذش أبدًا**، والـ 403 بيقع في فرع `HttpExceptionInterface`. والنتيجة:
+  - `book_not_purchased`: الرسالة المترجمة بتوصل، لكن **من غير `code`**.
+  - باقي الرفض: لسه بيرجع «This action is unauthorized.» بالإنجليزي.
+- التستات مالقطتش ده لأنها بتنادي `DocumentPolicy` مباشرة (`->denied()`)، ومفيش
+  تست بيضرب الـ endpoint نفسه.
+
+### المطلوب
+
+1. في أول الـ render callback، فك الاستثناء الأصلي قبل الفروع:
+   ```php
+   if ($e instanceof AccessDeniedHttpException && $e->getPrevious() instanceof AuthorizationException) {
+       $e = $e->getPrevious();
+   }
+   ```
+2. تست HTTP:
+   ```php
+   $this->actingAs($stranger, 'sanctum')
+       ->getJson("/api/v1/documents/{$doc->id}/download")
+       ->assertForbidden()
+       ->assertJsonPath('code', 'book_not_purchased');
+   ```
+
+### أثره على الموبايل
+
+**مافيش.** الموبايل مش معتمد على `code` هنا: زرار التحميل بقى بيظهر بس لما
+`has_book_access = true`، ولو حصل 403 بيعرض رسالته المترجمة من الـ status code.
+البند ده عشان العقد يبقى صح للويب وأي client جاي.
