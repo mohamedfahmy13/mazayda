@@ -11,6 +11,10 @@ class PrimaryButton extends StatelessWidget {
   final bool isLoading;
   final bool outlined;
 
+  /// لون الزرار — الافتراضي الأساسي، و`AppColors.danger` للإجراء اللي
+  /// مالوش رجوع (حذف الحساب).
+  final Color color;
+
   const PrimaryButton({
     super.key,
     required this.label,
@@ -18,12 +22,13 @@ class PrimaryButton extends StatelessWidget {
     this.icon,
     this.isLoading = false,
     this.outlined = false,
+    this.color = AppColors.primary,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bg = outlined ? AppColors.white : AppColors.primary;
-    final fg = outlined ? AppColors.primary : AppColors.white;
+    final bg = outlined ? AppColors.white : color;
+    final fg = outlined ? color : AppColors.white;
 
     return SizedBox(
       width: double.infinity,
@@ -37,9 +42,7 @@ class PrimaryButton extends StatelessWidget {
               ? AppColors.white
               : const Color(0xFFB8C4C0),
           elevation: 0,
-          side: outlined
-              ? const BorderSide(color: AppColors.primary)
-              : BorderSide.none,
+          side: outlined ? BorderSide(color: color) : BorderSide.none,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.r),
           ),

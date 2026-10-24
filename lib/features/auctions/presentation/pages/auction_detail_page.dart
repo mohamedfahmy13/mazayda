@@ -12,6 +12,7 @@ import '../../../../core/widgets/app_image.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/primary_button.dart';
+import '../../../../core/widgets/signed_in_gate.dart';
 import '../../../../core/widgets/state_views.dart';
 import '../../domain/entities/auction.dart';
 import '../../domain/entities/auction_viewer.dart';
@@ -525,10 +526,12 @@ class _DetailActionBar extends StatelessWidget {
     BuildContext context,
     AppLocalizations t,
   ) => switch (cta) {
+    // الضيف بيتصفّح المزاد كامل، والمشاركة بس هي اللي محتاجة حساب. بعد
+    // الدخول بنعيد التحميل فالزرار بيتحوّل للخطوة الصح لنفس المستخدم.
     AuctionCta.login => (
       t.ctaLogin,
       Icons.login,
-      () => context.push(Routes.login),
+      () => _signInAndReload(context),
     ),
     AuctionCta.needsKyc => (
       t.ctaNeedsKyc,
@@ -590,6 +593,11 @@ class _DetailActionBar extends StatelessWidget {
     ),
     AuctionCta.none => ('', Icons.info_outline, null),
   };
+
+  Future<void> _signInAndReload(BuildContext context) async {
+    final cubit = context.read<AuctionDetailCubit>();
+    if (await openSignIn(context)) await cubit.load(auction.id);
+  }
 
   /// مسار التسجيل + إعادة تحميل المزاد لو حالته اتغيّرت.
   ///

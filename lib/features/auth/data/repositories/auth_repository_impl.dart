@@ -7,7 +7,7 @@ import '../../../../core/errors/exceptions_mapper.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/token_storage.dart';
 import '../../../../core/notifications/device_registrar.dart';
-import '../../../../core/session/account_cache.dart';
+import '../../../../core/session/session_manager.dart';
 import '../../../../core/utils/locale_sync.dart';
 import '../../domain/entities/auth_entities.dart';
 import '../../domain/entities/email_recovery.dart';
@@ -19,37 +19,33 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remote;
   final TokenStorage tokenStorage;
   final DeviceRegistrar deviceRegistrar;
-  final AccountCache accountCache;
+  final SessionManager session;
   final LocaleSync localeSync;
 
   AuthRepositoryImpl(
     this.remote,
     this.tokenStorage,
     this.deviceRegistrar,
-    this.accountCache,
+    this.session,
     this.localeSync,
   );
 
   @override
   Future<Either<Failure, RegisterResult>> register({
-    required String nin,
     required String firstNameAr,
     required String lastNameAr,
     required String phone,
     required String email,
-    required String birthDate,
     required String password,
     required String passwordConfirmation,
     required String deviceName,
   }) {
     return _guard(() async {
       final userId = await remote.register({
-        'nin': nin,
         'first_name_ar': firstNameAr,
         'last_name_ar': lastNameAr,
         'phone': phone,
         'email': email,
-        'birth_date': birthDate,
         'password': password,
         'password_confirmation': passwordConfirmation,
         'device_name': deviceName,
@@ -75,6 +71,7 @@ class AuthRepositoryImpl implements AuthRepository {
         accessToken: model.accessToken,
         refreshToken: model.refreshToken,
       );
+      session.signedIn();
       // نربط الجهاز بالحساب عشان الإشعارات توصله (بيتجاهل الفشل بهدوء).
       await deviceRegistrar.register();
       // وبلغة التطبيق — الحساب الجديد بيتعمل بالعربي افتراضيًا.
@@ -111,6 +108,7 @@ class AuthRepositoryImpl implements AuthRepository {
           accessToken: tokens.accessToken,
           refreshToken: tokens.refreshToken,
         );
+        session.signedIn();
         await deviceRegistrar.register();
         unawaited(localeSync.sync());
       }
@@ -136,14 +134,11 @@ class AuthRepositoryImpl implements AuthRepository {
       } catch (_) {
         // حتى لو فشل النداء، نمسح محليًا
       }
-      await tokenStorage.clear();
-      await accountCache.clear();
+      // التطبيق بيكمّل كضيف — مش بيرجع لشاشة دخول.
+      await session.end();
       return unit;
     });
   }
-
-  @override
-  Future<bool> hasSession() => tokenStorage.hasTokens;
 
   // ===== استرجاع البريد الإلكتروني المفقود (تعديل العميل رقم 1) =====
 
@@ -181,7 +176,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, Unit>> requestPasswordReset({
-    required String nin,
+    String? nin,
     required String email,
   }) {
     return _guard(() async {
@@ -192,7 +187,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, Unit>> verifyPasswordReset({
-    required String nin,
+    String? nin,
     required String email,
     required String otp,
     required String password,
@@ -207,15 +202,14 @@ class AuthRepositoryImpl implements AuthRepository {
         passwordConfirmation: passwordConfirmation,
       );
       // السيرفر عمل revokeAll — أي توكن مخزّن بقى ميت، فنمسحه.
-      await tokenStorage.clear();
-      await accountCache.clear();
+      await session.end();
       return unit;
     });
   }
 
   @override
   Future<Either<Failure, String>> revealSecretQuestion({
-    required String nin,
+    String? nin,
     required String email,
   }) {
     return _guard(
@@ -225,7 +219,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, Unit>> recoverBySecret({
-    required String nin,
+    String? nin,
     required String email,
     required String secretAnswer,
     required String password,
@@ -239,7 +233,7 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
         passwordConfirmation: passwordConfirmation,
       );
-      await tokenStorage.clear();
+      await session.end();
       return unit;
     });
   }

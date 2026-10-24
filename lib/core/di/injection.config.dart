@@ -15,6 +15,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/account/data/datasources/account_remote_data_source.dart'
+    as _i935;
+import '../../features/account/data/repositories/account_repository_impl.dart'
+    as _i857;
+import '../../features/account/domain/repositories/account_repository.dart'
+    as _i1067;
+import '../../features/account/domain/usecases/account_deletion_usecases.dart'
+    as _i1050;
+import '../../features/account/presentation/cubit/account_deletion_cubit.dart'
+    as _i701;
 import '../../features/appeals/data/datasources/appeals_remote_data_source.dart'
     as _i459;
 import '../../features/appeals/data/repositories/appeals_repository_impl.dart'
@@ -42,7 +52,6 @@ import '../../features/auth/data/datasources/auth_remote_data_source.dart'
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i153;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
-import '../../features/auth/domain/usecases/check_session.dart' as _i625;
 import '../../features/auth/domain/usecases/email_recovery_usecases.dart'
     as _i123;
 import '../../features/auth/domain/usecases/login_user.dart' as _i778;
@@ -176,10 +185,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i269.PushNotificationService>(
       () => _i269.PushNotificationService(),
     );
-    gh.lazySingleton<_i432.SessionManager>(
-      () => _i432.SessionManager(),
-      dispose: (i) => i.dispose(),
-    );
     gh.lazySingleton<_i964.TokenStorage>(
       () => _i964.TokenStorage(gh<_i558.FlutterSecureStorage>()),
     );
@@ -188,6 +193,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i218.LocaleCubit>(
       () => _i218.LocaleCubit(gh<_i558.FlutterSecureStorage>()),
+    );
+    gh.lazySingleton<_i432.SessionManager>(
+      () => _i432.SessionManager(
+        gh<_i964.TokenStorage>(),
+        gh<_i141.AccountCache>(),
+      ),
+      dispose: (i) => i.dispose(),
     );
     gh.lazySingleton<_i557.ApiClient>(
       () => _i557.ApiClient(
@@ -214,11 +226,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i690.ConnectivityCubit>(
       () => _i690.ConnectivityCubit(gh<_i895.Connectivity>()),
     );
+    gh.lazySingleton<_i935.AccountRemoteDataSource>(
+      () => _i935.AccountRemoteDataSourceImpl(gh<_i557.ApiClient>()),
+    );
     gh.lazySingleton<_i1017.KycRepository>(
       () => _i832.KycRepositoryImpl(gh<_i789.KycRemoteDataSource>()),
     );
     gh.lazySingleton<_i798.CommercialRegisterRemoteDataSource>(
       () => _i798.CommercialRegisterRemoteDataSourceImpl(gh<_i557.ApiClient>()),
+    );
+    gh.lazySingleton<_i1067.AccountRepository>(
+      () => _i857.AccountRepositoryImpl(
+        gh<_i935.AccountRemoteDataSource>(),
+        gh<_i432.SessionManager>(),
+      ),
     );
     gh.lazySingleton<_i340.PaymentsRemoteDataSource>(
       () => _i340.PaymentsRemoteDataSourceImpl(gh<_i557.ApiClient>()),
@@ -237,6 +258,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i459.AppealsRemoteDataSource>(
       () => _i459.AppealsRemoteDataSourceImpl(gh<_i557.ApiClient>()),
+    );
+    gh.lazySingleton<_i860.DeviceRegistrar>(
+      () => _i860.DeviceRegistrar(
+        gh<_i557.ApiClient>(),
+        gh<_i269.PushNotificationService>(),
+        gh<_i964.TokenStorage>(),
+        gh<_i432.SessionManager>(),
+      ),
     );
     gh.lazySingleton<_i582.BiddingRepository>(
       () => _i735.BiddingRepositoryImpl(gh<_i620.BiddingRemoteDataSource>()),
@@ -272,13 +301,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i793.AuctionRepository>(
       () => _i837.AuctionRepositoryImpl(gh<_i838.AuctionRemoteDataSource>()),
-    );
-    gh.lazySingleton<_i860.DeviceRegistrar>(
-      () => _i860.DeviceRegistrar(
-        gh<_i557.ApiClient>(),
-        gh<_i269.PushNotificationService>(),
-        gh<_i964.TokenStorage>(),
-      ),
     );
     gh.factory<_i581.GetLatestBids>(
       () => _i581.GetLatestBids(gh<_i582.BiddingRepository>()),
@@ -350,6 +372,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i964.TokenStorage>(),
         gh<_i218.LocaleCubit>(),
       ),
+    );
+    gh.factory<_i1050.CheckAccountDeletion>(
+      () => _i1050.CheckAccountDeletion(gh<_i1067.AccountRepository>()),
+    );
+    gh.factory<_i1050.DeleteAccount>(
+      () => _i1050.DeleteAccount(gh<_i1067.AccountRepository>()),
     );
     gh.lazySingleton<_i420.QaRepository>(
       () => _i1033.QaRepositoryImpl(gh<_i92.QaRemoteDataSource>()),
@@ -465,6 +493,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1060.AppealsRepository>(
       () => _i851.AppealsRepositoryImpl(gh<_i459.AppealsRemoteDataSource>()),
     );
+    gh.lazySingleton<_i787.AuthRepository>(
+      () => _i153.AuthRepositoryImpl(
+        gh<_i107.AuthRemoteDataSource>(),
+        gh<_i964.TokenStorage>(),
+        gh<_i860.DeviceRegistrar>(),
+        gh<_i432.SessionManager>(),
+        gh<_i209.LocaleSync>(),
+      ),
+    );
     gh.factory<_i212.FinalPaymentPreviewCubit>(
       () => _i212.FinalPaymentPreviewCubit(gh<_i306.GetFinalPaymentPreview>()),
     );
@@ -474,13 +511,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i689.GetAuctions>(
       () => _i689.GetAuctions(gh<_i793.AuctionRepository>()),
     );
-    gh.lazySingleton<_i787.AuthRepository>(
-      () => _i153.AuthRepositoryImpl(
-        gh<_i107.AuthRemoteDataSource>(),
-        gh<_i964.TokenStorage>(),
-        gh<_i860.DeviceRegistrar>(),
-        gh<_i141.AccountCache>(),
-        gh<_i209.LocaleSync>(),
+    gh.factory<_i701.AccountDeletionCubit>(
+      () => _i701.AccountDeletionCubit(
+        gh<_i1050.CheckAccountDeletion>(),
+        gh<_i1050.DeleteAccount>(),
       ),
     );
     gh.factory<_i700.KycCubit>(
@@ -497,7 +531,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i79.AuctionDetailCubit(
         gh<_i357.GetAuctionById>(),
         gh<_i72.GetProfile>(),
-        gh<_i964.TokenStorage>(),
+        gh<_i432.SessionManager>(),
         gh<_i141.AccountCache>(),
       ),
     );
@@ -513,9 +547,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i487.QaCubit>(
       () => _i487.QaCubit(gh<_i420.GetQuestions>(), gh<_i420.AskQuestion>()),
-    );
-    gh.factory<_i625.CheckSession>(
-      () => _i625.CheckSession(gh<_i787.AuthRepository>()),
     );
     gh.factory<_i123.SubmitEmailRecovery>(
       () => _i123.SubmitEmailRecovery(gh<_i787.AuthRepository>()),

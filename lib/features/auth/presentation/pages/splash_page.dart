@@ -7,11 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:mazayada/l10n/app_localizations.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/widgets/brand_mark.dart';
-import '../../../../core/di/injection.dart';
 import '../../../../core/router/app_router.dart';
-import '../../domain/usecases/check_session.dart';
 
-/// أقل مدة للـ splash؛ فحص الجلسة يعمل بالتوازي فلا نضيف انتظارًا بعده.
+/// مدة الـ splash — الجلسة بتتقرا في main قبل runApp، فمفيش حاجة نستناها.
 const _minimumSplashDuration = Duration(milliseconds: 1350);
 
 class SplashPage extends StatefulWidget {
@@ -28,13 +26,12 @@ class _SplashPageState extends State<SplashPage> {
     _decide();
   }
 
+  /// الرئيسية دايمًا، بجلسة أو من غيرها: الضيف بيتصفّح المزايدات وبيسجّل
+  /// دخول بس لما يحب يشارك (App Store 5.1.1 — مفيش لوحة دخول إجبارية).
   Future<void> _decide() async {
-    final results = await Future.wait<bool>([
-      getIt<CheckSession>()(),
-      Future<void>.delayed(_minimumSplashDuration).then((_) => false),
-    ]);
+    await Future<void>.delayed(_minimumSplashDuration);
     if (!mounted) return;
-    context.go(results.first ? Routes.home : Routes.login);
+    context.go(Routes.home);
   }
 
   @override

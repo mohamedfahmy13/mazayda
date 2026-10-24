@@ -13,6 +13,7 @@ import 'core/notifications/device_registrar.dart';
 import 'core/notifications/push_notification_service.dart';
 import 'core/notifications/push_tap_router.dart';
 import 'core/router/app_router.dart';
+import 'core/session/session_exit_router.dart';
 import 'core/session/session_manager.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/locale_cubit.dart';
@@ -40,6 +41,9 @@ Future<void> main() async {
   await configureDependencies();
   // حمّل اللغة المحفوظة قبل التشغيل
   await getIt<LocaleCubit>().loadSaved();
+  // والجلسة المحفوظة (لو فيه) — الـ router والتبويبات بيقروها متزامن.
+  // مافيهاش لوحة دخول: من غير جلسة التطبيق بيفتح كضيف على المزايدات.
+  await getIt<SessionManager>().restore();
   // وبلّغ السيرفر بيها عشان الإشعارات تتولّد بنفس اللغة.
   getIt<LocaleSync>().start();
 
@@ -98,6 +102,9 @@ class _MazayadaAppState extends State<MazayadaApp> {
   // نبني الـ router مرة واحدة (مش في كل rebuild) مع SessionManager
   late final _router = createRouter(getIt<SessionManager>());
 
+  // رسايل على مستوى التطبيق (انتهاء الجلسة) — بتعيش بعد تغيير الشاشة.
+  final _messengerKey = GlobalKey<ScaffoldMessengerState>();
+
   // الضغط على إشعار Push → الشاشة المناسبة (بعد ما الجلسة تجهز).
   late final _pushTaps = PushTapRouter(
     _router,
@@ -105,15 +112,24 @@ class _MazayadaAppState extends State<MazayadaApp> {
     getIt<MarkNotificationRead>(),
   );
 
+  // الجلسة خلصت → خروج من شاشات الحساب للرئيسية كضيف.
+  late final _sessionExits = SessionExitRouter(
+    _router,
+    getIt<SessionManager>(),
+    _messengerKey,
+  );
+
   @override
   void initState() {
     super.initState();
     _pushTaps.start();
+    _sessionExits.start();
   }
 
   @override
   void dispose() {
     _pushTaps.dispose();
+    _sessionExits.dispose();
     super.dispose();
   }
 
@@ -142,6 +158,7 @@ class _MazayadaAppState extends State<MazayadaApp> {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       routerConfig: _router,
+      scaffoldMessengerKey: _messengerKey,
       // شريط حالة الاتصال يلفّ كل الشاشات
       builder: (context, child) =>
           ConnectivityBanner(child: child ?? const SizedBox()),

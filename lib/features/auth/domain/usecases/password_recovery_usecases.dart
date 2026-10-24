@@ -64,10 +64,12 @@ class RecoverBySecret implements UseCase<Unit, RecoverBySecretParams> {
 }
 
 /// تعريف الحساب — مشترك بين خطوتي البداية في المسارين.
+///
+/// [nin] `null` للحساب اللي اتعمل من غير رقم تعريف — البريد لوحده بيكفي.
 @freezed
 abstract class IdentifyAccountParams with _$IdentifyAccountParams {
   const factory IdentifyAccountParams({
-    required String nin,
+    String? nin,
     required String email,
   }) = _IdentifyAccountParams;
 }
@@ -75,7 +77,7 @@ abstract class IdentifyAccountParams with _$IdentifyAccountParams {
 @freezed
 abstract class VerifyPasswordResetParams with _$VerifyPasswordResetParams {
   const factory VerifyPasswordResetParams({
-    required String nin,
+    String? nin,
     required String email,
     required String otp,
     required String password,
@@ -86,7 +88,7 @@ abstract class VerifyPasswordResetParams with _$VerifyPasswordResetParams {
 @freezed
 abstract class RecoverBySecretParams with _$RecoverBySecretParams {
   const factory RecoverBySecretParams({
-    required String nin,
+    String? nin,
     required String email,
     required String secretAnswer,
     required String password,

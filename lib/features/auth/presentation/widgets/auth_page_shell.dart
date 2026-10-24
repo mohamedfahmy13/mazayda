@@ -74,11 +74,13 @@ class AuthPageShell extends StatelessWidget {
                   children: [
                     if (showBackButton) ...[
                       _BackButton(
+                        // مفيش حاجة نرجعلها (تحويل من الـ router) → المزايدات
+                        // كضيف؛ الدخول نفسه مش بوابة للتطبيق.
                         onTap: () {
                           if (context.canPop()) {
                             context.pop();
                           } else {
-                            context.go(Routes.login);
+                            context.go(Routes.home);
                           }
                         },
                       ),

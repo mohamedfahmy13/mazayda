@@ -11,17 +11,17 @@ part 'register_cubit.freezed.dart';
 
 enum RegisterStatus { idle, submitting, success, failure }
 
+/// رقم التعريف وتاريخ الميلاد مش في الفورم ده (App Store 5.1.1: بيانات مش
+/// لازمة لإنشاء الحساب) — بيتطلبوا في الـ KYC قبل أول مشاركة.
 @freezed
 abstract class RegisterState with _$RegisterState {
   const RegisterState._();
 
   const factory RegisterState({
-    @Default(NinInput.pure()) NinInput nin,
     @Default(NameInput.pure()) NameInput firstName,
     @Default(NameInput.pure()) NameInput lastName,
     @Default(PhoneInput.pure()) PhoneInput phone,
     @Default(EmailInput.pure()) EmailInput email,
-    @Default(BirthDateInput.pure()) BirthDateInput birthDate,
     @Default(NewPasswordInput.pure()) NewPasswordInput password,
     @Default(ConfirmPasswordInput.pure()) ConfirmPasswordInput confirmPassword,
     @Default(RegisterStatus.idle) RegisterStatus status,
@@ -42,12 +42,10 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   void _revalidate(RegisterState s) {
     final valid = Formz.validate([
-      s.nin,
       s.firstName,
       s.lastName,
       s.phone,
       s.email,
-      s.birthDate,
       s.password,
       s.confirmPassword,
     ]);
@@ -61,8 +59,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
   }
 
-  void ninChanged(String v) =>
-      _revalidate(state.copyWith(nin: NinInput.dirty(v)));
   void firstNameChanged(String v) =>
       _revalidate(state.copyWith(firstName: NameInput.dirty(v)));
   void lastNameChanged(String v) =>
@@ -71,10 +67,6 @@ class RegisterCubit extends Cubit<RegisterState> {
       _revalidate(state.copyWith(phone: PhoneInput.dirty(v)));
   void emailChanged(String v) =>
       _revalidate(state.copyWith(email: EmailInput.dirty(v)));
-
-  /// [v] بصيغة YYYY-MM-DD (من الـ date picker).
-  void birthDateChanged(String v) =>
-      _revalidate(state.copyWith(birthDate: BirthDateInput.dirty(v)));
 
   void passwordChanged(String v) {
     // عند تغيير كلمة المرور، نعيد التحقق من التأكيد أيضًا (لأن المرجع تغيّر)
@@ -113,12 +105,10 @@ class RegisterCubit extends Cubit<RegisterState> {
 
     final result = await _registerUser(
       RegisterParams(
-        nin: state.nin.value,
         firstNameAr: state.firstName.value,
         lastNameAr: state.lastName.value,
         phone: state.phone.value,
         email: state.email.value,
-        birthDate: state.birthDate.value,
         password: state.password.value,
         passwordConfirmation: state.confirmPassword.value,
         deviceName: deviceName,

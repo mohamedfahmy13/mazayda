@@ -54,7 +54,10 @@ class PushTapRouter {
   }
 
   bool get _ready {
-    final path = _router.routerDelegate.currentConfiguration.uri.path;
+    final config = _router.routerDelegate.currentConfiguration;
+    // الشاشة المعروضة فعلًا: الدخول بقى بيتفتح push فوق المزايدات (وضع
+    // الضيف)، والـ `uri` بيفضل على أساس الـ stack تحته.
+    final path = config.lastOrNull?.matchedLocation ?? config.uri.path;
     // فاضي = الـ router لسه ماحلّش أول مسار.
     return path.isNotEmpty &&
         !_preSessionPaths.contains(path) &&

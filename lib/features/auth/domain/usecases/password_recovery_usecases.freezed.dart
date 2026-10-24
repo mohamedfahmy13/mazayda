@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$IdentifyAccountParams {
 
- String get nin; String get email;
+ String? get nin; String get email;
 /// Create a copy of IdentifyAccountParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -51,7 +51,7 @@ abstract mixin class $IdentifyAccountParamsCopyWith<$Res>  {
   factory $IdentifyAccountParamsCopyWith(IdentifyAccountParams value, $Res Function(IdentifyAccountParams) _then) = _$IdentifyAccountParamsCopyWithImpl;
 @useResult
 $Res call({
- String nin, String email
+ String? nin, String email
 });
 
 
@@ -68,10 +68,10 @@ class _$IdentifyAccountParamsCopyWithImpl<$Res>
 
 /// Create a copy of IdentifyAccountParams
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? nin = null,Object? email = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? nin = freezed,Object? email = null,}) {
   return _then(IdentifyAccountParams(
-nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+nin: freezed == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -157,7 +157,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String nin,  String email)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? nin,  String email)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _IdentifyAccountParams() when $default != null:
 return $default(_that.nin,_that.email);case _:
@@ -178,7 +178,7 @@ return $default(_that.nin,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String nin,  String email)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? nin,  String email)  $default,) {final _that = this;
 switch (_that) {
 case _IdentifyAccountParams():
 return $default(_that.nin,_that.email);case _:
@@ -198,7 +198,7 @@ return $default(_that.nin,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String nin,  String email)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? nin,  String email)?  $default,) {final _that = this;
 switch (_that) {
 case _IdentifyAccountParams() when $default != null:
 return $default(_that.nin,_that.email);case _:
@@ -213,10 +213,10 @@ return $default(_that.nin,_that.email);case _:
 
 
 class _IdentifyAccountParams implements IdentifyAccountParams {
-  const _IdentifyAccountParams({required this.nin, required this.email});
+  const _IdentifyAccountParams({this.nin, required this.email});
   
 
-@override final  String nin;
+@override final  String? nin;
 @override final  String email;
 
 /// Create a copy of IdentifyAccountParams
@@ -251,7 +251,7 @@ abstract mixin class _$IdentifyAccountParamsCopyWith<$Res> implements $IdentifyA
   factory _$IdentifyAccountParamsCopyWith(_IdentifyAccountParams value, $Res Function(_IdentifyAccountParams) _then) = __$IdentifyAccountParamsCopyWithImpl;
 @override @useResult
 $Res call({
- String nin, String email
+ String? nin, String email
 });
 
 
@@ -268,10 +268,10 @@ class __$IdentifyAccountParamsCopyWithImpl<$Res>
 
 /// Create a copy of IdentifyAccountParams
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? nin = null,Object? email = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? nin = freezed,Object? email = null,}) {
   return _then(_IdentifyAccountParams(
-nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+nin: freezed == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -282,7 +282,7 @@ as String,
 /// @nodoc
 mixin _$VerifyPasswordResetParams {
 
- String get nin; String get email; String get otp; String get password; String get passwordConfirmation;
+ String? get nin; String get email; String get otp; String get password; String get passwordConfirmation;
 /// Create a copy of VerifyPasswordResetParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -318,7 +318,7 @@ abstract mixin class $VerifyPasswordResetParamsCopyWith<$Res>  {
   factory $VerifyPasswordResetParamsCopyWith(VerifyPasswordResetParams value, $Res Function(VerifyPasswordResetParams) _then) = _$VerifyPasswordResetParamsCopyWithImpl;
 @useResult
 $Res call({
- String nin, String email, String otp, String password, String passwordConfirmation
+ String? nin, String email, String otp, String password, String passwordConfirmation
 });
 
 
@@ -335,10 +335,10 @@ class _$VerifyPasswordResetParamsCopyWithImpl<$Res>
 
 /// Create a copy of VerifyPasswordResetParams
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? nin = null,Object? email = null,Object? otp = null,Object? password = null,Object? passwordConfirmation = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? nin = freezed,Object? email = null,Object? otp = null,Object? password = null,Object? passwordConfirmation = null,}) {
   return _then(VerifyPasswordResetParams(
-nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+nin: freezed == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,otp: null == otp ? _self.otp : otp // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,passwordConfirmation: null == passwordConfirmation ? _self.passwordConfirmation : passwordConfirmation // ignore: cast_nullable_to_non_nullable
@@ -427,7 +427,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String nin,  String email,  String otp,  String password,  String passwordConfirmation)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? nin,  String email,  String otp,  String password,  String passwordConfirmation)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VerifyPasswordResetParams() when $default != null:
 return $default(_that.nin,_that.email,_that.otp,_that.password,_that.passwordConfirmation);case _:
@@ -448,7 +448,7 @@ return $default(_that.nin,_that.email,_that.otp,_that.password,_that.passwordCon
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String nin,  String email,  String otp,  String password,  String passwordConfirmation)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? nin,  String email,  String otp,  String password,  String passwordConfirmation)  $default,) {final _that = this;
 switch (_that) {
 case _VerifyPasswordResetParams():
 return $default(_that.nin,_that.email,_that.otp,_that.password,_that.passwordConfirmation);case _:
@@ -468,7 +468,7 @@ return $default(_that.nin,_that.email,_that.otp,_that.password,_that.passwordCon
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String nin,  String email,  String otp,  String password,  String passwordConfirmation)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? nin,  String email,  String otp,  String password,  String passwordConfirmation)?  $default,) {final _that = this;
 switch (_that) {
 case _VerifyPasswordResetParams() when $default != null:
 return $default(_that.nin,_that.email,_that.otp,_that.password,_that.passwordConfirmation);case _:
@@ -483,10 +483,10 @@ return $default(_that.nin,_that.email,_that.otp,_that.password,_that.passwordCon
 
 
 class _VerifyPasswordResetParams implements VerifyPasswordResetParams {
-  const _VerifyPasswordResetParams({required this.nin, required this.email, required this.otp, required this.password, required this.passwordConfirmation});
+  const _VerifyPasswordResetParams({this.nin, required this.email, required this.otp, required this.password, required this.passwordConfirmation});
   
 
-@override final  String nin;
+@override final  String? nin;
 @override final  String email;
 @override final  String otp;
 @override final  String password;
@@ -524,7 +524,7 @@ abstract mixin class _$VerifyPasswordResetParamsCopyWith<$Res> implements $Verif
   factory _$VerifyPasswordResetParamsCopyWith(_VerifyPasswordResetParams value, $Res Function(_VerifyPasswordResetParams) _then) = __$VerifyPasswordResetParamsCopyWithImpl;
 @override @useResult
 $Res call({
- String nin, String email, String otp, String password, String passwordConfirmation
+ String? nin, String email, String otp, String password, String passwordConfirmation
 });
 
 
@@ -541,10 +541,10 @@ class __$VerifyPasswordResetParamsCopyWithImpl<$Res>
 
 /// Create a copy of VerifyPasswordResetParams
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? nin = null,Object? email = null,Object? otp = null,Object? password = null,Object? passwordConfirmation = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? nin = freezed,Object? email = null,Object? otp = null,Object? password = null,Object? passwordConfirmation = null,}) {
   return _then(_VerifyPasswordResetParams(
-nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+nin: freezed == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,otp: null == otp ? _self.otp : otp // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,passwordConfirmation: null == passwordConfirmation ? _self.passwordConfirmation : passwordConfirmation // ignore: cast_nullable_to_non_nullable
@@ -558,7 +558,7 @@ as String,
 /// @nodoc
 mixin _$RecoverBySecretParams {
 
- String get nin; String get email; String get secretAnswer; String get password; String get passwordConfirmation;
+ String? get nin; String get email; String get secretAnswer; String get password; String get passwordConfirmation;
 /// Create a copy of RecoverBySecretParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -594,7 +594,7 @@ abstract mixin class $RecoverBySecretParamsCopyWith<$Res>  {
   factory $RecoverBySecretParamsCopyWith(RecoverBySecretParams value, $Res Function(RecoverBySecretParams) _then) = _$RecoverBySecretParamsCopyWithImpl;
 @useResult
 $Res call({
- String nin, String email, String secretAnswer, String password, String passwordConfirmation
+ String? nin, String email, String secretAnswer, String password, String passwordConfirmation
 });
 
 
@@ -611,10 +611,10 @@ class _$RecoverBySecretParamsCopyWithImpl<$Res>
 
 /// Create a copy of RecoverBySecretParams
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? nin = null,Object? email = null,Object? secretAnswer = null,Object? password = null,Object? passwordConfirmation = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? nin = freezed,Object? email = null,Object? secretAnswer = null,Object? password = null,Object? passwordConfirmation = null,}) {
   return _then(RecoverBySecretParams(
-nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+nin: freezed == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,secretAnswer: null == secretAnswer ? _self.secretAnswer : secretAnswer // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,passwordConfirmation: null == passwordConfirmation ? _self.passwordConfirmation : passwordConfirmation // ignore: cast_nullable_to_non_nullable
@@ -703,7 +703,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String nin,  String email,  String secretAnswer,  String password,  String passwordConfirmation)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? nin,  String email,  String secretAnswer,  String password,  String passwordConfirmation)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RecoverBySecretParams() when $default != null:
 return $default(_that.nin,_that.email,_that.secretAnswer,_that.password,_that.passwordConfirmation);case _:
@@ -724,7 +724,7 @@ return $default(_that.nin,_that.email,_that.secretAnswer,_that.password,_that.pa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String nin,  String email,  String secretAnswer,  String password,  String passwordConfirmation)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? nin,  String email,  String secretAnswer,  String password,  String passwordConfirmation)  $default,) {final _that = this;
 switch (_that) {
 case _RecoverBySecretParams():
 return $default(_that.nin,_that.email,_that.secretAnswer,_that.password,_that.passwordConfirmation);case _:
@@ -744,7 +744,7 @@ return $default(_that.nin,_that.email,_that.secretAnswer,_that.password,_that.pa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String nin,  String email,  String secretAnswer,  String password,  String passwordConfirmation)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? nin,  String email,  String secretAnswer,  String password,  String passwordConfirmation)?  $default,) {final _that = this;
 switch (_that) {
 case _RecoverBySecretParams() when $default != null:
 return $default(_that.nin,_that.email,_that.secretAnswer,_that.password,_that.passwordConfirmation);case _:
@@ -759,10 +759,10 @@ return $default(_that.nin,_that.email,_that.secretAnswer,_that.password,_that.pa
 
 
 class _RecoverBySecretParams implements RecoverBySecretParams {
-  const _RecoverBySecretParams({required this.nin, required this.email, required this.secretAnswer, required this.password, required this.passwordConfirmation});
+  const _RecoverBySecretParams({this.nin, required this.email, required this.secretAnswer, required this.password, required this.passwordConfirmation});
   
 
-@override final  String nin;
+@override final  String? nin;
 @override final  String email;
 @override final  String secretAnswer;
 @override final  String password;
@@ -800,7 +800,7 @@ abstract mixin class _$RecoverBySecretParamsCopyWith<$Res> implements $RecoverBy
   factory _$RecoverBySecretParamsCopyWith(_RecoverBySecretParams value, $Res Function(_RecoverBySecretParams) _then) = __$RecoverBySecretParamsCopyWithImpl;
 @override @useResult
 $Res call({
- String nin, String email, String secretAnswer, String password, String passwordConfirmation
+ String? nin, String email, String secretAnswer, String password, String passwordConfirmation
 });
 
 
@@ -817,10 +817,10 @@ class __$RecoverBySecretParamsCopyWithImpl<$Res>
 
 /// Create a copy of RecoverBySecretParams
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? nin = null,Object? email = null,Object? secretAnswer = null,Object? password = null,Object? passwordConfirmation = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? nin = freezed,Object? email = null,Object? secretAnswer = null,Object? password = null,Object? passwordConfirmation = null,}) {
   return _then(_RecoverBySecretParams(
-nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+nin: freezed == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,secretAnswer: null == secretAnswer ? _self.secretAnswer : secretAnswer // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,passwordConfirmation: null == passwordConfirmation ? _self.passwordConfirmation : passwordConfirmation // ignore: cast_nullable_to_non_nullable

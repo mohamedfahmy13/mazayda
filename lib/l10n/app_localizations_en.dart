@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -1077,11 +1076,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get forgotPasswordHint =>
-      'Enter your NIN and registered email and we will send a reset code.';
+      'Enter your registered email (and your NIN if you added one) and we will send a reset code.';
 
   @override
   String get recoverAccountHint =>
-      'Enter your NIN and registered email to see your secret question.';
+      'Enter your registered email (and your NIN if you added one) to see your secret question.';
 
   @override
   String get sendCode => 'Send code';
@@ -1491,4 +1490,102 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prefsGoPremium => 'Get Premium';
+
+  @override
+  String get sessionExpiredNotice =>
+      'Your session has ended. Sign in again to continue.';
+
+  @override
+  String get guestPromptTitle => 'Sign in to continue';
+
+  @override
+  String get guestMyAuctionsBody =>
+      'Follow the auctions you joined, your bids and your payments in one place.';
+
+  @override
+  String get guestNotificationsBody =>
+      'Sign in to get alerts about your auctions, payments and identity verification here.';
+
+  @override
+  String get guestProfileBody =>
+      'Manage your account and documents, and verify your identity to take part in auctions. You can browse auctions without an account.';
+
+  @override
+  String get registerIdentityLaterHint =>
+      'We don’t ask for your NIN or date of birth now. You’ll enter them when you verify your identity, before taking part in an auction.';
+
+  @override
+  String get ninOptional => 'National ID Number (optional)';
+
+  @override
+  String get recoveryNinOptionalHint =>
+      'Enter your NIN if you added one to your account.';
+
+  @override
+  String get lostEmailNeedsIdentity =>
+      'This option needs the NIN and date of birth on your account, so it isn’t available for accounts that haven’t added them yet.';
+
+  @override
+  String get kycIdentityMissingHint =>
+      'To complete identity verification, enter your NIN and date of birth (they were not asked for when the account was created).';
+
+  @override
+  String get profileNotProvided => 'Not added yet';
+
+  @override
+  String get deleteAccount => 'Delete account';
+
+  @override
+  String get deleteAccountWarningTitle =>
+      'Deletion is permanent and cannot be undone';
+
+  @override
+  String get deleteAccountIntro =>
+      'Your personal data will be permanently deleted and you will be signed out of every device.';
+
+  @override
+  String get deleteAccountDeletedTitle => 'What gets deleted';
+
+  @override
+  String get deleteAccountDeletedBody =>
+      'Your name, NIN, phone, email, date of birth, address, identity and commercial-register documents, notifications, watchlist and preferences. Any Premium subscription stops renewing.';
+
+  @override
+  String get deleteAccountKeptTitle =>
+      'What is kept, with nothing that identifies you';
+
+  @override
+  String get deleteAccountKeptBody =>
+      'Bids, payments, and signed reports and receipts, because the law requires the platform to keep these records.';
+
+  @override
+  String get deleteAccountReRegisterNote =>
+      'You can create a new account later with the same email and phone number.';
+
+  @override
+  String get deleteAccountPasswordLabel => 'Current password to confirm';
+
+  @override
+  String get deleteAccountSubmit => 'Permanently delete my account';
+
+  @override
+  String get deleteAccountConfirmTitle => 'Delete your account?';
+
+  @override
+  String get deleteAccountConfirmBody =>
+      'Are you sure? Your account will be permanently deleted and cannot be recovered.';
+
+  @override
+  String get deleteAccountConfirmAction => 'Delete permanently';
+
+  @override
+  String get deleteAccountBlockedTitle =>
+      'The account can’t be deleted right now';
+
+  @override
+  String get deleteAccountBlockedHint =>
+      'Deletion becomes available once the following is resolved:';
+
+  @override
+  String get deleteAccountDone => 'Your account has been permanently deleted.';
 }

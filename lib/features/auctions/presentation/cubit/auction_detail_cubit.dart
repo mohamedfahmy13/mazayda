@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/errors/failures.dart';
-import '../../../../core/network/token_storage.dart';
 import '../../../../core/session/account_cache.dart';
+import '../../../../core/session/session_manager.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../../../profile/domain/usecases/get_profile.dart';
 import '../../domain/entities/auction_viewer.dart';
@@ -37,13 +37,13 @@ sealed class AuctionDetailState with _$AuctionDetailState {
 class AuctionDetailCubit extends Cubit<AuctionDetailState> {
   final GetAuctionById _getAuctionById;
   final GetProfile _getProfile;
-  final TokenStorage _tokenStorage;
+  final SessionManager _session;
   final AccountCache _accountCache;
 
   AuctionDetailCubit(
     this._getAuctionById,
     this._getProfile,
-    this._tokenStorage,
+    this._session,
     this._accountCache,
   ) : super(const AuctionDetailState.initial());
 
@@ -60,8 +60,7 @@ class AuctionDetailCubit extends Cubit<AuctionDetailState> {
             : AuctionDetailState.error(failure.message),
       ),
       (detail) async {
-        final isAuthed = await _tokenStorage.hasTokens;
-        if (isClosed) return;
+        final isAuthed = _session.isSignedIn;
 
         // بعد BE-15 الـ viewer بيتعبّى عادي للمستخدم المسجّل، فالفرع ده
         // بقى استثناء: بيحصل لو التوكن منتهي/مش `access` — المصادقة على

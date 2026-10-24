@@ -32,6 +32,8 @@ class KycRepositoryImpl implements KycRepository {
   Future<Either<Failure, Unit>> submit(KycSubmitParams p) {
     return _guard(() async {
       await remote.submit({
+        if (p.nin != null) 'nin': p.nin,
+        if (p.birthDate != null) 'birth_date': p.birthDate,
         'first_name_fr': p.firstNameFr,
         'last_name_fr': p.lastNameFr,
         'father_name': p.fatherName,

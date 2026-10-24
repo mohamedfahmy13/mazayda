@@ -28,7 +28,7 @@ typedef PushData = Map<String, dynamic>;
 /// ناقص، التطبيق يكمل بدون Push. عشان كده **ممنوع** نلمس
 /// `FirebaseMessaging.instance` في تعريف الحقول — الوصول له قبل
 /// `Firebase.initializeApp` يرمي `[core/no-app]` وقت بناء الكائن، وده يكسر
-/// كل الـ DI اللي معتمد عليه (DeviceRegistrar → AuthRepository → CheckSession).
+/// كل الـ DI اللي معتمد عليه (DeviceRegistrar → AuthRepository → اللوجين).
 /// بدلها نجيبه كسول ومحميّ، وكل العمليات تبقى no-op لو Firebase مش جاهز.
 @lazySingleton
 class PushNotificationService {

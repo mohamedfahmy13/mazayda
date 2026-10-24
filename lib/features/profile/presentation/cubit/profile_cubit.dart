@@ -17,7 +17,6 @@ sealed class ProfileState with _$ProfileState {
     @Default(false) bool saving,
   }) = ProfileLoaded;
   const factory ProfileState.error(String message) = ProfileError;
-  const factory ProfileState.loggedOut() = ProfileLoggedOut;
 }
 
 @injectable
@@ -49,8 +48,9 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
+  /// الخروج — التطبيق بيكمّل كضيف. التنقّل مسؤولية الشاشة: التبويب نفسه
+  /// بيتقلب لطلب تسجيل الدخول، والـ Cubit ده بيتقفل معاه.
   Future<void> logout() async {
     await _logout(false);
-    emit(const ProfileState.loggedOut());
   }
 }

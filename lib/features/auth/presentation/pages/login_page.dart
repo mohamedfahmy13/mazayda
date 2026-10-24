@@ -13,31 +13,54 @@ import '../formz/auth_input_errors.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/auth_page_shell.dart';
 
+/// تسجيل الدخول — بيتفتح فوق الشاشة اللي محتاجة حساب (مش بوابة للتطبيق:
+/// الضيف بيتصفّح من غيره، App Store 5.1.1).
+///
+/// بعد النجاح بيرجع `true` للشاشة اللي فتحته فتكمّل من مكانها. [from] لما
+/// الـ router يحوّل الضيف هنا من شاشة حساب (رابط إشعار مثلًا) — بنكمّل لها.
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final String? from;
+
+  const LoginPage({super.key, this.from});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<LoginCubit>(),
-      child: const _LoginView(),
+      child: _LoginView(from: from),
     );
   }
 }
 
 class _LoginView extends StatelessWidget {
-  const _LoginView();
+  final String? from;
+
+  const _LoginView({this.from});
+
+  void _finish(BuildContext context) {
+    final target = from;
+    if (target != null && target.startsWith('/')) {
+      context.canPop() ? context.pushReplacement(target) : context.go(target);
+    } else if (context.canPop()) {
+      context.pop(true);
+    } else {
+      context.go(Routes.home);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return BlocConsumer<LoginCubit, LoginState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         switch (state.status) {
           case LoginStatus.success:
-            context.go(Routes.home);
+            _finish(context);
           case LoginStatus.needsVerification:
-            context.push('${Routes.otp}/${state.userId ?? ''}');
+            final verified = await context.push<bool>(
+              '${Routes.otp}/${state.userId ?? ''}',
+            );
+            if (verified == true && context.mounted) _finish(context);
           default:
             break;
         }
@@ -50,7 +73,6 @@ class _LoginView extends StatelessWidget {
           title: t.login,
           subtitle: t.splashTagline,
           icon: Icons.login_rounded,
-          showBackButton: false,
           child: AutofillGroup(
             child: ListView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -157,7 +179,14 @@ class _LoginView extends StatelessWidget {
                   child: TextButton(
                     onPressed: submitting
                         ? null
-                        : () => context.push(Routes.register),
+                        : () async {
+                            final created = await context.push<bool>(
+                              Routes.register,
+                            );
+                            if (created == true && context.mounted) {
+                              _finish(context);
+                            }
+                          },
                     child: Text(
                       t.noAccountRegister,
                       textAlign: TextAlign.center,

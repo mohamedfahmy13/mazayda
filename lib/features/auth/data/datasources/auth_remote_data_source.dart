@@ -20,13 +20,13 @@ abstract class AuthRemoteDataSource {
   /// ⚠️ الباك بيرجّع 200 **دايمًا** حتى لو الحساب مش موجود (حماية من
   /// استكشاف الحسابات) — فمينفعش نستنتج وجود الحساب من الردّ.
   Future<void> requestPasswordReset({
-    required String nin,
+    String? nin,
     required String email,
   });
 
   /// التحقق من الرمز وتعيين كلمة سر جديدة. أخطاء الرمز بتيجي تحت `otp`.
   Future<void> verifyPasswordReset({
-    required String nin,
+    String? nin,
     required String email,
     required String otp,
     required String password,
@@ -36,13 +36,13 @@ abstract class AuthRemoteDataSource {
   /// كشف السؤال السرّي — بيرجّع **مفتاح** السؤال مش نصّه.
   /// ⚠️ ده بيكشف وجود الحساب فعلًا (422 تحت `nin` لو مش متاح).
   Future<String> revealSecretQuestion({
-    required String nin,
+    String? nin,
     required String email,
   });
 
   /// استرجاع بالسؤال السرّي. أخطاء الإجابة بتيجي تحت `secret_answer`.
   Future<void> recoverBySecret({
-    required String nin,
+    String? nin,
     required String email,
     required String secretAnswer,
     required String password,
@@ -128,18 +128,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> requestPasswordReset({
-    required String nin,
+    String? nin,
     required String email,
   }) async {
     await client.post(
       ApiConstants.passwordRequest,
-      body: {'nin': nin, 'email': email},
+      body: _identity(nin, email),
     );
   }
 
   @override
   Future<void> verifyPasswordReset({
-    required String nin,
+    String? nin,
     required String email,
     required String otp,
     required String password,
@@ -148,8 +148,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     await client.post(
       ApiConstants.passwordVerify,
       body: {
-        'nin': nin,
-        'email': email,
+        ..._identity(nin, email),
         'otp': otp,
         'password': password,
         'password_confirmation': passwordConfirmation,
@@ -159,12 +158,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<String> revealSecretQuestion({
-    required String nin,
+    String? nin,
     required String email,
   }) async {
     final data = await client.post(
       ApiConstants.recoverReveal,
-      body: {'nin': nin, 'email': email},
+      body: _identity(nin, email),
     );
     // data: { question: "<key>" } — مفتاح زي mother_maiden، بنترجمه محليًا.
     return ((data as Map)['question'] ?? '').toString();
@@ -172,7 +171,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> recoverBySecret({
-    required String nin,
+    String? nin,
     required String email,
     required String secretAnswer,
     required String password,
@@ -181,8 +180,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     await client.post(
       ApiConstants.recoverVerify,
       body: {
-        'nin': nin,
-        'email': email,
+        ..._identity(nin, email),
         'secret_answer': secretAnswer,
         'password': password,
         'password_confirmation': passwordConfirmation,
@@ -222,6 +220,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (data == null) return null;
     return EmailRecoveryModel.fromJson(data as Map<String, dynamic>);
   }
+
+  /// تعريف الحساب في مسارات الاسترجاع — `nin` بيتبعت بس لو المستخدم كتبه.
+  /// طلب بالبريد لوحده بيطابق الحسابات اللي **مالهاش** رقم تعريف بس.
+  Map<String, dynamic> _identity(String? nin, String email) => {
+    if (nin != null) 'nin': nin,
+    'email': email,
+  };
 
   /// الـ envelope ممكن يرجّع التوكنات متداخلة تحت "tokens" أو في الجذر مباشرة.
   Map<String, dynamic> _unwrapTokens(Map<String, dynamic> data) =>

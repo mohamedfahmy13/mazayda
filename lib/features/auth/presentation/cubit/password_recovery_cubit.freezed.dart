@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PasswordRecoveryState {
 
- RecoveryMode get mode; RecoveryStep get step; RecoveryStatus get status; NinInput get nin; EmailInput get email; String get otp; String get secretAnswer; NewPasswordInput get password; ConfirmPasswordInput get confirmPassword;/// مفتاح السؤال السرّي الراجع من السيرفر (مثال: mother_maiden).
+ RecoveryMode get mode; RecoveryStep get step; RecoveryStatus get status;/// اختياري — الحساب اللي اتعمل من غير رقم تعريف بيتعرّف بالبريد بس.
+ OptionalNinInput get nin; EmailInput get email; String get otp; String get secretAnswer; NewPasswordInput get password; ConfirmPasswordInput get confirmPassword;/// مفتاح السؤال السرّي الراجع من السيرفر (مثال: mother_maiden).
  String? get questionKey; String? get errorMessage; Map<String, List<String>>? get serverErrors;
 /// Create a copy of PasswordRecoveryState
 /// with the given fields replaced by the non-null parameter values.
@@ -52,7 +53,7 @@ abstract mixin class $PasswordRecoveryStateCopyWith<$Res>  {
   factory $PasswordRecoveryStateCopyWith(PasswordRecoveryState value, $Res Function(PasswordRecoveryState) _then) = _$PasswordRecoveryStateCopyWithImpl;
 @useResult
 $Res call({
- RecoveryMode mode, RecoveryStep step, RecoveryStatus status, NinInput nin, EmailInput email, String otp, String secretAnswer, NewPasswordInput password, ConfirmPasswordInput confirmPassword, String? questionKey, String? errorMessage, Map<String, List<String>>? serverErrors
+ RecoveryMode mode, RecoveryStep step, RecoveryStatus status, OptionalNinInput nin, EmailInput email, String otp, String secretAnswer, NewPasswordInput password, ConfirmPasswordInput confirmPassword, String? questionKey, String? errorMessage, Map<String, List<String>>? serverErrors
 });
 
 
@@ -75,7 +76,7 @@ mode: null == mode ? _self.mode : mode // ignore: cast_nullable_to_non_nullable
 as RecoveryMode,step: null == step ? _self.step : step // ignore: cast_nullable_to_non_nullable
 as RecoveryStep,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as RecoveryStatus,nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as NinInput,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as OptionalNinInput,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as EmailInput,otp: null == otp ? _self.otp : otp // ignore: cast_nullable_to_non_nullable
 as String,secretAnswer: null == secretAnswer ? _self.secretAnswer : secretAnswer // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
@@ -168,7 +169,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( RecoveryMode mode,  RecoveryStep step,  RecoveryStatus status,  NinInput nin,  EmailInput email,  String otp,  String secretAnswer,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  String? questionKey,  String? errorMessage,  Map<String, List<String>>? serverErrors)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( RecoveryMode mode,  RecoveryStep step,  RecoveryStatus status,  OptionalNinInput nin,  EmailInput email,  String otp,  String secretAnswer,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  String? questionKey,  String? errorMessage,  Map<String, List<String>>? serverErrors)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PasswordRecoveryState() when $default != null:
 return $default(_that.mode,_that.step,_that.status,_that.nin,_that.email,_that.otp,_that.secretAnswer,_that.password,_that.confirmPassword,_that.questionKey,_that.errorMessage,_that.serverErrors);case _:
@@ -189,7 +190,7 @@ return $default(_that.mode,_that.step,_that.status,_that.nin,_that.email,_that.o
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( RecoveryMode mode,  RecoveryStep step,  RecoveryStatus status,  NinInput nin,  EmailInput email,  String otp,  String secretAnswer,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  String? questionKey,  String? errorMessage,  Map<String, List<String>>? serverErrors)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( RecoveryMode mode,  RecoveryStep step,  RecoveryStatus status,  OptionalNinInput nin,  EmailInput email,  String otp,  String secretAnswer,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  String? questionKey,  String? errorMessage,  Map<String, List<String>>? serverErrors)  $default,) {final _that = this;
 switch (_that) {
 case _PasswordRecoveryState():
 return $default(_that.mode,_that.step,_that.status,_that.nin,_that.email,_that.otp,_that.secretAnswer,_that.password,_that.confirmPassword,_that.questionKey,_that.errorMessage,_that.serverErrors);case _:
@@ -209,7 +210,7 @@ return $default(_that.mode,_that.step,_that.status,_that.nin,_that.email,_that.o
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( RecoveryMode mode,  RecoveryStep step,  RecoveryStatus status,  NinInput nin,  EmailInput email,  String otp,  String secretAnswer,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  String? questionKey,  String? errorMessage,  Map<String, List<String>>? serverErrors)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( RecoveryMode mode,  RecoveryStep step,  RecoveryStatus status,  OptionalNinInput nin,  EmailInput email,  String otp,  String secretAnswer,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  String? questionKey,  String? errorMessage,  Map<String, List<String>>? serverErrors)?  $default,) {final _that = this;
 switch (_that) {
 case _PasswordRecoveryState() when $default != null:
 return $default(_that.mode,_that.step,_that.status,_that.nin,_that.email,_that.otp,_that.secretAnswer,_that.password,_that.confirmPassword,_that.questionKey,_that.errorMessage,_that.serverErrors);case _:
@@ -224,13 +225,14 @@ return $default(_that.mode,_that.step,_that.status,_that.nin,_that.email,_that.o
 
 
 class _PasswordRecoveryState extends PasswordRecoveryState {
-  const _PasswordRecoveryState({required this.mode, this.step = RecoveryStep.identify, this.status = RecoveryStatus.idle, this.nin = const NinInput.pure(), this.email = const EmailInput.pure(), this.otp = '', this.secretAnswer = '', this.password = const NewPasswordInput.pure(), this.confirmPassword = const ConfirmPasswordInput.pure(), this.questionKey, this.errorMessage,  Map<String, List<String>>? serverErrors}): _serverErrors = serverErrors,super._();
+  const _PasswordRecoveryState({required this.mode, this.step = RecoveryStep.identify, this.status = RecoveryStatus.idle, this.nin = const OptionalNinInput.pure(), this.email = const EmailInput.pure(), this.otp = '', this.secretAnswer = '', this.password = const NewPasswordInput.pure(), this.confirmPassword = const ConfirmPasswordInput.pure(), this.questionKey, this.errorMessage,  Map<String, List<String>>? serverErrors}): _serverErrors = serverErrors,super._();
   
 
 @override final  RecoveryMode mode;
 @override@JsonKey() final  RecoveryStep step;
 @override@JsonKey() final  RecoveryStatus status;
-@override@JsonKey() final  NinInput nin;
+/// اختياري — الحساب اللي اتعمل من غير رقم تعريف بيتعرّف بالبريد بس.
+@override@JsonKey() final  OptionalNinInput nin;
 @override@JsonKey() final  EmailInput email;
 @override@JsonKey() final  String otp;
 @override@JsonKey() final  String secretAnswer;
@@ -281,7 +283,7 @@ abstract mixin class _$PasswordRecoveryStateCopyWith<$Res> implements $PasswordR
   factory _$PasswordRecoveryStateCopyWith(_PasswordRecoveryState value, $Res Function(_PasswordRecoveryState) _then) = __$PasswordRecoveryStateCopyWithImpl;
 @override @useResult
 $Res call({
- RecoveryMode mode, RecoveryStep step, RecoveryStatus status, NinInput nin, EmailInput email, String otp, String secretAnswer, NewPasswordInput password, ConfirmPasswordInput confirmPassword, String? questionKey, String? errorMessage, Map<String, List<String>>? serverErrors
+ RecoveryMode mode, RecoveryStep step, RecoveryStatus status, OptionalNinInput nin, EmailInput email, String otp, String secretAnswer, NewPasswordInput password, ConfirmPasswordInput confirmPassword, String? questionKey, String? errorMessage, Map<String, List<String>>? serverErrors
 });
 
 
@@ -304,7 +306,7 @@ mode: null == mode ? _self.mode : mode // ignore: cast_nullable_to_non_nullable
 as RecoveryMode,step: null == step ? _self.step : step // ignore: cast_nullable_to_non_nullable
 as RecoveryStep,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as RecoveryStatus,nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as NinInput,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as OptionalNinInput,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as EmailInput,otp: null == otp ? _self.otp : otp // ignore: cast_nullable_to_non_nullable
 as String,secretAnswer: null == secretAnswer ? _self.secretAnswer : secretAnswer // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable

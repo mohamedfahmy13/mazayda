@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RegisterState {
 
- NinInput get nin; NameInput get firstName; NameInput get lastName; PhoneInput get phone; EmailInput get email; BirthDateInput get birthDate; NewPasswordInput get password; ConfirmPasswordInput get confirmPassword; RegisterStatus get status; bool get isValid; String? get userId; String? get errorMessage; Map<String, List<String>>? get serverErrors;
+ NameInput get firstName; NameInput get lastName; PhoneInput get phone; EmailInput get email; NewPasswordInput get password; ConfirmPasswordInput get confirmPassword; RegisterStatus get status; bool get isValid; String? get userId; String? get errorMessage; Map<String, List<String>>? get serverErrors;
 /// Create a copy of RegisterState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $RegisterStateCopyWith<RegisterState> get copyWith => _$RegisterStateCopyWithImp
 @override
 bool operator ==(Object other) {
   final _this = this as RegisterState;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegisterState&&(identical(other.nin, _this.nin) || other.nin == _this.nin)&&(identical(other.firstName, _this.firstName) || other.firstName == _this.firstName)&&(identical(other.lastName, _this.lastName) || other.lastName == _this.lastName)&&(identical(other.phone, _this.phone) || other.phone == _this.phone)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.birthDate, _this.birthDate) || other.birthDate == _this.birthDate)&&(identical(other.password, _this.password) || other.password == _this.password)&&(identical(other.confirmPassword, _this.confirmPassword) || other.confirmPassword == _this.confirmPassword)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.isValid, _this.isValid) || other.isValid == _this.isValid)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.errorMessage, _this.errorMessage) || other.errorMessage == _this.errorMessage)&&const DeepCollectionEquality().equals(other.serverErrors, _this.serverErrors));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegisterState&&(identical(other.firstName, _this.firstName) || other.firstName == _this.firstName)&&(identical(other.lastName, _this.lastName) || other.lastName == _this.lastName)&&(identical(other.phone, _this.phone) || other.phone == _this.phone)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.password, _this.password) || other.password == _this.password)&&(identical(other.confirmPassword, _this.confirmPassword) || other.confirmPassword == _this.confirmPassword)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.isValid, _this.isValid) || other.isValid == _this.isValid)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.errorMessage, _this.errorMessage) || other.errorMessage == _this.errorMessage)&&const DeepCollectionEquality().equals(other.serverErrors, _this.serverErrors));
 }
 
 
 @override
 int get hashCode {
   final _this = this as RegisterState;
-  return Object.hash(runtimeType,_this.nin,_this.firstName,_this.lastName,_this.phone,_this.email,_this.birthDate,_this.password,_this.confirmPassword,_this.status,_this.isValid,_this.userId,_this.errorMessage,const DeepCollectionEquality().hash(_this.serverErrors));
+  return Object.hash(runtimeType,_this.firstName,_this.lastName,_this.phone,_this.email,_this.password,_this.confirmPassword,_this.status,_this.isValid,_this.userId,_this.errorMessage,const DeepCollectionEquality().hash(_this.serverErrors));
 }
 
 @override
 String toString() {
   final _this = this as RegisterState;
-  return 'RegisterState(nin: ${_this.nin}, firstName: ${_this.firstName}, lastName: ${_this.lastName}, phone: ${_this.phone}, email: ${_this.email}, birthDate: ${_this.birthDate}, password: ${_this.password}, confirmPassword: ${_this.confirmPassword}, status: ${_this.status}, isValid: ${_this.isValid}, userId: ${_this.userId}, errorMessage: ${_this.errorMessage}, serverErrors: ${_this.serverErrors})';
+  return 'RegisterState(firstName: ${_this.firstName}, lastName: ${_this.lastName}, phone: ${_this.phone}, email: ${_this.email}, password: ${_this.password}, confirmPassword: ${_this.confirmPassword}, status: ${_this.status}, isValid: ${_this.isValid}, userId: ${_this.userId}, errorMessage: ${_this.errorMessage}, serverErrors: ${_this.serverErrors})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $RegisterStateCopyWith<$Res>  {
   factory $RegisterStateCopyWith(RegisterState value, $Res Function(RegisterState) _then) = _$RegisterStateCopyWithImpl;
 @useResult
 $Res call({
- NinInput nin, NameInput firstName, NameInput lastName, PhoneInput phone, EmailInput email, BirthDateInput birthDate, NewPasswordInput password, ConfirmPasswordInput confirmPassword, RegisterStatus status, bool isValid, String? userId, String? errorMessage, Map<String, List<String>>? serverErrors
+ NameInput firstName, NameInput lastName, PhoneInput phone, EmailInput email, NewPasswordInput password, ConfirmPasswordInput confirmPassword, RegisterStatus status, bool isValid, String? userId, String? errorMessage, Map<String, List<String>>? serverErrors
 });
 
 
@@ -68,15 +68,13 @@ class _$RegisterStateCopyWithImpl<$Res>
 
 /// Create a copy of RegisterState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? nin = null,Object? firstName = null,Object? lastName = null,Object? phone = null,Object? email = null,Object? birthDate = null,Object? password = null,Object? confirmPassword = null,Object? status = null,Object? isValid = null,Object? userId = freezed,Object? errorMessage = freezed,Object? serverErrors = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? firstName = null,Object? lastName = null,Object? phone = null,Object? email = null,Object? password = null,Object? confirmPassword = null,Object? status = null,Object? isValid = null,Object? userId = freezed,Object? errorMessage = freezed,Object? serverErrors = freezed,}) {
   return _then(RegisterState(
-nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as NinInput,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as NameInput,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as NameInput,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
 as PhoneInput,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as EmailInput,birthDate: null == birthDate ? _self.birthDate : birthDate // ignore: cast_nullable_to_non_nullable
-as BirthDateInput,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as EmailInput,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as NewPasswordInput,confirmPassword: null == confirmPassword ? _self.confirmPassword : confirmPassword // ignore: cast_nullable_to_non_nullable
 as ConfirmPasswordInput,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as RegisterStatus,isValid: null == isValid ? _self.isValid : isValid // ignore: cast_nullable_to_non_nullable
@@ -168,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( NinInput nin,  NameInput firstName,  NameInput lastName,  PhoneInput phone,  EmailInput email,  BirthDateInput birthDate,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  RegisterStatus status,  bool isValid,  String? userId,  String? errorMessage,  Map<String, List<String>>? serverErrors)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( NameInput firstName,  NameInput lastName,  PhoneInput phone,  EmailInput email,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  RegisterStatus status,  bool isValid,  String? userId,  String? errorMessage,  Map<String, List<String>>? serverErrors)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RegisterState() when $default != null:
-return $default(_that.nin,_that.firstName,_that.lastName,_that.phone,_that.email,_that.birthDate,_that.password,_that.confirmPassword,_that.status,_that.isValid,_that.userId,_that.errorMessage,_that.serverErrors);case _:
+return $default(_that.firstName,_that.lastName,_that.phone,_that.email,_that.password,_that.confirmPassword,_that.status,_that.isValid,_that.userId,_that.errorMessage,_that.serverErrors);case _:
   return orElse();
 
 }
@@ -189,10 +187,10 @@ return $default(_that.nin,_that.firstName,_that.lastName,_that.phone,_that.email
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( NinInput nin,  NameInput firstName,  NameInput lastName,  PhoneInput phone,  EmailInput email,  BirthDateInput birthDate,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  RegisterStatus status,  bool isValid,  String? userId,  String? errorMessage,  Map<String, List<String>>? serverErrors)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( NameInput firstName,  NameInput lastName,  PhoneInput phone,  EmailInput email,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  RegisterStatus status,  bool isValid,  String? userId,  String? errorMessage,  Map<String, List<String>>? serverErrors)  $default,) {final _that = this;
 switch (_that) {
 case _RegisterState():
-return $default(_that.nin,_that.firstName,_that.lastName,_that.phone,_that.email,_that.birthDate,_that.password,_that.confirmPassword,_that.status,_that.isValid,_that.userId,_that.errorMessage,_that.serverErrors);case _:
+return $default(_that.firstName,_that.lastName,_that.phone,_that.email,_that.password,_that.confirmPassword,_that.status,_that.isValid,_that.userId,_that.errorMessage,_that.serverErrors);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +207,10 @@ return $default(_that.nin,_that.firstName,_that.lastName,_that.phone,_that.email
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( NinInput nin,  NameInput firstName,  NameInput lastName,  PhoneInput phone,  EmailInput email,  BirthDateInput birthDate,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  RegisterStatus status,  bool isValid,  String? userId,  String? errorMessage,  Map<String, List<String>>? serverErrors)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( NameInput firstName,  NameInput lastName,  PhoneInput phone,  EmailInput email,  NewPasswordInput password,  ConfirmPasswordInput confirmPassword,  RegisterStatus status,  bool isValid,  String? userId,  String? errorMessage,  Map<String, List<String>>? serverErrors)?  $default,) {final _that = this;
 switch (_that) {
 case _RegisterState() when $default != null:
-return $default(_that.nin,_that.firstName,_that.lastName,_that.phone,_that.email,_that.birthDate,_that.password,_that.confirmPassword,_that.status,_that.isValid,_that.userId,_that.errorMessage,_that.serverErrors);case _:
+return $default(_that.firstName,_that.lastName,_that.phone,_that.email,_that.password,_that.confirmPassword,_that.status,_that.isValid,_that.userId,_that.errorMessage,_that.serverErrors);case _:
   return null;
 
 }
@@ -224,15 +222,13 @@ return $default(_that.nin,_that.firstName,_that.lastName,_that.phone,_that.email
 
 
 class _RegisterState extends RegisterState {
-  const _RegisterState({this.nin = const NinInput.pure(), this.firstName = const NameInput.pure(), this.lastName = const NameInput.pure(), this.phone = const PhoneInput.pure(), this.email = const EmailInput.pure(), this.birthDate = const BirthDateInput.pure(), this.password = const NewPasswordInput.pure(), this.confirmPassword = const ConfirmPasswordInput.pure(), this.status = RegisterStatus.idle, this.isValid = false, this.userId, this.errorMessage,  Map<String, List<String>>? serverErrors}): _serverErrors = serverErrors,super._();
+  const _RegisterState({this.firstName = const NameInput.pure(), this.lastName = const NameInput.pure(), this.phone = const PhoneInput.pure(), this.email = const EmailInput.pure(), this.password = const NewPasswordInput.pure(), this.confirmPassword = const ConfirmPasswordInput.pure(), this.status = RegisterStatus.idle, this.isValid = false, this.userId, this.errorMessage,  Map<String, List<String>>? serverErrors}): _serverErrors = serverErrors,super._();
   
 
-@override@JsonKey() final  NinInput nin;
 @override@JsonKey() final  NameInput firstName;
 @override@JsonKey() final  NameInput lastName;
 @override@JsonKey() final  PhoneInput phone;
 @override@JsonKey() final  EmailInput email;
-@override@JsonKey() final  BirthDateInput birthDate;
 @override@JsonKey() final  NewPasswordInput password;
 @override@JsonKey() final  ConfirmPasswordInput confirmPassword;
 @override@JsonKey() final  RegisterStatus status;
@@ -259,18 +255,18 @@ _$RegisterStateCopyWith<_RegisterState> get copyWith => __$RegisterStateCopyWith
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegisterState&&(identical(other.nin, nin) || other.nin == nin)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.birthDate, birthDate) || other.birthDate == birthDate)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword)&&(identical(other.status, status) || other.status == status)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other.serverErrors, _serverErrors));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegisterState&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.confirmPassword, confirmPassword) || other.confirmPassword == confirmPassword)&&(identical(other.status, status) || other.status == status)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other.serverErrors, _serverErrors));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,nin,firstName,lastName,phone,email,birthDate,password,confirmPassword,status,isValid,userId,errorMessage,const DeepCollectionEquality().hash(_serverErrors));
+    return Object.hash(runtimeType,firstName,lastName,phone,email,password,confirmPassword,status,isValid,userId,errorMessage,const DeepCollectionEquality().hash(_serverErrors));
 }
 
 @override
 String toString() {
-    return 'RegisterState(nin: $nin, firstName: $firstName, lastName: $lastName, phone: $phone, email: $email, birthDate: $birthDate, password: $password, confirmPassword: $confirmPassword, status: $status, isValid: $isValid, userId: $userId, errorMessage: $errorMessage, serverErrors: $serverErrors)';
+    return 'RegisterState(firstName: $firstName, lastName: $lastName, phone: $phone, email: $email, password: $password, confirmPassword: $confirmPassword, status: $status, isValid: $isValid, userId: $userId, errorMessage: $errorMessage, serverErrors: $serverErrors)';
 }
 
 
@@ -281,7 +277,7 @@ abstract mixin class _$RegisterStateCopyWith<$Res> implements $RegisterStateCopy
   factory _$RegisterStateCopyWith(_RegisterState value, $Res Function(_RegisterState) _then) = __$RegisterStateCopyWithImpl;
 @override @useResult
 $Res call({
- NinInput nin, NameInput firstName, NameInput lastName, PhoneInput phone, EmailInput email, BirthDateInput birthDate, NewPasswordInput password, ConfirmPasswordInput confirmPassword, RegisterStatus status, bool isValid, String? userId, String? errorMessage, Map<String, List<String>>? serverErrors
+ NameInput firstName, NameInput lastName, PhoneInput phone, EmailInput email, NewPasswordInput password, ConfirmPasswordInput confirmPassword, RegisterStatus status, bool isValid, String? userId, String? errorMessage, Map<String, List<String>>? serverErrors
 });
 
 
@@ -298,15 +294,13 @@ class __$RegisterStateCopyWithImpl<$Res>
 
 /// Create a copy of RegisterState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? nin = null,Object? firstName = null,Object? lastName = null,Object? phone = null,Object? email = null,Object? birthDate = null,Object? password = null,Object? confirmPassword = null,Object? status = null,Object? isValid = null,Object? userId = freezed,Object? errorMessage = freezed,Object? serverErrors = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? firstName = null,Object? lastName = null,Object? phone = null,Object? email = null,Object? password = null,Object? confirmPassword = null,Object? status = null,Object? isValid = null,Object? userId = freezed,Object? errorMessage = freezed,Object? serverErrors = freezed,}) {
   return _then(_RegisterState(
-nin: null == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
-as NinInput,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as NameInput,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as NameInput,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
 as PhoneInput,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as EmailInput,birthDate: null == birthDate ? _self.birthDate : birthDate // ignore: cast_nullable_to_non_nullable
-as BirthDateInput,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as EmailInput,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as NewPasswordInput,confirmPassword: null == confirmPassword ? _self.confirmPassword : confirmPassword // ignore: cast_nullable_to_non_nullable
 as ConfirmPasswordInput,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as RegisterStatus,isValid: null == isValid ? _self.isValid : isValid // ignore: cast_nullable_to_non_nullable

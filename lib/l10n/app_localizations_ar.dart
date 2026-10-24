@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -1072,11 +1071,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get forgotPasswordHint =>
-      'أدخل رقم التعريف الوطني والبريد المسجّل، وسنرسل رمزًا لإعادة التعيين.';
+      'أدخل بريدك الإلكتروني المسجّل (ورقم التعريف الوطني إن أضفته)، وسنرسل رمزًا لإعادة التعيين.';
 
   @override
   String get recoverAccountHint =>
-      'أدخل رقم التعريف الوطني والبريد المسجّل لعرض سؤالك السرّي.';
+      'أدخل بريدك الإلكتروني المسجّل (ورقم التعريف الوطني إن أضفته) لعرض سؤالك السرّي.';
 
   @override
   String get sendCode => 'إرسال الرمز';
@@ -1485,4 +1484,98 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prefsGoPremium => 'الاشتراك في العضوية المميّزة';
+
+  @override
+  String get sessionExpiredNotice =>
+      'انتهت جلستك. سجّل الدخول من جديد للمتابعة.';
+
+  @override
+  String get guestPromptTitle => 'سجّل الدخول للمتابعة';
+
+  @override
+  String get guestMyAuctionsBody =>
+      'تابع المزايدات التي شاركت فيها، وعروضك، ومدفوعاتك من مكان واحد.';
+
+  @override
+  String get guestNotificationsBody =>
+      'سجّل الدخول لتصلك هنا تنبيهات مزايداتك ومدفوعاتك والتحقق من هويتك.';
+
+  @override
+  String get guestProfileBody =>
+      'أدِر حسابك ووثائقك، وتحقّق من هويتك للمشاركة في المزايدات. يمكنك تصفّح المزايدات دون حساب.';
+
+  @override
+  String get registerIdentityLaterHint =>
+      'لا نطلب رقم التعريف الوطني ولا تاريخ الميلاد الآن، بل عند التحقق من الهوية قبل المشاركة في أي مزايدة.';
+
+  @override
+  String get ninOptional => 'رقم التعريف الوطني (اختياري)';
+
+  @override
+  String get recoveryNinOptionalHint =>
+      'أدخل رقم التعريف الوطني إذا كنت قد أضفته إلى حسابك.';
+
+  @override
+  String get lostEmailNeedsIdentity =>
+      'يتطلّب هذا المسار رقم التعريف الوطني وتاريخ الميلاد المسجّلين في حسابك، لذا لا يتاح للحسابات التي لم تُضِفهما بعد.';
+
+  @override
+  String get kycIdentityMissingHint =>
+      'لإتمام التحقق من الهوية، أدخل رقم التعريف الوطني وتاريخ الميلاد (لم يُطلبا عند إنشاء الحساب).';
+
+  @override
+  String get profileNotProvided => 'لم يُضَف بعد';
+
+  @override
+  String get deleteAccount => 'حذف الحساب';
+
+  @override
+  String get deleteAccountWarningTitle => 'الحذف نهائي ولا يمكن التراجع عنه';
+
+  @override
+  String get deleteAccountIntro =>
+      'سيتم حذف بياناتك الشخصية نهائياً وتسجيل خروجك من جميع الأجهزة.';
+
+  @override
+  String get deleteAccountDeletedTitle => 'ما سيُحذف';
+
+  @override
+  String get deleteAccountDeletedBody =>
+      'الاسم، ورقم التعريف الوطني، والهاتف، والبريد الإلكتروني، وتاريخ الميلاد، والعنوان، ووثائق التحقق من الهوية والسجل التجاري، والإشعارات، والمزايدات المتابَعة، وتفضيلاتك. ويتوقّف تجديد أي اشتراك مميّز.';
+
+  @override
+  String get deleteAccountKeptTitle => 'ما يُحتفظ به دون أي بيانات تعرّف بك';
+
+  @override
+  String get deleteAccountKeptBody =>
+      'المزايدات والمدفوعات والمحاضر والإيصالات الموقّعة، لأن القانون يُلزم المنصّة بالاحتفاظ بهذه السجلات.';
+
+  @override
+  String get deleteAccountReRegisterNote =>
+      'يمكنك إنشاء حساب جديد لاحقًا بنفس البريد الإلكتروني ورقم الهاتف.';
+
+  @override
+  String get deleteAccountPasswordLabel => 'كلمة المرور الحالية للتأكيد';
+
+  @override
+  String get deleteAccountSubmit => 'حذف حسابي نهائياً';
+
+  @override
+  String get deleteAccountConfirmTitle => 'تأكيد حذف الحساب';
+
+  @override
+  String get deleteAccountConfirmBody =>
+      'هل أنت متأكد؟ سيُحذف حسابك نهائياً ولا يمكن استرجاعه.';
+
+  @override
+  String get deleteAccountConfirmAction => 'حذف نهائياً';
+
+  @override
+  String get deleteAccountBlockedTitle => 'لا يمكن حذف الحساب حالياً';
+
+  @override
+  String get deleteAccountBlockedHint => 'يصبح الحذف متاحًا بعد معالجة ما يلي:';
+
+  @override
+  String get deleteAccountDone => 'تم حذف حسابك نهائياً.';
 }

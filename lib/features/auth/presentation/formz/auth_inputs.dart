@@ -129,6 +129,27 @@ class NinInput extends FormzInput<String, NinError> {
   }
 }
 
+/// رقم تعريف **اختياري** (استرجاع الحساب): الفاضي صالح، والمكتوب لازم
+/// يبقى 18 رقم. الحساب اللي اتعمل من غير رقم بيتعرّف بالبريد بس.
+class OptionalNinInput extends FormzInput<String, NinError> {
+  const OptionalNinInput.pure() : super.pure('');
+  OptionalNinInput.dirty([String value = ''])
+    : super.dirty(toLatinDigits(value.trim()));
+
+  @override
+  NinError? validator(String value) {
+    if (value.isEmpty) return null;
+    if (value.length != AuthConstants.ninLength ||
+        int.tryParse(value) == null) {
+      return NinError.invalid;
+    }
+    return null;
+  }
+
+  /// القيمة اللي بتتبعت — `null` لو المستخدم ماكتبش رقم.
+  String? get valueOrNull => value.isEmpty ? null : value;
+}
+
 enum PhoneError { empty, invalid }
 
 class PhoneInput extends FormzInput<String, PhoneError> {

@@ -16,12 +16,10 @@ class RegisterUser implements UseCase<RegisterResult, RegisterParams> {
   @override
   Future<Either<Failure, RegisterResult>> call(RegisterParams p) {
     return repository.register(
-      nin: p.nin,
       firstNameAr: p.firstNameAr,
       lastNameAr: p.lastNameAr,
       phone: p.phone,
       email: p.email,
-      birthDate: p.birthDate,
       password: p.password,
       passwordConfirmation: p.passwordConfirmation,
       deviceName: p.deviceName,
@@ -29,15 +27,15 @@ class RegisterUser implements UseCase<RegisterResult, RegisterParams> {
   }
 }
 
+/// رقم التعريف وتاريخ الميلاد مش هنا عن قصد — بيتطلبوا في الـ KYC
+/// (App Store 5.1.1).
 @freezed
 abstract class RegisterParams with _$RegisterParams {
   const factory RegisterParams({
-    required String nin,
     required String firstNameAr,
     required String lastNameAr,
     required String phone,
     required String email,
-    required String birthDate,
     required String password,
     required String passwordConfirmation,
     required String deviceName,

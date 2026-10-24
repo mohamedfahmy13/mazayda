@@ -25,9 +25,15 @@ abstract class KycRepository {
 }
 
 /// مدخلات إرسال نموذج الـ KYC — تطابق body الـ API.
+///
+/// [nin] و[birthDate] بيتبعتوا بس لو الحساب ناقصهم (اختياريين عند التسجيل
+/// من الموبايل — App Store 5.1.1). السيرفر بيحفظهم مرة واحدة ومابيغيّرهمش
+/// بعد كده، فبعتهم لحساب عنده قيمة بيتجاهل.
 @freezed
 abstract class KycSubmitParams with _$KycSubmitParams {
   const factory KycSubmitParams({
+    String? nin,
+    String? birthDate, // Y-m-d
     required String firstNameFr,
     required String lastNameFr,
     required String fatherName,

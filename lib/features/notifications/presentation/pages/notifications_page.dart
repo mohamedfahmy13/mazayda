@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazayada/l10n/app_localizations.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/widgets/list_entrance_animation.dart';
+import '../../../../core/widgets/signed_in_gate.dart';
 import '../../../../core/widgets/state_views.dart';
 import '../../domain/entities/app_notification.dart';
 import '../cubit/notifications_cubit.dart';
@@ -18,9 +20,15 @@ class NotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<NotificationsCubit>()..load(),
-      child: const _NotificationsView(),
+    final t = AppLocalizations.of(context);
+    return SignedInGate(
+      title: t.notifications,
+      icon: Icons.notifications_none_rounded,
+      message: t.guestNotificationsBody,
+      builder: (_) => BlocProvider(
+        create: (_) => getIt<NotificationsCubit>()..load(),
+        child: const _NotificationsView(),
+      ),
     );
   }
 }

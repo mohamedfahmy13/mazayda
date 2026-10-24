@@ -9,6 +9,7 @@ import '../../../../core/constants/app_icons.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/list_entrance_animation.dart';
+import '../../../../core/widgets/signed_in_gate.dart';
 import '../../../../core/widgets/state_views.dart';
 import '../../domain/entities/profile.dart';
 import '../cubit/profile_cubit.dart';
@@ -16,6 +17,7 @@ import '../widgets/profile_header.dart';
 import '../widgets/profile_info_card.dart';
 import '../widgets/profile_language_switcher.dart';
 import '../widgets/profile_loading_view.dart';
+import '../widgets/profile_delete_account_button.dart';
 import '../widgets/profile_logout_button.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -23,9 +25,15 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<ProfileCubit>()..load(),
-      child: const _ProfileView(),
+    final t = AppLocalizations.of(context);
+    return SignedInGate(
+      title: t.navProfile,
+      icon: Icons.person_outline_rounded,
+      message: t.guestProfileBody,
+      builder: (_) => BlocProvider(
+        create: (_) => getIt<ProfileCubit>()..load(),
+        child: const _ProfileView(),
+      ),
     );
   }
 }
@@ -37,12 +45,9 @@ class _ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: BlocConsumer<ProfileCubit, ProfileState>(
-        listener: (context, state) {
-          if (state is ProfileLoggedOut) context.go(Routes.login);
-        },
+      body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) => switch (state) {
-          ProfileLoading() || ProfileLoggedOut() => const ProfileLoadingView(),
+          ProfileLoading() => const ProfileLoadingView(),
           ProfileError(:final message) => _ProfileErrorView(message: message),
           ProfileLoaded(:final profile) => _ProfileContent(profile: profile),
         },
@@ -65,10 +70,11 @@ class _ProfileContent extends StatelessWidget {
       _SectionTitle(text: t.personalData),
       ProfileInfoCard(
         rows: [
+          // ممكن يكون لسه ماتضافش (اختياري عند التسجيل، بيتطلب في الـ KYC).
           ProfileInfoRow(
             icon: Icons.badge_outlined,
             label: t.nin,
-            value: profile.ninMasked ?? '—',
+            value: profile.needsNin ? t.profileNotProvided : profile.ninMasked!,
           ),
           ProfileInfoRow(
             icon: Icons.phone_outlined,
@@ -142,7 +148,12 @@ class _ProfileContent extends StatelessWidget {
         ],
       ),
       const ProfileLanguageSwitcher(),
-      ProfileLogoutButton(onPressed: cubit.logout),
+      ProfileLogoutButton(onPressed: () => _logout(context)),
+      // حذف الحساب لازم يبقى سهل الوصول من جوّه التطبيق (App Store
+      // 5.1.1(v)) — مش مستخبّي ورا الدعم أو الإيميل.
+      ProfileDeleteAccountButton(
+        onPressed: () => context.push(Routes.deleteAccount),
+      ),
     ];
 
     return Column(
@@ -175,6 +186,14 @@ class _ProfileContent extends StatelessWidget {
       ],
     );
   }
+}
+
+/// الخروج بيرجّع التطبيق ضيف على المزايدات. الـ router بيتمسك قبل الـ await
+/// لأن التبويب ده نفسه بيتقلب لطلب الدخول أول ما الجلسة تخلص.
+Future<void> _logout(BuildContext context) async {
+  final router = GoRouter.of(context);
+  await context.read<ProfileCubit>().logout();
+  router.go(Routes.home);
 }
 
 class _SectionTitle extends StatelessWidget {

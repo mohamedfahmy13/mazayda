@@ -16,6 +16,13 @@ extension NinInputErrorText on NinInput {
   }
 }
 
+extension OptionalNinInputErrorText on OptionalNinInput {
+  String? errorText(AppLocalizations t) {
+    if (isPure || isValid) return null;
+    return t.valNinInvalid;
+  }
+}
+
 extension NameInputErrorText on NameInput {
   String? errorText(AppLocalizations t) {
     if (isPure || isValid) return null;

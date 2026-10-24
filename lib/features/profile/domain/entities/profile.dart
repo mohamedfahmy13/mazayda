@@ -20,7 +20,10 @@ class ProfileEntityRef extends Equatable {
 ///    نعيد اشتقاق الصلاحيات من الحالات الخام.
 class Profile extends Equatable {
   final String id;
-  final String? ninMasked; // مخفي جزئيًا
+
+  /// مخفي جزئيًا — `null` لو الحساب اتعمل من غير رقم تعريف (اختياري عند
+  /// التسجيل من الموبايل، وبيتطلب في الـ KYC).
+  final String? ninMasked;
   final String fullName;
   final String? firstNameAr;
   final String? lastNameAr;
@@ -43,7 +46,7 @@ class Profile extends Equatable {
   /// `/wilayas` عشان نعرف ولاية المستخدم من `communeId`.
   final int? wilayaId;
 
-  final String? birthDate; // Y-m-d زي ما الباك بيبعتها
+  final String? birthDate; // Y-m-d زي ما الباك بيبعتها — null لو لسه ماتضافش
   final String? birthPlace;
   final String? fatherName;
   final String? motherName;
@@ -73,6 +76,10 @@ class Profile extends Equatable {
   final bool phoneVerified;
   final String? secretQuestion;
   final bool hasSecretQuestion;
+
+  /// رقم التعريف **و**تاريخ الميلاد موجودين على الحساب. لو `false` فورم
+  /// الـ KYC لازم يطلب الناقص منهم (`ninMasked` / `birthDate` = null).
+  final bool identityComplete;
 
   // أعلام القدرات المحسوبة في السيرفر.
   final bool isKycComplete;
@@ -120,6 +127,7 @@ class Profile extends Equatable {
     this.phoneVerified = false,
     this.secretQuestion,
     this.hasSecretQuestion = false,
+    this.identityComplete = true,
     this.isKycComplete = false,
     this.canBid = false,
     this.isPremium = false,
@@ -131,6 +139,10 @@ class Profile extends Equatable {
   bool get isVerified => isKycComplete;
 
   bool get isAccountActive => accountStatus == null || accountStatus == 'ACTIVE';
+
+  /// الناقص اللي فورم الـ KYC لازم يسأل عنه.
+  bool get needsNin => ninMasked?.isNotEmpty != true;
+  bool get needsBirthDate => birthDate?.isNotEmpty != true;
 
   @override
   List<Object?> get props => [
@@ -147,5 +159,7 @@ class Profile extends Equatable {
     commercialRegisterStatus,
     canBid,
     isKycComplete,
+    identityComplete,
+    birthDate,
   ];
 }

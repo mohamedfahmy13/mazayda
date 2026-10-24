@@ -75,6 +75,8 @@ abstract class ProfileModel with _$ProfileModel {
     @JsonKey(name: 'has_secret_question')
     @Default(false)
     bool hasSecretQuestion,
+    // جديد (App Store 5.1.1) — غايب في الردود القديمة، فبنشتقّه من الحقلين.
+    @JsonKey(name: 'identity_complete') bool? identityComplete,
     @JsonKey(name: 'is_kyc_complete') @Default(false) bool isKycComplete,
     @JsonKey(name: 'can_bid') @Default(false) bool canBid,
     @JsonKey(name: 'is_premium') @Default(false) bool isPremium,
@@ -127,6 +129,9 @@ abstract class ProfileModel with _$ProfileModel {
     phoneVerified: phoneVerified,
     secretQuestion: secretQuestion,
     hasSecretQuestion: hasSecretQuestion,
+    identityComplete:
+        identityComplete ??
+        ((ninMasked?.isNotEmpty ?? false) && (birthDate?.isNotEmpty ?? false)),
     isKycComplete: isKycComplete,
     canBid: canBid,
     isPremium: isPremium,

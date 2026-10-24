@@ -143,7 +143,9 @@ class _FormStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _Hint(t.lostEmailHint),
+        // المسار ده بيتعرّف بالرقم الوطني وتاريخ الميلاد، والاتنين بقوا
+        // اختياريين عند التسجيل — فالحساب اللي مالوش رقم مالوش طريق هنا.
+        _Hint('${t.lostEmailHint}\n${t.lostEmailNeedsIdentity}'),
         Gap(16.h),
         AppTextField(
           label: t.nin,

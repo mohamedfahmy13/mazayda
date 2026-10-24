@@ -7,7 +7,8 @@ import 'token_storage.dart';
 /// - Accept-Language: لغة التطبيق الحالية (رسايل وتسميات الـ API بنفس لغة الواجهة)
 /// - Authorization: Bearer {access} للطلبات المحمية
 /// وبيعالج 401 بمحاولة تجديد التوكن مرة واحدة ثم إعادة الطلب.
-/// عند فشل التجديد نهائيًا: يمسح التوكنات ويبثّ حدث انتهاء الجلسة.
+/// عند فشل التجديد نهائيًا: يمسح حالة الحساب ويرجّع التطبيق **ضيف** (مش شاشة
+/// دخول إجبارية — App Store 5.1.1).
 class AuthInterceptor extends Interceptor {
   final TokenStorage _tokenStorage;
   final Dio _dio; // نفس الـ Dio لإعادة المحاولة
@@ -81,11 +82,8 @@ class AuthInterceptor extends Interceptor {
     handler.next(err);
   }
 
-  /// إنهاء الجلسة: مسح التوكنات + بثّ الحدث ليوجّه الـ router لـ login.
-  Future<void> _endSession() async {
-    await _tokenStorage.clear();
-    _sessionManager.expireSession();
-  }
+  /// إنهاء الجلسة: مسح التوكنات وكاش الحساب + الرجوع لوضع الضيف.
+  Future<void> _endSession() => _sessionManager.expire();
 
   Future<bool> _refreshToken() async {
     final refresh = await _tokenStorage.refreshToken;

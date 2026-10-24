@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../constants/api_constants.dart';
 import '../network/api_client.dart';
 import '../network/token_storage.dart';
+import '../session/session_manager.dart';
 import 'push_notification_service.dart';
 
 /// حالة الـ Push للمستخدم الحالي — `GET /devices/status` (BE-11).
@@ -28,7 +29,19 @@ class DeviceRegistrar {
   final PushNotificationService _push;
   final TokenStorage _tokenStorage;
 
-  DeviceRegistrar(this._client, this._push, this._tokenStorage);
+  DeviceRegistrar(
+    this._client,
+    this._push,
+    this._tokenStorage,
+    SessionManager session,
+  ) {
+    // الجلسة خلصت (خروج · حذف حساب · انتهاء) → التسجيل الجاي لازم يتبعت
+    // تاني حتى بنفس التوكن، عشان السيرفر يربط الجهاز بالحساب الجديد. حذف
+    // الحساب مثلًا مابيناديش [unregister] لأن السيرفر شال الأجهزة بنفسه.
+    session.addListener(() {
+      if (!session.isSignedIn) _lastSentToken = null;
+    });
+  }
 
   static String get _platform => Platform.isIOS ? 'ios' : 'android';
 

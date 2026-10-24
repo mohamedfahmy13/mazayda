@@ -52,7 +52,15 @@ class _OtpViewState extends State<_OtpView> {
 
     return BlocConsumer<OtpCubit, OtpState>(
       listener: (context, state) {
-        if (state is OtpVerified) context.go(Routes.home);
+        if (state is! OtpVerified) return;
+        // `true` بيرجع بالسلسلة (التسجيل ← اللوجين ← الشاشة اللي طلبت
+        // الدخول)، فالمستخدم بيكمّل من مكانه. مفيش حاجة تحتنا (رابط
+        // مباشر) → الرئيسية.
+        if (context.canPop()) {
+          context.pop(true);
+        } else {
+          context.go(Routes.home);
+        }
       },
       builder: (context, state) {
         final cooldown = state is OtpInitial ? state.cooldown : 0;

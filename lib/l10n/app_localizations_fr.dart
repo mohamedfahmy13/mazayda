@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -1086,11 +1085,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get forgotPasswordHint =>
-      'Saisissez votre NIN et l’e-mail enregistré ; nous enverrons un code de réinitialisation.';
+      'Saisissez l’e-mail enregistré (et votre NIN si vous l’avez ajouté) ; nous enverrons un code de réinitialisation.';
 
   @override
   String get recoverAccountHint =>
-      'Saisissez votre NIN et l’e-mail enregistré pour afficher votre question secrète.';
+      'Saisissez l’e-mail enregistré (et votre NIN si vous l’avez ajouté) pour afficher votre question secrète.';
 
   @override
   String get sendCode => 'Envoyer le code';
@@ -1506,4 +1505,102 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get prefsGoPremium => 'Passer à Premium';
+
+  @override
+  String get sessionExpiredNotice =>
+      'Votre session a expiré. Reconnectez-vous pour continuer.';
+
+  @override
+  String get guestPromptTitle => 'Connectez-vous pour continuer';
+
+  @override
+  String get guestMyAuctionsBody =>
+      'Suivez les enchères auxquelles vous participez, vos offres et vos paiements au même endroit.';
+
+  @override
+  String get guestNotificationsBody =>
+      'Connectez-vous pour recevoir ici les alertes sur vos enchères, vos paiements et la vérification d’identité.';
+
+  @override
+  String get guestProfileBody =>
+      'Gérez votre compte et vos documents, et vérifiez votre identité pour participer aux enchères. Vous pouvez consulter les enchères sans compte.';
+
+  @override
+  String get registerIdentityLaterHint =>
+      'Nous ne demandons ni votre NIN ni votre date de naissance maintenant. Vous les saisirez lors de la vérification d’identité, avant de participer à une enchère.';
+
+  @override
+  String get ninOptional => 'Numéro d\'identification national (facultatif)';
+
+  @override
+  String get recoveryNinOptionalHint =>
+      'Saisissez votre NIN si vous l’avez ajouté à votre compte.';
+
+  @override
+  String get lostEmailNeedsIdentity =>
+      'Cette option nécessite le NIN et la date de naissance enregistrés sur votre compte ; elle n’est donc pas disponible pour les comptes qui ne les ont pas encore ajoutés.';
+
+  @override
+  String get kycIdentityMissingHint =>
+      'Pour finaliser la vérification d\'identité, saisissez votre NIN et votre date de naissance (non demandés à la création du compte).';
+
+  @override
+  String get profileNotProvided => 'Pas encore ajouté';
+
+  @override
+  String get deleteAccount => 'Supprimer le compte';
+
+  @override
+  String get deleteAccountWarningTitle =>
+      'La suppression est définitive et irréversible';
+
+  @override
+  String get deleteAccountIntro =>
+      'Vos données personnelles seront définitivement supprimées et vous serez déconnecté de tous vos appareils.';
+
+  @override
+  String get deleteAccountDeletedTitle => 'Ce qui sera supprimé';
+
+  @override
+  String get deleteAccountDeletedBody =>
+      'Votre nom, NIN, téléphone, e-mail, date de naissance, adresse, documents d’identité et du registre de commerce, notifications, enchères suivies et préférences. Tout abonnement Premium cesse de se renouveler.';
+
+  @override
+  String get deleteAccountKeptTitle =>
+      'Ce qui est conservé, sans rien qui vous identifie';
+
+  @override
+  String get deleteAccountKeptBody =>
+      'Les enchères, les paiements ainsi que les procès-verbaux et reçus signés, car la loi impose à la plateforme de conserver ces enregistrements.';
+
+  @override
+  String get deleteAccountReRegisterNote =>
+      'Vous pourrez créer un nouveau compte plus tard avec le même e-mail et le même numéro de téléphone.';
+
+  @override
+  String get deleteAccountPasswordLabel => 'Mot de passe actuel pour confirmer';
+
+  @override
+  String get deleteAccountSubmit => 'Supprimer définitivement mon compte';
+
+  @override
+  String get deleteAccountConfirmTitle => 'Supprimer votre compte ?';
+
+  @override
+  String get deleteAccountConfirmBody =>
+      'Êtes-vous sûr ? Votre compte sera supprimé définitivement et ne pourra pas être récupéré.';
+
+  @override
+  String get deleteAccountConfirmAction => 'Supprimer définitivement';
+
+  @override
+  String get deleteAccountBlockedTitle =>
+      'Le compte ne peut pas être supprimé pour le moment';
+
+  @override
+  String get deleteAccountBlockedHint =>
+      'La suppression sera possible une fois les points suivants réglés :';
+
+  @override
+  String get deleteAccountDone => 'Votre compte a été définitivement supprimé.';
 }

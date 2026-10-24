@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mazayada/core/network/api_client.dart';
 import 'package:mazayada/core/network/auth_interceptor.dart';
 import 'package:mazayada/core/network/token_storage.dart';
+import 'package:mazayada/core/session/account_cache.dart';
 import 'package:mazayada/core/session/session_manager.dart';
 import 'package:mazayada/core/utils/locale_cubit.dart';
 import 'package:mazayada/core/utils/locale_sync.dart';
@@ -46,10 +47,12 @@ void main() {
 
   test('Accept-Language بيتبعت بلغة التطبيق وقت الطلب', () {
     var language = 'en';
+    const storage = FlutterSecureStorage();
+    final tokens = TokenStorage(storage);
     final interceptor = AuthInterceptor(
-      TokenStorage(const FlutterSecureStorage()),
+      tokens,
       Dio(),
-      SessionManager(),
+      SessionManager(tokens, AccountCache(storage)),
       () => language,
     );
 

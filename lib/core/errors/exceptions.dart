@@ -12,11 +12,16 @@ class ServerException implements Exception {
   /// (طلب BE-16)، فالكود ممكن يكون null ووقتها بنرجع للنص.
   final String? code;
 
+  /// جزء `data` من ردّ الخطأ لو الباك بعته — رفض بيحمل تفاصيل لازم تتعرض،
+  /// زي موانع حذف الحساب (`ACCOUNT_DELETION_BLOCKED` → `data.blockers`).
+  final Object? data;
+
   ServerException({
     required this.message,
     this.statusCode,
     this.errors,
     this.code,
+    this.data,
   });
 }
 

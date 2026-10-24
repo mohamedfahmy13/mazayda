@@ -116,7 +116,17 @@ class _IdentifyStep extends StatelessWidget {
         _Hint(isOtp ? t.forgotPasswordHint : t.recoverAccountHint),
         Gap(16.h),
         AppTextField(
-          label: t.nin,
+          label: t.email,
+          hint: 'example@mail.com',
+          icon: Icons.mail_outline,
+          keyboardType: TextInputType.emailAddress,
+          onChanged: cubit.emailChanged,
+          errorText: state.email.errorText(t) ?? srv?['email']?.first,
+        ),
+        // اختياري: الحساب اللي اتعمل من غير رقم تعريف بيتعرّف بالبريد بس،
+        // واللي عنده رقم لازم يكتبه (البريد لوحده مابيطابقش الحساب ده).
+        AppTextField(
+          label: t.ninOptional,
           hint: t.ninHint,
           icon: Icons.badge_outlined,
           keyboardType: TextInputType.number,
@@ -125,14 +135,7 @@ class _IdentifyStep extends StatelessWidget {
           onChanged: cubit.ninChanged,
           errorText: state.nin.errorText(t) ?? srv?['nin']?.first,
         ),
-        AppTextField(
-          label: t.email,
-          hint: 'example@mail.com',
-          icon: Icons.mail_outline,
-          keyboardType: TextInputType.emailAddress,
-          onChanged: cubit.emailChanged,
-          errorText: state.email.errorText(t) ?? srv?['email']?.first,
-        ),
+        _Hint(t.recoveryNinOptionalHint),
         Gap(12.h),
         PrimaryButton(
           label: isOtp ? t.sendCode : t.showQuestion,

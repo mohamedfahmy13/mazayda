@@ -31,7 +31,8 @@ abstract class PasswordRecoveryState with _$PasswordRecoveryState {
     required RecoveryMode mode,
     @Default(RecoveryStep.identify) RecoveryStep step,
     @Default(RecoveryStatus.idle) RecoveryStatus status,
-    @Default(NinInput.pure()) NinInput nin,
+    /// اختياري — الحساب اللي اتعمل من غير رقم تعريف بيتعرّف بالبريد بس.
+    @Default(OptionalNinInput.pure()) OptionalNinInput nin,
     @Default(EmailInput.pure()) EmailInput email,
     @Default('') String otp,
     @Default('') String secretAnswer,
@@ -79,8 +80,9 @@ class PasswordRecoveryCubit extends Cubit<PasswordRecoveryState> {
   void setMode(RecoveryMode mode) =>
       emit(PasswordRecoveryState(mode: mode));
 
-  void ninChanged(String v) =>
-      emit(state.copyWith(nin: NinInput.dirty(v), status: RecoveryStatus.idle));
+  void ninChanged(String v) => emit(
+    state.copyWith(nin: OptionalNinInput.dirty(v), status: RecoveryStatus.idle),
+  );
 
   void emailChanged(String v) => emit(
     state.copyWith(email: EmailInput.dirty(v), status: RecoveryStatus.idle),
@@ -128,7 +130,7 @@ class PasswordRecoveryCubit extends Cubit<PasswordRecoveryState> {
     _startSubmit();
 
     final params = IdentifyAccountParams(
-      nin: state.nin.value,
+      nin: state.nin.valueOrNull,
       email: state.email.value,
     );
 
@@ -168,7 +170,7 @@ class PasswordRecoveryCubit extends Cubit<PasswordRecoveryState> {
     final res = state.mode == RecoveryMode.otp
         ? await _verifyReset(
             VerifyPasswordResetParams(
-              nin: state.nin.value,
+              nin: state.nin.valueOrNull,
               email: state.email.value,
               otp: state.otp,
               password: state.password.value,
@@ -177,7 +179,7 @@ class PasswordRecoveryCubit extends Cubit<PasswordRecoveryState> {
           )
         : await _recoverBySecret(
             RecoverBySecretParams(
-              nin: state.nin.value,
+              nin: state.nin.valueOrNull,
               email: state.email.value,
               secretAnswer: state.secretAnswer,
               password: state.password.value,

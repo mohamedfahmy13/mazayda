@@ -2143,13 +2143,13 @@ abstract class AppLocalizations {
   /// No description provided for @forgotPasswordHint.
   ///
   /// In ar, this message translates to:
-  /// **'أدخل رقم التعريف الوطني والبريد المسجّل، وسنرسل رمزًا لإعادة التعيين.'**
+  /// **'أدخل بريدك الإلكتروني المسجّل (ورقم التعريف الوطني إن أضفته)، وسنرسل رمزًا لإعادة التعيين.'**
   String get forgotPasswordHint;
 
   /// No description provided for @recoverAccountHint.
   ///
   /// In ar, this message translates to:
-  /// **'أدخل رقم التعريف الوطني والبريد المسجّل لعرض سؤالك السرّي.'**
+  /// **'أدخل بريدك الإلكتروني المسجّل (ورقم التعريف الوطني إن أضفته) لعرض سؤالك السرّي.'**
   String get recoverAccountHint;
 
   /// No description provided for @sendCode.
@@ -2865,6 +2865,168 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الاشتراك في العضوية المميّزة'**
   String get prefsGoPremium;
+
+  /// No description provided for @sessionExpiredNotice.
+  ///
+  /// In ar, this message translates to:
+  /// **'انتهت جلستك. سجّل الدخول من جديد للمتابعة.'**
+  String get sessionExpiredNotice;
+
+  /// No description provided for @guestPromptTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل الدخول للمتابعة'**
+  String get guestPromptTitle;
+
+  /// No description provided for @guestMyAuctionsBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'تابع المزايدات التي شاركت فيها، وعروضك، ومدفوعاتك من مكان واحد.'**
+  String get guestMyAuctionsBody;
+
+  /// No description provided for @guestNotificationsBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل الدخول لتصلك هنا تنبيهات مزايداتك ومدفوعاتك والتحقق من هويتك.'**
+  String get guestNotificationsBody;
+
+  /// No description provided for @guestProfileBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدِر حسابك ووثائقك، وتحقّق من هويتك للمشاركة في المزايدات. يمكنك تصفّح المزايدات دون حساب.'**
+  String get guestProfileBody;
+
+  /// No description provided for @registerIdentityLaterHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا نطلب رقم التعريف الوطني ولا تاريخ الميلاد الآن، بل عند التحقق من الهوية قبل المشاركة في أي مزايدة.'**
+  String get registerIdentityLaterHint;
+
+  /// No description provided for @ninOptional.
+  ///
+  /// In ar, this message translates to:
+  /// **'رقم التعريف الوطني (اختياري)'**
+  String get ninOptional;
+
+  /// No description provided for @recoveryNinOptionalHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل رقم التعريف الوطني إذا كنت قد أضفته إلى حسابك.'**
+  String get recoveryNinOptionalHint;
+
+  /// No description provided for @lostEmailNeedsIdentity.
+  ///
+  /// In ar, this message translates to:
+  /// **'يتطلّب هذا المسار رقم التعريف الوطني وتاريخ الميلاد المسجّلين في حسابك، لذا لا يتاح للحسابات التي لم تُضِفهما بعد.'**
+  String get lostEmailNeedsIdentity;
+
+  /// No description provided for @kycIdentityMissingHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'لإتمام التحقق من الهوية، أدخل رقم التعريف الوطني وتاريخ الميلاد (لم يُطلبا عند إنشاء الحساب).'**
+  String get kycIdentityMissingHint;
+
+  /// No description provided for @profileNotProvided.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُضَف بعد'**
+  String get profileNotProvided;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الحساب'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountWarningTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحذف نهائي ولا يمكن التراجع عنه'**
+  String get deleteAccountWarningTitle;
+
+  /// No description provided for @deleteAccountIntro.
+  ///
+  /// In ar, this message translates to:
+  /// **'سيتم حذف بياناتك الشخصية نهائياً وتسجيل خروجك من جميع الأجهزة.'**
+  String get deleteAccountIntro;
+
+  /// No description provided for @deleteAccountDeletedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما سيُحذف'**
+  String get deleteAccountDeletedTitle;
+
+  /// No description provided for @deleteAccountDeletedBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'الاسم، ورقم التعريف الوطني، والهاتف، والبريد الإلكتروني، وتاريخ الميلاد، والعنوان، ووثائق التحقق من الهوية والسجل التجاري، والإشعارات، والمزايدات المتابَعة، وتفضيلاتك. ويتوقّف تجديد أي اشتراك مميّز.'**
+  String get deleteAccountDeletedBody;
+
+  /// No description provided for @deleteAccountKeptTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما يُحتفظ به دون أي بيانات تعرّف بك'**
+  String get deleteAccountKeptTitle;
+
+  /// No description provided for @deleteAccountKeptBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'المزايدات والمدفوعات والمحاضر والإيصالات الموقّعة، لأن القانون يُلزم المنصّة بالاحتفاظ بهذه السجلات.'**
+  String get deleteAccountKeptBody;
+
+  /// No description provided for @deleteAccountReRegisterNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'يمكنك إنشاء حساب جديد لاحقًا بنفس البريد الإلكتروني ورقم الهاتف.'**
+  String get deleteAccountReRegisterNote;
+
+  /// No description provided for @deleteAccountPasswordLabel.
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة المرور الحالية للتأكيد'**
+  String get deleteAccountPasswordLabel;
+
+  /// No description provided for @deleteAccountSubmit.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف حسابي نهائياً'**
+  String get deleteAccountSubmit;
+
+  /// No description provided for @deleteAccountConfirmTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'تأكيد حذف الحساب'**
+  String get deleteAccountConfirmTitle;
+
+  /// No description provided for @deleteAccountConfirmBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل أنت متأكد؟ سيُحذف حسابك نهائياً ولا يمكن استرجاعه.'**
+  String get deleteAccountConfirmBody;
+
+  /// No description provided for @deleteAccountConfirmAction.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف نهائياً'**
+  String get deleteAccountConfirmAction;
+
+  /// No description provided for @deleteAccountBlockedTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يمكن حذف الحساب حالياً'**
+  String get deleteAccountBlockedTitle;
+
+  /// No description provided for @deleteAccountBlockedHint.
+  ///
+  /// In ar, this message translates to:
+  /// **'يصبح الحذف متاحًا بعد معالجة ما يلي:'**
+  String get deleteAccountBlockedHint;
+
+  /// No description provided for @deleteAccountDone.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم حذف حسابك نهائياً.'**
+  String get deleteAccountDone;
 }
 
 class _AppLocalizationsDelegate

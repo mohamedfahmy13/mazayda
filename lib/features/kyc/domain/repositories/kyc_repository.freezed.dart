@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$KycSubmitParams {
 
- String get firstNameFr; String get lastNameFr; String get fatherName; String get motherName; String get motherSurname; String get address; int get wilayaId; int get communeId; String get postalCode; String get profession; int get expectedIncome; String get idType; String get idNumber;
+ String? get nin; String? get birthDate; String get firstNameFr; String get lastNameFr; String get fatherName; String get motherName; String get motherSurname; String get address; int get wilayaId; int get communeId; String get postalCode; String get profession; int get expectedIncome; String get idType; String get idNumber;
 /// Create a copy of KycSubmitParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $KycSubmitParamsCopyWith<KycSubmitParams> get copyWith => _$KycSubmitParamsCopyW
 @override
 bool operator ==(Object other) {
   final _this = this as KycSubmitParams;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is KycSubmitParams&&(identical(other.firstNameFr, _this.firstNameFr) || other.firstNameFr == _this.firstNameFr)&&(identical(other.lastNameFr, _this.lastNameFr) || other.lastNameFr == _this.lastNameFr)&&(identical(other.fatherName, _this.fatherName) || other.fatherName == _this.fatherName)&&(identical(other.motherName, _this.motherName) || other.motherName == _this.motherName)&&(identical(other.motherSurname, _this.motherSurname) || other.motherSurname == _this.motherSurname)&&(identical(other.address, _this.address) || other.address == _this.address)&&(identical(other.wilayaId, _this.wilayaId) || other.wilayaId == _this.wilayaId)&&(identical(other.communeId, _this.communeId) || other.communeId == _this.communeId)&&(identical(other.postalCode, _this.postalCode) || other.postalCode == _this.postalCode)&&(identical(other.profession, _this.profession) || other.profession == _this.profession)&&(identical(other.expectedIncome, _this.expectedIncome) || other.expectedIncome == _this.expectedIncome)&&(identical(other.idType, _this.idType) || other.idType == _this.idType)&&(identical(other.idNumber, _this.idNumber) || other.idNumber == _this.idNumber));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is KycSubmitParams&&(identical(other.nin, _this.nin) || other.nin == _this.nin)&&(identical(other.birthDate, _this.birthDate) || other.birthDate == _this.birthDate)&&(identical(other.firstNameFr, _this.firstNameFr) || other.firstNameFr == _this.firstNameFr)&&(identical(other.lastNameFr, _this.lastNameFr) || other.lastNameFr == _this.lastNameFr)&&(identical(other.fatherName, _this.fatherName) || other.fatherName == _this.fatherName)&&(identical(other.motherName, _this.motherName) || other.motherName == _this.motherName)&&(identical(other.motherSurname, _this.motherSurname) || other.motherSurname == _this.motherSurname)&&(identical(other.address, _this.address) || other.address == _this.address)&&(identical(other.wilayaId, _this.wilayaId) || other.wilayaId == _this.wilayaId)&&(identical(other.communeId, _this.communeId) || other.communeId == _this.communeId)&&(identical(other.postalCode, _this.postalCode) || other.postalCode == _this.postalCode)&&(identical(other.profession, _this.profession) || other.profession == _this.profession)&&(identical(other.expectedIncome, _this.expectedIncome) || other.expectedIncome == _this.expectedIncome)&&(identical(other.idType, _this.idType) || other.idType == _this.idType)&&(identical(other.idNumber, _this.idNumber) || other.idNumber == _this.idNumber));
 }
 
 
 @override
 int get hashCode {
   final _this = this as KycSubmitParams;
-  return Object.hash(runtimeType,_this.firstNameFr,_this.lastNameFr,_this.fatherName,_this.motherName,_this.motherSurname,_this.address,_this.wilayaId,_this.communeId,_this.postalCode,_this.profession,_this.expectedIncome,_this.idType,_this.idNumber);
+  return Object.hash(runtimeType,_this.nin,_this.birthDate,_this.firstNameFr,_this.lastNameFr,_this.fatherName,_this.motherName,_this.motherSurname,_this.address,_this.wilayaId,_this.communeId,_this.postalCode,_this.profession,_this.expectedIncome,_this.idType,_this.idNumber);
 }
 
 @override
 String toString() {
   final _this = this as KycSubmitParams;
-  return 'KycSubmitParams(firstNameFr: ${_this.firstNameFr}, lastNameFr: ${_this.lastNameFr}, fatherName: ${_this.fatherName}, motherName: ${_this.motherName}, motherSurname: ${_this.motherSurname}, address: ${_this.address}, wilayaId: ${_this.wilayaId}, communeId: ${_this.communeId}, postalCode: ${_this.postalCode}, profession: ${_this.profession}, expectedIncome: ${_this.expectedIncome}, idType: ${_this.idType}, idNumber: ${_this.idNumber})';
+  return 'KycSubmitParams(nin: ${_this.nin}, birthDate: ${_this.birthDate}, firstNameFr: ${_this.firstNameFr}, lastNameFr: ${_this.lastNameFr}, fatherName: ${_this.fatherName}, motherName: ${_this.motherName}, motherSurname: ${_this.motherSurname}, address: ${_this.address}, wilayaId: ${_this.wilayaId}, communeId: ${_this.communeId}, postalCode: ${_this.postalCode}, profession: ${_this.profession}, expectedIncome: ${_this.expectedIncome}, idType: ${_this.idType}, idNumber: ${_this.idNumber})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $KycSubmitParamsCopyWith<$Res>  {
   factory $KycSubmitParamsCopyWith(KycSubmitParams value, $Res Function(KycSubmitParams) _then) = _$KycSubmitParamsCopyWithImpl;
 @useResult
 $Res call({
- String firstNameFr, String lastNameFr, String fatherName, String motherName, String motherSurname, String address, int wilayaId, int communeId, String postalCode, String profession, int expectedIncome, String idType, String idNumber
+ String? nin, String? birthDate, String firstNameFr, String lastNameFr, String fatherName, String motherName, String motherSurname, String address, int wilayaId, int communeId, String postalCode, String profession, int expectedIncome, String idType, String idNumber
 });
 
 
@@ -68,9 +68,11 @@ class _$KycSubmitParamsCopyWithImpl<$Res>
 
 /// Create a copy of KycSubmitParams
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? firstNameFr = null,Object? lastNameFr = null,Object? fatherName = null,Object? motherName = null,Object? motherSurname = null,Object? address = null,Object? wilayaId = null,Object? communeId = null,Object? postalCode = null,Object? profession = null,Object? expectedIncome = null,Object? idType = null,Object? idNumber = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? nin = freezed,Object? birthDate = freezed,Object? firstNameFr = null,Object? lastNameFr = null,Object? fatherName = null,Object? motherName = null,Object? motherSurname = null,Object? address = null,Object? wilayaId = null,Object? communeId = null,Object? postalCode = null,Object? profession = null,Object? expectedIncome = null,Object? idType = null,Object? idNumber = null,}) {
   return _then(KycSubmitParams(
-firstNameFr: null == firstNameFr ? _self.firstNameFr : firstNameFr // ignore: cast_nullable_to_non_nullable
+nin: freezed == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
+as String?,birthDate: freezed == birthDate ? _self.birthDate : birthDate // ignore: cast_nullable_to_non_nullable
+as String?,firstNameFr: null == firstNameFr ? _self.firstNameFr : firstNameFr // ignore: cast_nullable_to_non_nullable
 as String,lastNameFr: null == lastNameFr ? _self.lastNameFr : lastNameFr // ignore: cast_nullable_to_non_nullable
 as String,fatherName: null == fatherName ? _self.fatherName : fatherName // ignore: cast_nullable_to_non_nullable
 as String,motherName: null == motherName ? _self.motherName : motherName // ignore: cast_nullable_to_non_nullable
@@ -168,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String firstNameFr,  String lastNameFr,  String fatherName,  String motherName,  String motherSurname,  String address,  int wilayaId,  int communeId,  String postalCode,  String profession,  int expectedIncome,  String idType,  String idNumber)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? nin,  String? birthDate,  String firstNameFr,  String lastNameFr,  String fatherName,  String motherName,  String motherSurname,  String address,  int wilayaId,  int communeId,  String postalCode,  String profession,  int expectedIncome,  String idType,  String idNumber)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _KycSubmitParams() when $default != null:
-return $default(_that.firstNameFr,_that.lastNameFr,_that.fatherName,_that.motherName,_that.motherSurname,_that.address,_that.wilayaId,_that.communeId,_that.postalCode,_that.profession,_that.expectedIncome,_that.idType,_that.idNumber);case _:
+return $default(_that.nin,_that.birthDate,_that.firstNameFr,_that.lastNameFr,_that.fatherName,_that.motherName,_that.motherSurname,_that.address,_that.wilayaId,_that.communeId,_that.postalCode,_that.profession,_that.expectedIncome,_that.idType,_that.idNumber);case _:
   return orElse();
 
 }
@@ -189,10 +191,10 @@ return $default(_that.firstNameFr,_that.lastNameFr,_that.fatherName,_that.mother
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String firstNameFr,  String lastNameFr,  String fatherName,  String motherName,  String motherSurname,  String address,  int wilayaId,  int communeId,  String postalCode,  String profession,  int expectedIncome,  String idType,  String idNumber)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? nin,  String? birthDate,  String firstNameFr,  String lastNameFr,  String fatherName,  String motherName,  String motherSurname,  String address,  int wilayaId,  int communeId,  String postalCode,  String profession,  int expectedIncome,  String idType,  String idNumber)  $default,) {final _that = this;
 switch (_that) {
 case _KycSubmitParams():
-return $default(_that.firstNameFr,_that.lastNameFr,_that.fatherName,_that.motherName,_that.motherSurname,_that.address,_that.wilayaId,_that.communeId,_that.postalCode,_that.profession,_that.expectedIncome,_that.idType,_that.idNumber);case _:
+return $default(_that.nin,_that.birthDate,_that.firstNameFr,_that.lastNameFr,_that.fatherName,_that.motherName,_that.motherSurname,_that.address,_that.wilayaId,_that.communeId,_that.postalCode,_that.profession,_that.expectedIncome,_that.idType,_that.idNumber);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +211,10 @@ return $default(_that.firstNameFr,_that.lastNameFr,_that.fatherName,_that.mother
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String firstNameFr,  String lastNameFr,  String fatherName,  String motherName,  String motherSurname,  String address,  int wilayaId,  int communeId,  String postalCode,  String profession,  int expectedIncome,  String idType,  String idNumber)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? nin,  String? birthDate,  String firstNameFr,  String lastNameFr,  String fatherName,  String motherName,  String motherSurname,  String address,  int wilayaId,  int communeId,  String postalCode,  String profession,  int expectedIncome,  String idType,  String idNumber)?  $default,) {final _that = this;
 switch (_that) {
 case _KycSubmitParams() when $default != null:
-return $default(_that.firstNameFr,_that.lastNameFr,_that.fatherName,_that.motherName,_that.motherSurname,_that.address,_that.wilayaId,_that.communeId,_that.postalCode,_that.profession,_that.expectedIncome,_that.idType,_that.idNumber);case _:
+return $default(_that.nin,_that.birthDate,_that.firstNameFr,_that.lastNameFr,_that.fatherName,_that.motherName,_that.motherSurname,_that.address,_that.wilayaId,_that.communeId,_that.postalCode,_that.profession,_that.expectedIncome,_that.idType,_that.idNumber);case _:
   return null;
 
 }
@@ -224,9 +226,11 @@ return $default(_that.firstNameFr,_that.lastNameFr,_that.fatherName,_that.mother
 
 
 class _KycSubmitParams implements KycSubmitParams {
-  const _KycSubmitParams({required this.firstNameFr, required this.lastNameFr, required this.fatherName, required this.motherName, required this.motherSurname, required this.address, required this.wilayaId, required this.communeId, required this.postalCode, required this.profession, required this.expectedIncome, this.idType = 'ID_CARD', required this.idNumber});
+  const _KycSubmitParams({this.nin, this.birthDate, required this.firstNameFr, required this.lastNameFr, required this.fatherName, required this.motherName, required this.motherSurname, required this.address, required this.wilayaId, required this.communeId, required this.postalCode, required this.profession, required this.expectedIncome, this.idType = 'ID_CARD', required this.idNumber});
   
 
+@override final  String? nin;
+@override final  String? birthDate;
 @override final  String firstNameFr;
 @override final  String lastNameFr;
 @override final  String fatherName;
@@ -251,18 +255,18 @@ _$KycSubmitParamsCopyWith<_KycSubmitParams> get copyWith => __$KycSubmitParamsCo
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _KycSubmitParams&&(identical(other.firstNameFr, firstNameFr) || other.firstNameFr == firstNameFr)&&(identical(other.lastNameFr, lastNameFr) || other.lastNameFr == lastNameFr)&&(identical(other.fatherName, fatherName) || other.fatherName == fatherName)&&(identical(other.motherName, motherName) || other.motherName == motherName)&&(identical(other.motherSurname, motherSurname) || other.motherSurname == motherSurname)&&(identical(other.address, address) || other.address == address)&&(identical(other.wilayaId, wilayaId) || other.wilayaId == wilayaId)&&(identical(other.communeId, communeId) || other.communeId == communeId)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.profession, profession) || other.profession == profession)&&(identical(other.expectedIncome, expectedIncome) || other.expectedIncome == expectedIncome)&&(identical(other.idType, idType) || other.idType == idType)&&(identical(other.idNumber, idNumber) || other.idNumber == idNumber));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _KycSubmitParams&&(identical(other.nin, nin) || other.nin == nin)&&(identical(other.birthDate, birthDate) || other.birthDate == birthDate)&&(identical(other.firstNameFr, firstNameFr) || other.firstNameFr == firstNameFr)&&(identical(other.lastNameFr, lastNameFr) || other.lastNameFr == lastNameFr)&&(identical(other.fatherName, fatherName) || other.fatherName == fatherName)&&(identical(other.motherName, motherName) || other.motherName == motherName)&&(identical(other.motherSurname, motherSurname) || other.motherSurname == motherSurname)&&(identical(other.address, address) || other.address == address)&&(identical(other.wilayaId, wilayaId) || other.wilayaId == wilayaId)&&(identical(other.communeId, communeId) || other.communeId == communeId)&&(identical(other.postalCode, postalCode) || other.postalCode == postalCode)&&(identical(other.profession, profession) || other.profession == profession)&&(identical(other.expectedIncome, expectedIncome) || other.expectedIncome == expectedIncome)&&(identical(other.idType, idType) || other.idType == idType)&&(identical(other.idNumber, idNumber) || other.idNumber == idNumber));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,firstNameFr,lastNameFr,fatherName,motherName,motherSurname,address,wilayaId,communeId,postalCode,profession,expectedIncome,idType,idNumber);
+    return Object.hash(runtimeType,nin,birthDate,firstNameFr,lastNameFr,fatherName,motherName,motherSurname,address,wilayaId,communeId,postalCode,profession,expectedIncome,idType,idNumber);
 }
 
 @override
 String toString() {
-    return 'KycSubmitParams(firstNameFr: $firstNameFr, lastNameFr: $lastNameFr, fatherName: $fatherName, motherName: $motherName, motherSurname: $motherSurname, address: $address, wilayaId: $wilayaId, communeId: $communeId, postalCode: $postalCode, profession: $profession, expectedIncome: $expectedIncome, idType: $idType, idNumber: $idNumber)';
+    return 'KycSubmitParams(nin: $nin, birthDate: $birthDate, firstNameFr: $firstNameFr, lastNameFr: $lastNameFr, fatherName: $fatherName, motherName: $motherName, motherSurname: $motherSurname, address: $address, wilayaId: $wilayaId, communeId: $communeId, postalCode: $postalCode, profession: $profession, expectedIncome: $expectedIncome, idType: $idType, idNumber: $idNumber)';
 }
 
 
@@ -273,7 +277,7 @@ abstract mixin class _$KycSubmitParamsCopyWith<$Res> implements $KycSubmitParams
   factory _$KycSubmitParamsCopyWith(_KycSubmitParams value, $Res Function(_KycSubmitParams) _then) = __$KycSubmitParamsCopyWithImpl;
 @override @useResult
 $Res call({
- String firstNameFr, String lastNameFr, String fatherName, String motherName, String motherSurname, String address, int wilayaId, int communeId, String postalCode, String profession, int expectedIncome, String idType, String idNumber
+ String? nin, String? birthDate, String firstNameFr, String lastNameFr, String fatherName, String motherName, String motherSurname, String address, int wilayaId, int communeId, String postalCode, String profession, int expectedIncome, String idType, String idNumber
 });
 
 
@@ -290,9 +294,11 @@ class __$KycSubmitParamsCopyWithImpl<$Res>
 
 /// Create a copy of KycSubmitParams
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? firstNameFr = null,Object? lastNameFr = null,Object? fatherName = null,Object? motherName = null,Object? motherSurname = null,Object? address = null,Object? wilayaId = null,Object? communeId = null,Object? postalCode = null,Object? profession = null,Object? expectedIncome = null,Object? idType = null,Object? idNumber = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? nin = freezed,Object? birthDate = freezed,Object? firstNameFr = null,Object? lastNameFr = null,Object? fatherName = null,Object? motherName = null,Object? motherSurname = null,Object? address = null,Object? wilayaId = null,Object? communeId = null,Object? postalCode = null,Object? profession = null,Object? expectedIncome = null,Object? idType = null,Object? idNumber = null,}) {
   return _then(_KycSubmitParams(
-firstNameFr: null == firstNameFr ? _self.firstNameFr : firstNameFr // ignore: cast_nullable_to_non_nullable
+nin: freezed == nin ? _self.nin : nin // ignore: cast_nullable_to_non_nullable
+as String?,birthDate: freezed == birthDate ? _self.birthDate : birthDate // ignore: cast_nullable_to_non_nullable
+as String?,firstNameFr: null == firstNameFr ? _self.firstNameFr : firstNameFr // ignore: cast_nullable_to_non_nullable
 as String,lastNameFr: null == lastNameFr ? _self.lastNameFr : lastNameFr // ignore: cast_nullable_to_non_nullable
 as String,fatherName: null == fatherName ? _self.fatherName : fatherName // ignore: cast_nullable_to_non_nullable
 as String,motherName: null == motherName ? _self.motherName : motherName // ignore: cast_nullable_to_non_nullable

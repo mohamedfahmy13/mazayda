@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/di/injection.dart';
+import '../../../../core/session/session_manager.dart';
+import '../../../../core/widgets/signed_in_gate.dart';
 import '../../../../core/widgets/state_views.dart';
 import '../../domain/entities/auction_question.dart';
 import '../cubit/qa_cubit.dart';
@@ -35,9 +37,14 @@ class _QaViewState extends State<_QaView> {
     super.dispose();
   }
 
-  void _send() {
+  Future<void> _send() async {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
+    // القراءة للكل، والسؤال نفسه مصادَق — الضيف يسجّل دخول الأول.
+    if (!getIt<SessionManager>().isSignedIn && !await openSignIn(context)) {
+      return;
+    }
+    if (!mounted) return;
     context.read<QaCubit>().ask(text);
     _controller.clear();
     FocusScope.of(context).unfocus();

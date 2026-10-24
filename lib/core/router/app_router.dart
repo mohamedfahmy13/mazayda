@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../session/session_manager.dart';
 import '../widgets/shell/main_shell.dart';
-import 'go_router_refresh_stream.dart';
+import '../../features/account/presentation/pages/delete_account_page.dart';
 import '../../features/auth/presentation/pages/splash_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
@@ -52,6 +52,41 @@ class Routes {
   static const premium = '/premium';
   /// تفضيلات الإشعارات وأنواع المزايدات المفضّلة (تعديلات 27 · 28 · 30).
   static const notificationPreferences = '/notification-preferences';
+
+  /// حذف الحساب (App Store 5.1.1(v)) — من «حسابي».
+  static const deleteAccount = '/delete-account';
+
+  /// الشاشات اللي مالهاش معنى من غير حساب. الضيف بيتصفّح باقي التطبيق عادي
+  /// (App Store 5.1.1)، والتبويبات (مزايداتي · الإشعارات · حسابي) بتعرض له
+  /// طلب تسجيل دخول جوّاها بدل ما تتقفل.
+  static const _accountOnly = [
+    kyc,
+    commercialRegister,
+    documents,
+    appeals,
+    premium,
+    notificationPreferences,
+    liveBidding,
+    deleteAccount,
+  ];
+
+  /// [path] شاشة حساب؟ — المسار نفسه أو أي مسار تحته (`/bidding/:id`).
+  static bool requiresAccount(String path) =>
+      _accountOnly.any((r) => path == r || path.startsWith('$r/'));
+}
+
+/// الضيف اللي وصل لشاشة حساب (رابط إشعار مثلًا) → تسجيل الدخول، ومعاه
+/// الوجهة في `from` عشان يكمّل لها بعد الدخول. أي حاجة تانية بتعدّي عادي.
+String? signInRedirect({
+  required bool signedIn,
+  required String matchedLocation,
+  required Uri uri,
+}) {
+  if (signedIn || !Routes.requiresAccount(matchedLocation)) return null;
+  return Uri(
+    path: Routes.login,
+    queryParameters: {'from': uri.toString()},
+  ).toString();
 }
 
 // مفاتيح الـ navigators: جذر + فرع لكل تبويب
@@ -62,32 +97,19 @@ final _shellNotificationsKey = GlobalKey<NavigatorState>();
 final _shellProfileKey = GlobalKey<NavigatorState>();
 
 /// ينشئ الـ go_router مع:
-/// - الحماية: توجيه تلقائي لـ login عند انتهاء الجلسة.
+/// - وضع الضيف: التطبيق بيفتح على المزايدات من غير تسجيل دخول، وشاشات
+///   الحساب بس هي اللي بتحوّل الضيف لتسجيل الدخول (وبترجّعه لنفس الوجهة).
+///   خروج المستخدم من شاشة حساب لما الجلسة تخلص مسؤولية `SessionExitRouter`.
 /// - StatefulShellRoute: bottom navigation يحفظ حالة كل تبويب.
 GoRouter createRouter(SessionManager session) {
   return GoRouter(
     navigatorKey: _rootKey,
     initialLocation: Routes.splash,
-    refreshListenable: GoRouterRefreshStream(session.onSessionExpired),
-    redirect: (context, state) {
-      final authPaths = {
-        Routes.login,
-        Routes.register,
-        Routes.splash,
-        Routes.forgotPassword,
-        Routes.recoverAccount,
-        // استرجاع البريد مسار خارج الجلسة — لو الجلسة انتهت والمستخدم
-        // فاتحه، ما ينفعش نرميه على login وهو في نص الطلب.
-        Routes.recoverEmail,
-      };
-      final inAuthFlow = authPaths.contains(state.matchedLocation) ||
-          state.matchedLocation.startsWith(Routes.otp);
-      if (session.isExpired && !inAuthFlow) {
-        session.reset();
-        return Routes.login;
-      }
-      return null;
-    },
+    redirect: (context, state) => signInRedirect(
+      signedIn: session.isSignedIn,
+      matchedLocation: state.matchedLocation,
+      uri: state.uri,
+    ),
     routes: [
       // ===== شاشات خارج الـ shell (بدون bottom bar) =====
       GoRoute(
@@ -96,7 +118,8 @@ GoRouter createRouter(SessionManager session) {
       ),
       GoRoute(
         path: Routes.login,
-        builder: (_, _) => const LoginPage(),
+        builder: (_, state) =>
+            LoginPage(from: state.uri.queryParameters['from']),
       ),
       GoRoute(
         path: Routes.forgotPassword,
@@ -138,6 +161,11 @@ GoRouter createRouter(SessionManager session) {
         parentNavigatorKey: _rootKey,
         path: Routes.notificationPreferences,
         builder: (_, _) => const NotificationPreferencesPage(),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootKey,
+        path: Routes.deleteAccount,
+        builder: (_, _) => const DeleteAccountPage(),
       ),
       GoRoute(
         parentNavigatorKey: _rootKey,

@@ -8,6 +8,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/list_entrance_animation.dart';
+import '../../../../core/widgets/signed_in_gate.dart';
 import '../../../../core/widgets/state_views.dart';
 import '../cubit/my_auctions_cubit.dart';
 import '../widgets/my_auction_card.dart';
@@ -21,9 +22,15 @@ class MyAuctionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<MyAuctionsCubit>()..load(),
-      child: const _MyAuctionsView(),
+    final t = AppLocalizations.of(context);
+    return SignedInGate(
+      title: t.navMyAuctions,
+      icon: Icons.account_balance_wallet_outlined,
+      message: t.guestMyAuctionsBody,
+      builder: (_) => BlocProvider(
+        create: (_) => getIt<MyAuctionsCubit>()..load(),
+        child: const _MyAuctionsView(),
+      ),
     );
   }
 }

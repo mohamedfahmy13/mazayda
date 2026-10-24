@@ -5,6 +5,8 @@ import 'package:open_filex/open_filex.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/errors/failures.dart';
+import '../../../../core/session/session_manager.dart';
+import '../../../../core/widgets/signed_in_gate.dart';
 import '../../domain/usecases/documents_usecases.dart';
 
 /// زر تحميل وثيقة مستقل بذاته — بيدير حالة التحميل داخليًا.
@@ -35,6 +37,12 @@ class _DocumentDownloadButtonState extends State<DocumentDownloadButton> {
 
   Future<void> _download() async {
     if (_busy) return;
+    // التحميل مصادَق حتى للدفتر المجاني اللي الضيف شايف مرجعه — بنطلب
+    // الدخول الأول بدل 401، ونكمّل التحميل لو دخل.
+    if (!getIt<SessionManager>().isSignedIn && !await openSignIn(context)) {
+      return;
+    }
+    if (!mounted) return;
     setState(() => _busy = true);
 
     final t = AppLocalizations.of(context);

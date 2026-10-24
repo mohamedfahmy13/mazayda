@@ -137,6 +137,12 @@ class ApiConstants {
   // ===== Profile =====
   static const String profile = '$apiPrefix/profile'; // GET + PUT
 
+  // ===== حذف الحساب (App Store 5.1.1(v)) =====
+  // الفحص الأول (هل فيه موانع؟) وبعدين DELETE بكلمة السر الحالية.
+  static const String accountDeletionCheck =
+      '$apiPrefix/account/deletion-check';
+  static const String account = '$apiPrefix/account'; // DELETE {password}
+
   // ===== Documents (مكتبة وثائق المستخدم) =====
   static const String documents =
       '$apiPrefix/documents'; // ?search&type[]&preset&...

@@ -137,6 +137,15 @@ class ApiClient {
     return _handleEnvelope(() => _dio.post(path, data: body));
   }
 
+  /// DELETE مع الحفاظ على الغلاف كامل — لما رسالة النجاح نفسها بتتعرض
+  /// (`data: null` ومفيش غيرها، زي حذف الحساب).
+  Future<ApiResponse<dynamic>> deleteEnvelope(
+    String path, {
+    dynamic body,
+  }) async {
+    return _handleEnvelope(() => _dio.delete(path, data: body));
+  }
+
   /// المنطق المشترك: يشغّل الطلب، يفكّ الـ envelope، يحوّل الأخطاء.
   Future<dynamic> _handle(Future<Response> Function() request) async {
     try {
@@ -193,12 +202,14 @@ class ApiClient {
     String message = 'حدث خطأ، حاول مجددًا';
     Map<String, List<String>>? errors;
     String? code;
+    Object? details;
 
     if (data is Map) {
       if (data['message'] is String) message = data['message'];
       // كود يتقري لو الباك بعته (BE-16) — بيخلّينا نفرّق بين أنواع الرفض
       // من غير ما نطابق نصوص مترجمة.
       if (data['code'] is String) code = data['code'] as String;
+      details = data['data'];
       if (data['errors'] is Map) {
         errors = (data['errors'] as Map).map(
           (k, v) => MapEntry(
@@ -218,6 +229,7 @@ class ApiClient {
       statusCode: status,
       errors: errors,
       code: code,
+      data: details,
     );
   }
 }
